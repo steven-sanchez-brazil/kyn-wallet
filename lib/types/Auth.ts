@@ -6,4 +6,18 @@ export interface AuthCredentials {
 export interface User {
   Email: string;
   Password: string;
+  FullName?: string;
+}
+
+export interface RegisterCredentials {
+  FullName: string;
+  Email: string;
+  Password: string;
+  ConfirmPassword: string;
+  AcceptedTerms: boolean;
+}
+
+export interface RegisterResult {
+  success: boolean;
+  error?: string;
 }
