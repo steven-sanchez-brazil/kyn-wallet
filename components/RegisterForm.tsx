@@ -7,16 +7,20 @@ import { Input } from './ui/Input';
 import { Button } from './ui/Button';
 import SocialLogins from './SocialLogins';
 import { AuthService } from '../lib/services/AuthService';
-import { validateEmail, validatePassword } from '../lib/utils/Validation';
+import { validateEmail, validatePassword, validatePasswordsMatch } from '../lib/utils/Validation';
 
-const LoginForm: React.FC = () => {
+const RegisterForm: React.FC = () => {
   const router = useRouter();
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [acceptTerms, setAcceptTerms] = useState(false);
+
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
-  const [authError, setAuthError] = useState<string | null>(null);
+  const [confirmPasswordError, setConfirmPasswordError] = useState<string | null>(null);
+  const [registerError, setRegisterError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   // Real-time validation for email
@@ -37,56 +41,69 @@ const LoginForm: React.FC = () => {
     }
   }, [password]);
 
+  // Real-time validation for confirm password
+  useEffect(() => {
+    if (confirmPassword && !validatePasswordsMatch(password, confirmPassword)) {
+      setConfirmPasswordError('Las contraseñas no coinciden');
+    } else {
+      setConfirmPasswordError(null);
+    }
+  }, [password, confirmPassword]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setAuthError(null);
+    setRegisterError(null);
 
-    const isEmailValid = validateEmail(email);
-    const isPasswordValid = validatePassword(password);
-
-    if (!isEmailValid || !isPasswordValid) {
-      if (!isEmailValid) setEmailError('Formato de correo inválido');
-      if (!isPasswordValid) setPasswordError('La contraseña debe tener al menos 8 caracteres');
+    if (!validateEmail(email) || !validatePassword(password) || !validatePasswordsMatch(password, confirmPassword) || !acceptTerms || !fullName) {
       return;
     }
 
     setLoading(true);
 
     try {
-      const success = await AuthService.login({
+      const success = await AuthService.register({
+        FullName: fullName,
         Email: email,
         Password: password,
       });
 
       if (success) {
-        router.push('/construction');
+        alert('Registro exitoso. Ahora puedes iniciar sesión.');
+        router.push('/login');
       } else {
-        setAuthError('Credenciales inválidas. Por favor, intenta de nuevo.');
+        setRegisterError('El correo ya está registrado.');
       }
     } catch (err) {
-      setAuthError('Ocurrió un error inesperado.');
+      setRegisterError('Ocurrió un error inesperado.');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleForgotPassword = () => {
-    alert('Recuperación de contraseña estará disponible próximamente.');
-  };
+  const isFormValid = fullName && email && password && confirmPassword && acceptTerms && !emailError && !passwordError && !confirmPasswordError;
 
   return (
     <div className="w-full max-w-md space-y-8">
       <div className="text-center lg:text-left">
         <h2 className="text-3xl font-bold text-neutral-900">
-          Bienvenido de nuevo
+          Crea tu cuenta
         </h2>
         <p className="mt-2 text-neutral-500">
-          Ingresa tus credenciales para acceder a tu billetera
+          Únete a KynWallet y empieza a gestionar tu dinero
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
         <div className="space-y-4">
+          <Input
+            id="fullName"
+            label="Nombre completo"
+            type="text"
+            placeholder="Juan Pérez"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            required
+          />
           <Input
             id="email"
             label="Correo electrónico"
@@ -96,7 +113,6 @@ const LoginForm: React.FC = () => {
             onChange={(e) => setEmail(e.target.value)}
             error={emailError || undefined}
             required
-            autoComplete="email"
           />
           <Input
             id="password"
@@ -107,52 +123,57 @@ const LoginForm: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             error={passwordError || undefined}
             required
-            autoComplete="current-password"
+          />
+          <Input
+            id="confirmPassword"
+            label="Confirmar contraseña"
+            type="password"
+            placeholder="••••••••"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            error={confirmPasswordError || undefined}
+            required
           />
         </div>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
+        <div className="flex items-start">
+          <div className="flex items-center h-5">
             <input
-              id="remember-me"
-              name="remember-me"
+              id="terms"
+              name="terms"
               type="checkbox"
               className="h-4 w-4 text-brand-primary focus:ring-brand-primary border-neutral-300 rounded"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
+              checked={acceptTerms}
+              onChange={(e) => setAcceptTerms(e.target.checked)}
+              required
             />
-            <label htmlFor="remember-me" className="ml-2 block text-sm text-neutral-900">
-              Recordarme
-            </label>
           </div>
-
-          <div className="text-sm">
-            <button
-              type="button"
-              onClick={handleForgotPassword}
-              className="font-medium text-brand-primary hover:text-opacity-80"
-            >
-              ¿Olvidaste tu contraseña?
-            </button>
+          <div className="ml-3 text-sm">
+            <label htmlFor="terms" className="text-neutral-500">
+              Acepto los{' '}
+              <button type="button" className="text-brand-primary font-medium hover:text-opacity-80">
+                Términos y Condiciones
+              </button>
+            </label>
           </div>
         </div>
 
-        {authError && (
+        {registerError && (
           <div className="bg-red-50 text-red-500 p-3 rounded-lg text-sm border border-red-100">
-            {authError}
+            {registerError}
           </div>
         )}
 
-        <Button type="submit" disabled={loading || !!emailError || !!passwordError}>
-          {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+        <Button type="submit" disabled={loading || !isFormValid}>
+          {loading ? 'Creando cuenta...' : 'Crear cuenta'}
         </Button>
       </form>
 
       <div className="mt-4 text-center">
         <p className="text-sm text-neutral-500">
-          ¿No tienes una cuenta?{' '}
-          <Link href="/register" className="font-medium text-brand-primary hover:text-opacity-80">
-            Regístrate
+          ¿Ya tienes cuenta?{' '}
+          <Link href="/login" className="font-medium text-brand-primary hover:text-opacity-80">
+            Inicia sesión
           </Link>
         </p>
       </div>
@@ -163,7 +184,7 @@ const LoginForm: React.FC = () => {
             <div className="w-full border-t border-neutral-300"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-neutral-500">o continúa con</span>
+            <span className="px-2 bg-white text-neutral-500">o regístrate con</span>
           </div>
         </div>
 
@@ -175,4 +196,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

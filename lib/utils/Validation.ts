@@ -12,3 +12,10 @@ export const validateEmail = (email: string): boolean => {
 export const validatePassword = (password: string): boolean => {
   return password.length >= 8;
 };
+
+/**
+ * Valida si dos contraseñas coinciden.
+ */
+export const validatePasswordsMatch = (password: string, confirm: string): boolean => {
+  return password === confirm;
+};
