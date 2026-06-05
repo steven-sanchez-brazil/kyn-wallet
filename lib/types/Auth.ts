@@ -3,6 +3,12 @@ export interface AuthCredentials {
   Password: string;
 }
 
+export interface RegisterCredentials {
+  FullName: string;
+  Email: string;
+  Password: string;
+}
+
 export interface User {
   Email: string;
   Password: string;

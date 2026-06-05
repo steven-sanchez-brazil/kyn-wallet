@@ -1,7 +1,8 @@
-import { AuthCredentials, User } from '../types/Auth';
+import { AuthCredentials, RegisterCredentials, User } from '../types/Auth';
 
 export interface IAuthService {
   login(credentials: AuthCredentials): Promise<boolean>;
+  register(credentials: RegisterCredentials): Promise<boolean>;
   isAuthenticated(): boolean;
 }
 
@@ -29,6 +30,23 @@ export const AuthService: IAuthService = {
     }
 
     return false;
+  },
+
+  async register(credentials: RegisterCredentials): Promise<boolean> {
+    // Simulating API delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    // Check if user already exists
+    const exists = MOCK_USERS.some((u) => u.Email === credentials.Email);
+    if (exists) return false;
+
+    // Add user to mock database
+    MOCK_USERS.push({
+      Email: credentials.Email,
+      Password: credentials.Password,
+    });
+
+    return true;
   },
 
   isAuthenticated(): boolean {

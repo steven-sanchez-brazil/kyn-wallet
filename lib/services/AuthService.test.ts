@@ -18,4 +18,21 @@ describe('AuthService', () => {
     });
     expect(result).toBe(false);
   });
+
+  it('should register a new user successfully', async () => {
+    const newUser = {
+      FullName: 'John Doe',
+      Email: 'john@example.com',
+      Password: 'password123',
+    };
+    const result = await AuthService.register(newUser);
+    expect(result).toBe(true);
+
+    // Verify we can login with the new user
+    const loginResult = await AuthService.login({
+      Email: 'john@example.com',
+      Password: 'password123',
+    });
+    expect(loginResult).toBe(true);
+  });
 });
