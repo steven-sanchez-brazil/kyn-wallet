@@ -62,7 +62,7 @@ const LoginForm: React.FC = () => {
       } else {
         setAuthError('Credenciales inválidas. Por favor, intenta de nuevo.');
       }
-    } catch (err) {
+    } catch {
       setAuthError('Ocurrió un error inesperado.');
     } finally {
       setLoading(false);
@@ -161,6 +161,13 @@ const LoginForm: React.FC = () => {
           <SocialLogins />
         </div>
       </div>
+
+      <p className="text-center text-sm text-neutral-500 mt-4">
+        ¿No tienes cuenta?{' '}
+        <a href="/register" className="text-brand-primary font-medium hover:underline">
+          Regístrate
+        </a>
+      </p>
     </div>
   );
 };

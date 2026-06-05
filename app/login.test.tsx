@@ -1,7 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import LoginForm from '../components/LoginForm';
-import { AuthService } from '../lib/services/AuthService';
 import React from 'react';
 
 // Mock the router
