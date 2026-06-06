@@ -1,16 +1,10 @@
 import { AuthCredentials, User } from '../types/Auth';
+import { UserStore } from './UserStore';
 
 export interface IAuthService {
   login(credentials: AuthCredentials): Promise<boolean>;
   isAuthenticated(): boolean;
 }
-
-const MOCK_USERS: User[] = [
-  {
-    Email: 'tucorreo@ejemplo.com',
-    Password: 'password123',
-  },
-];
 
 let currentUser: User | null = null;
 
@@ -19,11 +13,9 @@ export const AuthService: IAuthService = {
     // Simulating API delay
     await new Promise((resolve) => setTimeout(resolve, 500));
 
-    const user = MOCK_USERS.find(
-      (u) => u.Email === credentials.Email && u.Password === credentials.Password
-    );
+    const user = UserStore.findByEmail(credentials.Email);
 
-    if (user) {
+    if (user && user.Password === credentials.Password) {
       currentUser = user;
       return true;
     }
