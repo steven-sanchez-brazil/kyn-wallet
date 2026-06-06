@@ -7,10 +7,10 @@ export default function ConstructionPage() {
       <div className="max-w-md space-y-6">
         <span className="text-6xl">🚧</span>
         <h1 className="text-3xl font-bold text-neutral-900">
-          ¡Acceso Exitoso!
+          Página en construcción
         </h1>
         <p className="text-neutral-500 text-lg">
-          Has iniciado sesión correctamente. Esta sección de la billetera está actualmente en construcción.
+          Esta sección de la billetera está actualmente en desarrollo. Pronto estará disponible.
         </p>
         <div className="pt-4">
           <Link 
