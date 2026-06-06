@@ -1,7 +1,8 @@
-import { AuthCredentials, User } from '../types/Auth';
+import { AuthCredentials, User, RegisterData } from '../types/Auth';
 
 export interface IAuthService {
   login(credentials: AuthCredentials): Promise<boolean>;
+  register(data: RegisterData): Promise<boolean>;
   isAuthenticated(): boolean;
 }
 
@@ -29,6 +30,19 @@ export const AuthService: IAuthService = {
     }
 
     return false;
+  },
+
+  async register(data: RegisterData): Promise<boolean> {
+    // Simulating API delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    // Persist the user in memory for this session
+    MOCK_USERS.push({
+      Email: data.Email,
+      Password: data.Password,
+    });
+
+    return true;
   },
 
   isAuthenticated(): boolean {

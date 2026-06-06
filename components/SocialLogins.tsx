@@ -11,7 +11,7 @@ const SocialLogins: React.FC = () => {
       <Button 
         variant="secondary" 
         onClick={() => handleComingSoon('Google')}
-        className="flex items-center justify-center space-x-2"
+        className="flex items-center justify-center space-x-2 border-[1.5px]"
       >
         <span className="text-lg">G</span>
         <span>Google</span>
@@ -19,7 +19,7 @@ const SocialLogins: React.FC = () => {
       <Button 
         variant="secondary" 
         onClick={() => handleComingSoon('Apple')}
-        className="flex items-center justify-center space-x-2"
+        className="flex items-center justify-center space-x-2 border-[1.5px]"
       >
         <span className="text-lg"></span>
         <span>Apple</span>
