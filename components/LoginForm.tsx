@@ -8,7 +8,7 @@ import SocialLogins from './SocialLogins';
 import { AuthService } from '../lib/services/AuthService';
 import { validateEmail, validatePassword } from '../lib/utils/Validation';
 
-const LoginForm: React.FC = () => {
+const LoginForm: React.FC<{ showRegisteredBanner?: boolean }> = ({ showRegisteredBanner = false }) => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -75,6 +75,11 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className="w-full max-w-md space-y-8">
+      {showRegisteredBanner && (
+        <div className="bg-green-50 text-green-700 p-3 rounded-lg text-sm border border-green-200">
+          Cuenta creada exitosamente. Inicia sesión para continuar.
+        </div>
+      )}
       <div className="text-center lg:text-left">
         <h2 className="text-3xl font-bold text-neutral-900">
           Bienvenido de nuevo
