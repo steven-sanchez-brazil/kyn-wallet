@@ -2,6 +2,7 @@
 
 **Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
 **Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+**Language**: This document MUST be written in Spanish.
 
 **Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/plan-template.md` for the execution workflow.
 
@@ -32,12 +33,14 @@
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
 - [ ] **TDD**: Is the test strategy defined before implementation?
+- [ ] **TDD Critico**: For critical functionality, are failing tests planned before code?
 - [ ] **SOLID**: Does the design enforce SOLID principles?
-- [ ] **Clean Architecture**: Are layers strictly separated with inward dependencies?
+- [ ] **Clean Architecture**: Are UI, components, business logic, and utilities clearly separated with inward dependencies?
 - [ ] **DRY & YAGNI**: Is the design free of unnecessary complexity and duplicated code?
-- [ ] **Naming**: Does the plan respect `PascalCase` for structures?
-- [ ] **Dependencies**: Is the solution completely free of external libraries?
+- [ ] **Naming**: Does the plan enforce `PascalCase` for React components?
+- [ ] **Dependencies**: Are new external libraries avoided, or explicitly justified and approved?
 - [ ] **Security**: Are all inputs validated and protected routes authenticated?
+- [ ] **Idioma SDD**: Is all generated SDD documentation planned in Spanish?
 
 ## Project Structure
 

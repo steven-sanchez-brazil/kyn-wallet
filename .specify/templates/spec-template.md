@@ -4,6 +4,7 @@
 **Created**: [DATE]  
 **Status**: Draft  
 **Input**: User description: "$ARGUMENTS"
+**Language**: This document MUST be written in Spanish.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -86,8 +87,9 @@
 
 - **Constraint**: All user inputs MUST be rigorously validated before processing.
 - **Constraint**: All protected routes MUST require authentication before granting access.
-- **Constraint**: The use of external libraries is strictly prohibited.
-- **Constraint**: `PascalCase` must be used for naming relevant structures.
+- **Constraint**: New external libraries MUST NOT be added unless an explicit technical justification is documented.
+- **Constraint**: React components MUST use `PascalCase` naming.
+- **Constraint**: All SDD-generated documentation MUST be written in Spanish.
 
 ### Functional Requirements
 

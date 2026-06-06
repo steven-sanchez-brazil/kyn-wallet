@@ -8,6 +8,7 @@ Este proyecto es una billetera virtual que implementa la pantalla de inicio de s
 *   **Validación en Tiempo Real**: Feedback instantáneo para errores de formato de correo y longitud de contraseña.
 *   **Diseño Responsivo**: Diseño de panel dividido (Split-panel) en escritorio y vista enfocada en el formulario para dispositivos móviles.
 *   **Test-Driven Development (TDD)**: Cobertura del 100% con pruebas unitarias y de integración utilizando Vitest y React Testing Library.
+*   **Dependencias Controladas**: No se agregan nuevas librerías externas sin justificación técnica explícita y documentada.
 
 ## Tecnologías Utilizadas
 
@@ -96,3 +97,7 @@ kyn-wallet/
 │   └── utils/            # Funciones de utilidad (Validaciones) y tests
 └── specs/                # Documentación del diseño impulsado por especificaciones (SDD)
 ```
+
+## Reglas de Documentación SDD
+
+Todo artefacto generado por SDD (`spec.md`, `plan.md`, `tasks.md` y derivados) debe redactarse en español.
