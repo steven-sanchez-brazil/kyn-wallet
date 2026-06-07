@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Input } from './ui/Input';
 import { Button } from './ui/Button';
 import SocialLogins from './SocialLogins';
@@ -10,6 +11,7 @@ import { validateEmail, validatePassword } from '../lib/utils/Validation';
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -17,6 +19,7 @@ const LoginForm: React.FC = () => {
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const isRegistered = searchParams.get('registered') === 'true';
 
   // Real-time validation for email
   useEffect(() => {
@@ -85,6 +88,12 @@ const LoginForm: React.FC = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+        {isRegistered && (
+          <div className="bg-green-50 text-green-700 p-3 rounded-lg text-sm border border-green-100">
+            Registro exitoso. Ahora puedes iniciar sesión.
+          </div>
+        )}
+
         <div className="space-y-4">
           <Input
             id="email"
@@ -161,6 +170,13 @@ const LoginForm: React.FC = () => {
           <SocialLogins />
         </div>
       </div>
+
+      <p className="text-center text-sm text-neutral-500">
+        ¿No tienes cuenta?{' '}
+        <Link href="/register" className="font-medium text-brand-primary hover:text-opacity-80">
+          Regístrate
+        </Link>
+      </p>
     </div>
   );
 };

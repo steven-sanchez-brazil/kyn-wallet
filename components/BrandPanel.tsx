@@ -1,16 +1,39 @@
 import React from 'react';
 
-const BrandPanel: React.FC = () => {
+interface BrandPanelProps {
+  iconVariant?: 'default' | 'register';
+  gradientVariant?: 'default' | 'register';
+}
+
+const BrandPanel: React.FC<BrandPanelProps> = ({
+  iconVariant = 'default',
+  gradientVariant = 'default',
+}) => {
   return (
     <div 
       className="hidden lg:flex flex-col items-start justify-between w-1/2 px-[56px] py-[64px] relative bg-gradient-to-br from-brand-gradientStart to-brand-gradientEnd"
+      style={
+        gradientVariant === 'register'
+          ? {
+              backgroundImage:
+                'linear-gradient(70.7315deg, #FF8A65 31.698%, #EF5226 83.455%)',
+            }
+          : undefined
+      }
     >
       {/* Logo */}
       <div className="flex gap-[12px] items-center relative shrink-0">
-        <div className="h-[44px] relative shrink-0 w-[20px] bg-white rounded-full flex flex-col justify-between p-[2px]">
-           <div className="w-full aspect-square bg-brand-primary rounded-full opacity-0" />
-           <div className="w-full aspect-square bg-brand-primary rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-        </div>
+        {iconVariant === 'register' ? (
+          <div className="relative shrink-0 h-[44px] w-[34px]">
+            <div className="absolute left-0 top-0 h-[44px] w-[20px] rounded-full bg-white" />
+            <div className="absolute left-[14px] top-[14px] h-[30px] w-[30px] rounded-full bg-[#f7c3b3]" />
+          </div>
+        ) : (
+          <div className="h-[44px] relative shrink-0 w-[20px] bg-white rounded-full flex flex-col justify-between p-[2px]">
+             <div className="w-full aspect-square bg-brand-primary rounded-full opacity-0" />
+             <div className="w-full aspect-square bg-brand-primary rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+          </div>
+        )}
         <p className="font-bold leading-[normal] not-italic relative shrink-0 text-[26px] text-white whitespace-nowrap">
           KynWallet
         </p>
