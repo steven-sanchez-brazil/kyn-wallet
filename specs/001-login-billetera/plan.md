@@ -1,76 +1,50 @@
-# Implementation Plan: Login Spec Update
-
-**Branch**: `002-login-spec-update` | **Date**: 2026-06-04 | **Spec**: [specs/002-login-spec-update/spec.md](spec.md)
-**Input**: Feature specification from `specs/002-login-spec-update/spec.md`
+# Implementation Plan: Login, Register & Home Screen System
 
 ## Summary
 
-Implement a login screen for the KynWallet application using a split-panel design (Brand vs Form) that strictly follows the provided Figma design. The technical stack will be Next.js 14 (App Router), TypeScript, and Tailwind CSS, following a custom implementation of design tokens to ensure zero additional external UI library dependencies.
+This plan covers the implementation of the core authentication flow (Login/Register) and the main dashboard (Home Screen) for the KynWallet application. It includes persistent storage using a JSON file, server-side logic via Next.js Server Actions, and a responsive design that strictly follows the provided Figma prototypes.
 
 ## Technical Context
 
-**Language/Version**: TypeScript / Next.js 14 (App Router)  
-**Primary Dependencies**: React 18, Next.js 14, Tailwind CSS 3.x  
-**Storage**: In-memory (hardcoded users array)  
-**Testing**: [NEEDS CLARIFICATION: Preferred test runner (Vitest/Jest) for TDD compliance?]  
-**Target Platform**: Web (Responsive)
-**Project Type**: web-application  
-**Performance Goals**: Login completion < 30s, successful validation < 2s.  
-**Constraints**: No external UI libraries (Radix, Shadcn, etc.), strict PascalCase naming.  
-**Scale/Scope**: Single feature (Login) with redirection to a placeholder screen.
+**Stack**: Next.js 14 (App Router), TypeScript, Tailwind CSS.
+**Persistence**: Local file `data/users.json`.
+**Validations**: Custom client-side and server-side logic in `lib/utils/Validation.ts` and `lib/actions/authActions.ts`.
+**Layout**: Responsive split-panel (Desktop) and single-column (Mobile).
 
-## Constitution Check
+## Phases
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+### 1. Data Layer & Persistence
+- [X] Create `data/users.json` with initial mock user.
+- [X] Update `lib/types/Auth.ts` with `FullName` and `RegisterData`.
+- [X] Implement `loginAction` and `registerAction` in `lib/actions/authActions.ts`.
 
-- [ ] **TDD**: Is the test strategy defined before implementation? (Needs clarification on runner)
-- [x] **SOLID**: Does the design enforce SOLID principles? (Clean separation of UI, logic, and constants)
-- [x] **Clean Architecture**: Are layers strictly separated with inward dependencies? (app/ for routing, components/ for UI, lib/ for logic)
-- [x] **DRY & YAGNI**: Is the design free of unnecessary complexity and duplicated code? (Focused only on login requirements)
-- [x] **Naming**: Does the plan respect `PascalCase` for structures? (Mandatory for all components and structures)
-- [x] **Dependencies**: Is the solution completely free of external libraries? (Using only Next.js/Tailwind as base, no UI libs)
-- [x] **Security**: Are all inputs validated and protected routes authenticated? (Validation FR-004 and FR-005)
+### 2. Authentication UI & Logic
+- [X] **Login (`/`)**: 
+    - Updated branding to match Figma 2:2.
+    - Connected to `loginAction`.
+    - Added link to `/register`.
+    - Added success message handling after registration.
+- [X] **Register (`/register`)**:
+    - Implemented `RegisterForm.tsx` with full validations (Email, Password min 8, Match, Terms).
+    - Connected to `registerAction`.
+    - Redirection to Login with success parameter.
 
-## Project Structure
+### 3. Home Screen (`/inicio`)
+- [X] Implemented responsive dashboard.
+- [X] **Mobile View (11:2)**:
+    - Header with balance and notifications.
+    - Quick Action icons (Enviar, Recibir, etc.).
+    - Recent transactions list with incoming/outgoing styles.
+    - Floating bottom navigation bar.
+- [X] **Desktop View (13:2)**:
+    - Adapted grid layout for wider screens.
 
-### Documentation (this feature)
+### 4. Interactions & Polish
+- [X] Added "Próximamente" alerts to all social login buttons (Google/Apple).
+- [X] Implemented cross-navigation between Login and Register.
+- [X] Final visual audit of all screens against Figma prototypes.
 
-```text
-specs/002-login-spec-update/
-├── plan.md              # This file
-├── research.md          # Phase 0 output
-├── data-model.md        # Phase 1 output
-├── quickstart.md        # Phase 1 output
-├── checklists/
-│   └── requirements.md
-├── contracts/           # Phase 1 output
-└── spec.md              # Input spec
-```
-
-### Source Code (repository root)
-
-```text
-app/
-├── layout.tsx
-├── page.tsx             # Login page
-└── construction/        # Placeholder page
-    └── page.tsx
-
-components/
-├── BrandPanel.tsx
-├── LoginForm.tsx
-└── ui/                  # Custom UI elements (Input, Button, etc.)
-
-lib/
-├── auth.ts              # Hardcoded logic
-└── constants/
-    └── design-tokens.ts # Figma tokens mapped here
-```
-
-**Structure Decision**: Web application structure with Next.js App Router conventions, separating shared UI components and business logic in `components/` and `lib/` respectively.
-
-## Complexity Tracking
-
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| Next.js / Tailwind | Explicit user directive overrides strict "no external libraries" for the base framework. | Building a custom SSR framework and CSS parser is out of scope. |
+## Verification
+1.  **Register**: Create a new user -> Confirm it appears in `users.json`.
+2.  **Login**: Use new credentials -> Confirm redirection to `/inicio`.
+3.  **Inicio**: Verify that balance and transactions display correctly with the brand's identity.

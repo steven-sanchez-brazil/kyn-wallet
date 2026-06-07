@@ -12,3 +12,17 @@ export const validateEmail = (email: string): boolean => {
 export const validatePassword = (password: string): boolean => {
   return password.length >= 8;
 };
+
+/**
+ * Valida si el nombre completo no está vacío.
+ */
+export const validateFullName = (name: string): boolean => {
+  return name.trim().length > 0;
+};
+
+/**
+ * Valida si dos contraseñas coinciden.
+ */
+export const passwordsMatch = (p1: string, p2: string): boolean => {
+  return p1 === p2;
+};

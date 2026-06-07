@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import { Input } from './ui/Input';
 import { Button } from './ui/Button';
 import SocialLogins from './SocialLogins';
-import { AuthService } from '../lib/services/AuthService';
+import { loginAction } from '../lib/actions/authActions';
 import { validateEmail, validatePassword } from '../lib/utils/Validation';
+import Link from 'next/link';
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
@@ -16,7 +17,16 @@ const LoginForm: React.FC = () => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // Check for success message in URL (from registration)
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('registered') === 'true') {
+      setSuccessMessage('¡Registro exitoso! Por favor, inicia sesión.');
+    }
+  }, []);
 
   // Real-time validation for email
   useEffect(() => {
@@ -39,6 +49,7 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError(null);
+    setSuccessMessage(null);
 
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
@@ -52,15 +63,17 @@ const LoginForm: React.FC = () => {
     setLoading(true);
 
     try {
-      const success = await AuthService.login({
+      const result = await loginAction({
         Email: email,
         Password: password,
       });
 
-      if (success) {
-        router.push('/construction');
+      if (result.success) {
+        // Redirigir pasando el nombre del usuario para personalizar la experiencia
+        const userName = encodeURIComponent(result.user?.FullName || 'Usuario');
+        router.push(`/inicio?name=${userName}`);
       } else {
-        setAuthError('Credenciales inválidas. Por favor, intenta de nuevo.');
+        setAuthError(result.error || 'Credenciales inválidas. Por favor, intenta de nuevo.');
       }
     } catch (err) {
       setAuthError('Ocurrió un error inesperado.');
@@ -75,6 +88,16 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className="w-full max-w-md space-y-8">
+      {/* Mobile-only Logo */}
+      <div className="lg:hidden flex justify-center mb-8">
+        <div className="flex gap-[12px] items-center">
+          <div className="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center text-white font-bold">K</div>
+          <p className="font-bold text-2xl text-neutral-900 tracking-tight">
+            KynWallet
+          </p>
+        </div>
+      </div>
+
       <div className="text-center lg:text-left">
         <h2 className="text-3xl font-bold text-neutral-900">
           Bienvenido de nuevo
@@ -136,6 +159,12 @@ const LoginForm: React.FC = () => {
           </div>
         </div>
 
+        {successMessage && (
+          <div className="bg-green-50 text-green-600 p-3 rounded-lg text-sm border border-green-100 font-medium">
+            {successMessage}
+          </div>
+        )}
+
         {authError && (
           <div className="bg-red-50 text-red-500 p-3 rounded-lg text-sm border border-red-100">
             {authError}
@@ -160,6 +189,16 @@ const LoginForm: React.FC = () => {
         <div className="mt-6">
           <SocialLogins />
         </div>
+      </div>
+
+      <div className="mt-8 text-center text-sm">
+        <span className="text-neutral-500">¿No tienes cuenta? </span>
+        <Link 
+          href="/register" 
+          className="font-semibold text-brand-primary hover:text-opacity-80"
+        >
+          Regístrate
+        </Link>
       </div>
     </div>
   );
