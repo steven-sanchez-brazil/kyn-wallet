@@ -1,15 +1,17 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import LoginForm from '../components/LoginForm';
-import { AuthService } from '../lib/services/AuthService';
+import LoginForm from '../../components/LoginForm';
+import { AuthService } from '../../lib/services/AuthService';
 import React from 'react';
 
 // Mock the router
 const mockPush = vi.fn();
+const mockSearchParams = new URLSearchParams();
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
     push: mockPush,
   }),
+  useSearchParams: () => mockSearchParams,
 }));
 
 describe('LoginForm Integration', () => {

@@ -3,7 +3,7 @@ import React from 'react';
 const BrandPanel: React.FC = () => {
   return (
     <div 
-      className="hidden lg:flex flex-col items-start justify-between w-1/2 px-[56px] py-[64px] relative bg-gradient-to-br from-brand-gradientStart to-brand-gradientEnd"
+      className="hidden lg:flex flex-col items-start justify-between w-1/2 px-[56px] py-[64px] relative bg-[linear-gradient(121.19deg,theme(colors.brand.gradientStart)_0%,theme(colors.brand.gradientEnd)_100%)]"
     >
       {/* Logo */}
       <div className="flex gap-[12px] items-center relative shrink-0">

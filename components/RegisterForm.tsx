@@ -1,33 +1,43 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Input } from './ui/Input';
 import { Button } from './ui/Button';
 import SocialLogins from './SocialLogins';
 import { AuthService } from '../lib/services/AuthService';
-import { validateEmail, validatePassword } from '../lib/utils/Validation';
+import { 
+  validateEmail, 
+  validatePassword, 
+  validateFullName, 
+  passwordsMatch 
+} from '../lib/utils/Validation';
 
-const LoginFormContent: React.FC = () => {
+const RegisterForm: React.FC = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [acceptTerms, setAcceptTerms] = useState(false);
+
+  const [fullNameError, setFullNameError] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
-  const [authError, setAuthError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [confirmPasswordError, setConfirmPasswordError] = useState<string | null>(null);
+  const [registerError, setRegisterError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // Real-time validations
   useEffect(() => {
-    if (searchParams.get('registro') === 'exitoso') {
-      setSuccessMessage('¡Registro exitoso! Por favor, inicia sesión.');
+    if (fullName && !validateFullName(fullName)) {
+      setFullNameError('El nombre es obligatorio');
+    } else {
+      setFullNameError(null);
     }
-  }, [searchParams]);
+  }, [fullName]);
 
-  // Real-time validation for email
   useEffect(() => {
     if (email && !validateEmail(email)) {
       setEmailError('Formato de correo inválido');
@@ -36,7 +46,6 @@ const LoginFormContent: React.FC = () => {
     }
   }, [email]);
 
-  // Real-time validation for password
   useEffect(() => {
     if (password && !validatePassword(password)) {
       setPasswordError('La contraseña debe tener al menos 8 caracteres');
@@ -45,56 +54,76 @@ const LoginFormContent: React.FC = () => {
     }
   }, [password]);
 
+  useEffect(() => {
+    if (confirmPassword && !passwordsMatch(password, confirmPassword)) {
+      setConfirmPasswordError('Las contraseñas no coinciden');
+    } else {
+      setConfirmPasswordError(null);
+    }
+  }, [password, confirmPassword]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setAuthError(null);
+    setRegisterError(null);
 
+    const isFullNameValid = validateFullName(fullName);
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
+    const isMatch = passwordsMatch(password, confirmPassword);
 
-    if (!isEmailValid || !isPasswordValid) {
+    if (!isFullNameValid || !isEmailValid || !isPasswordValid || !isMatch || !acceptTerms) {
+      if (!isFullNameValid) setFullNameError('El nombre es obligatorio');
       if (!isEmailValid) setEmailError('Formato de correo inválido');
       if (!isPasswordValid) setPasswordError('La contraseña debe tener al menos 8 caracteres');
+      if (!isMatch) setConfirmPasswordError('Las contraseñas no coinciden');
       return;
     }
 
     setLoading(true);
 
     try {
-      const success = await AuthService.login({
+      const success = await AuthService.register({
+        FullName: fullName,
         Email: email,
         Password: password,
+        ConfirmPassword: confirmPassword,
       });
 
       if (success) {
-        router.push('/construction');
+        router.push('/login?registro=exitoso');
       } else {
-        setAuthError('Credenciales inválidas. Por favor, intenta de nuevo.');
+        setRegisterError('Ocurrió un error durante el registro. Intenta de nuevo.');
       }
     } catch (err) {
-      setAuthError('Ocurrió un error inesperado.');
+      setRegisterError('Ocurrió un error inesperado.');
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleForgotPassword = () => {
-    alert('Recuperación de contraseña estará disponible próximamente.');
   };
 
   return (
     <div className="w-full max-w-md space-y-8">
       <div className="text-center lg:text-left">
         <h2 className="text-3xl font-bold text-neutral-900">
-          Bienvenido de nuevo
+          Crea tu cuenta
         </h2>
         <p className="mt-2 text-neutral-500">
-          Ingresa tus credenciales para acceder a tu billetera
+          Únete a KynWallet y maneja tu dinero sin fronteras
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
         <div className="space-y-4">
+          <Input
+            id="full-name"
+            label="Nombre completo"
+            type="text"
+            placeholder="Ej. Steven Luna"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            error={fullNameError || undefined}
+            required
+          />
           <Input
             id="email"
             label="Correo electrónico"
@@ -104,7 +133,6 @@ const LoginFormContent: React.FC = () => {
             onChange={(e) => setEmail(e.target.value)}
             error={emailError || undefined}
             required
-            autoComplete="email"
           />
           <Input
             id="password"
@@ -115,50 +143,49 @@ const LoginFormContent: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             error={passwordError || undefined}
             required
-            autoComplete="current-password"
+          />
+          <Input
+            id="confirm-password"
+            label="Confirmar contraseña"
+            type="password"
+            placeholder="••••••••"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            error={confirmPasswordError || undefined}
+            required
           />
         </div>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
+        <div className="flex items-start">
+          <div className="flex items-center h-5">
             <input
-              id="remember-me"
-              name="remember-me"
+              id="terms"
+              name="terms"
               type="checkbox"
               className="h-4 w-4 text-brand-primary focus:ring-brand-primary border-neutral-300 rounded-md"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
+              checked={acceptTerms}
+              onChange={(e) => setAcceptTerms(e.target.checked)}
+              required
             />
-            <label htmlFor="remember-me" className="ml-2 block text-sm text-neutral-900">
-              Recordarme
-            </label>
           </div>
-
-          <div className="text-sm">
-            <button
-              type="button"
-              onClick={handleForgotPassword}
-              className="font-medium text-brand-primary hover:text-opacity-80"
-            >
-              ¿Olvidaste tu contraseña?
-            </button>
+          <div className="ml-3 text-sm">
+            <label htmlFor="terms" className="font-medium text-neutral-900">
+              Acepto los términos y condiciones
+            </label>
           </div>
         </div>
 
-        {successMessage && (
-          <div className="bg-green-50 text-green-600 p-3 rounded-lg text-sm border border-green-100 mb-4">
-            {successMessage}
-          </div>
-        )}
-
-        {authError && (
+        {registerError && (
           <div className="bg-red-50 text-red-500 p-3 rounded-lg text-sm border border-red-100">
-            {authError}
+            {registerError}
           </div>
         )}
 
-        <Button type="submit" disabled={loading || !!emailError || !!passwordError}>
-          {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+        <Button 
+          type="submit" 
+          disabled={loading || !acceptTerms || !!fullNameError || !!emailError || !!passwordError || !!confirmPasswordError}
+        >
+          {loading ? 'Creando cuenta...' : 'Crear cuenta'}
         </Button>
       </form>
 
@@ -179,9 +206,9 @@ const LoginFormContent: React.FC = () => {
 
       <div className="text-center mt-8">
         <p className="text-sm text-neutral-500">
-          ¿No tienes una cuenta?{' '}
-          <Link href="/register" className="font-medium text-brand-primary hover:text-opacity-80">
-            Regístrate
+          ¿Ya tienes cuenta?{' '}
+          <Link href="/login" className="font-medium text-brand-primary hover:text-opacity-80">
+            Inicia sesión
           </Link>
         </p>
       </div>
@@ -189,12 +216,4 @@ const LoginFormContent: React.FC = () => {
   );
 };
 
-const LoginForm: React.FC = () => {
-  return (
-    <Suspense fallback={<div>Cargando...</div>}>
-      <LoginFormContent />
-    </Suspense>
-  );
-};
-
-export default LoginForm;
+export default RegisterForm;
