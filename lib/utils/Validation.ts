@@ -12,3 +12,27 @@ export const validateEmail = (email: string): boolean => {
 export const validatePassword = (password: string): boolean => {
   return password.length >= 8;
 };
+
+/**
+ * Valida que un campo obligatorio tenga contenido.
+ */
+export const validateRequiredField = (value: string): boolean => {
+  return value.trim().length > 0;
+};
+
+/**
+ * Valida que la confirmación de contraseña coincida.
+ */
+export const validatePasswordMatch = (
+  password: string,
+  confirmPassword: string
+): boolean => {
+  return password === confirmPassword;
+};
+
+/**
+ * Valida aceptación de términos y condiciones.
+ */
+export const validateTermsAccepted = (isAccepted: boolean): boolean => {
+  return isAccepted;
+};

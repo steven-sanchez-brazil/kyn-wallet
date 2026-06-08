@@ -2,13 +2,18 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Input } from './ui/Input';
 import { Button } from './ui/Button';
 import SocialLogins from './SocialLogins';
 import { AuthService } from '../lib/services/AuthService';
 import { validateEmail, validatePassword } from '../lib/utils/Validation';
 
-const LoginForm: React.FC = () => {
+interface LoginFormProps {
+  showRegistrationSuccess?: boolean;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ showRegistrationSuccess = false }) => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -85,6 +90,12 @@ const LoginForm: React.FC = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+        {showRegistrationSuccess && (
+          <div className="bg-green-50 text-green-700 p-3 rounded-lg text-sm border border-green-100">
+            Registro exitoso. Ahora puedes iniciar sesión.
+          </div>
+        )}
+
         <div className="space-y-4">
           <Input
             id="email"
@@ -147,19 +158,13 @@ const LoginForm: React.FC = () => {
         </Button>
       </form>
 
-      <div className="mt-6">
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-neutral-300"></div>
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-neutral-500">o continúa con</span>
-          </div>
-        </div>
+      <SocialLogins mode="login" />
 
-        <div className="mt-6">
-          <SocialLogins />
-        </div>
+      <div className="text-center text-sm text-neutral-500">
+        <span>No tienen cuenta?. </span>
+        <Link href="/register" className="font-medium text-brand-primary hover:text-opacity-80">
+          Regístrate
+        </Link>
       </div>
     </div>
   );

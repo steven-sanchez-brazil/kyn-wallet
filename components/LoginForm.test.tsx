@@ -45,4 +45,10 @@ describe('LoginForm UI', () => {
       expect(loginButton).toBeDisabled();
     });
   });
+
+  it('should render register navigation link', () => {
+    render(<LoginForm />);
+
+    expect(screen.getByRole('link', { name: /Regístrate/i })).toHaveAttribute('href', '/register');
+  });
 });
