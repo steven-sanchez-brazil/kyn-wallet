@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { validateEmail, validatePassword } from './Validation';
+import { validateEmail, validatePassword, validateName } from './Validation';
 
 describe('Validation Utils', () => {
   describe('validateEmail', () => {
@@ -24,6 +24,19 @@ describe('Validation Utils', () => {
     it('should return false for passwords with less than 8 characters', () => {
       expect(validatePassword('short')).toBe(false);
       expect(validatePassword('')).toBe(false);
+    });
+  });
+
+  describe('validateName', () => {
+    it('should return true for names with 3+ characters', () => {
+      expect(validateName('Luke Skywalker')).toBe(true);
+      expect(validateName('Obi')).toBe(true);
+    });
+
+    it('should return false for names with less than 3 characters or empty/whitespace only', () => {
+      expect(validateName('Lu')).toBe(false);
+      expect(validateName('  ')).toBe(false);
+      expect(validateName('')).toBe(false);
     });
   });
 });

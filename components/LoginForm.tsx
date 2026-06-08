@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Input } from './ui/Input';
 import { Button } from './ui/Button';
 import SocialLogins from './SocialLogins';
@@ -146,6 +147,13 @@ const LoginForm: React.FC = () => {
           {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
         </Button>
       </form>
+
+      <div className="text-center lg:text-left text-sm">
+        <span className="text-neutral-500">¿No tienes una cuenta? </span>
+        <Link href="/register" className="font-medium text-brand-primary hover:text-opacity-80 hover:underline">
+          Regístrate gratis
+        </Link>
+      </div>
 
       <div className="mt-6">
         <div className="relative">
