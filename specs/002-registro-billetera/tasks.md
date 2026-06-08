@@ -123,10 +123,35 @@
 
 ## Phase 7: Polish & Cross-Cutting Concerns
 
-**Purpose**: Final validation and end-to-end verification
+**Purpose**: Final validation, new FR integration, and end-to-end verification
 
 - [x] T019 Run quickstart.md validation scenarios end-to-end
 - [x] T020 Verify all tests pass with `npm test`
+
+---
+
+## Phase 8: New Requirements from Figma Review (FR-013, FR-014, FR-015)
+
+**Purpose**: Integrate clarifications from Figma design review (2026-06-08)
+
+### Tests (TDD — Write FIRST, must FAIL)
+
+- [x] T021 [P] Write test: password field shows/hides text when eye icon is clicked in components/RegisterForm.test.tsx
+- [x] T022 [P] Write test: confirmPassword field shows/hides text when eye icon is clicked in components/RegisterForm.test.tsx
+- [x] T023 [P] Write test: BrandPanel renders custom headline and subtitle when props are passed in components/BrandPanel.test.tsx
+- [x] T024 [P] Write test: "términos y condiciones" link triggers alert "Próximamente" in components/RegisterForm.test.tsx
+
+### Implementation
+
+- [x] T025 Parametrize BrandPanel to accept optional headline and subtitle props (defaults to login text) in components/BrandPanel.tsx
+- [x] T026 Pass registration-specific headline ("Comienza tu camino financiero.") and subtitle to BrandPanel in app/register/page.tsx
+- [x] T027 Implement "términos y condiciones" as clickable button with window.alert("Próximamente") in components/RegisterForm.tsx
+- [x] T028 Verify Input component eye icon toggle works correctly for both password fields (already implemented from 001)
+
+### Validation
+
+- [x] T029 Run quickstart.md scenarios 7, 8, 9 (new scenarios from Figma review)
+- [x] T030 Run full test suite: `npm test` — all green
 
 ---
 
@@ -141,6 +166,7 @@
 - **User Story 3 (Phase 5)**: Depends on User Story 1 (T010) — modifies page layout
 - **User Story 4 (Phase 6)**: Depends on User Story 1 (T009) — extends same component
 - **Polish (Phase 7)**: Depends on all user stories complete
+- **Figma Review (Phase 8)**: Depends on Phase 7 — adds new FRs (FR-013, FR-014, FR-015)
 
 ### Within Each User Story
 
@@ -185,6 +211,7 @@ T016 + T017 (independent of Phase 5, only needs Phase 3 complete)
 4. Add User Story 3 → Responsive layout complete
 5. Add User Story 4 → Social buttons + navigation
 6. Polish → Login page shows success banner
+7. Figma Review FRs → Eye icon, BrandPanel props, T&C link
 
 ---
 
@@ -195,3 +222,4 @@ T016 + T017 (independent of Phase 5, only needs Phase 3 complete)
 - Existing components (BrandPanel, SocialLogins, Input, Button) are reused as-is
 - Commit after each task or logical group
 - Stop at any checkpoint to validate story independently
+- Phase 8 (T021–T030) adds 3 new FRs from Figma design review: eye icon toggle (FR-013), BrandPanel parametrization (FR-014), T&C clickable link (FR-015)

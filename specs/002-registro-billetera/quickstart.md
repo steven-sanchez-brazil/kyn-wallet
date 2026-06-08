@@ -96,6 +96,48 @@ npm run dev
 
 ---
 
+### Scenario 7: Toggle de visibilidad de contraseña (FR-013)
+
+**Steps**:
+1. Navegar a `/register`
+2. Escribir "password123" en campo "Contraseña"
+3. Clic en el icono de ojo del campo "Contraseña"
+4. Clic nuevamente en el icono de ojo
+5. Repetir pasos 2-4 en campo "Confirmar contraseña"
+
+**Expected Outcome**:
+- Inicialmente ambos campos muestran puntos (••••••••)
+- Al hacer clic en el ojo, el texto se vuelve visible ("password123")
+- Al hacer clic de nuevo, el texto se oculta otra vez
+- Funciona independientemente en cada campo
+
+---
+
+### Scenario 8: BrandPanel con textos de registro (FR-014)
+
+**Steps**:
+1. Navegar a `/register` en viewport desktop (>= 1024px)
+2. Observar el panel izquierdo
+
+**Expected Outcome**:
+- Headline muestra: "Comienza tu camino financiero."
+- Subtítulo muestra: "Crea tu cuenta en minutos y empieza a enviar, recibir y administrar tu dinero desde cualquier lugar."
+- El resto del panel (logo, card mockup) permanece igual al login
+
+---
+
+### Scenario 9: Enlace "términos y condiciones" (FR-015)
+
+**Steps**:
+1. Navegar a `/register`
+2. Clic en el texto "términos y condiciones" (estilizado en naranja junto al checkbox)
+
+**Expected Outcome**:
+- Se muestra un alert con el mensaje "Próximamente"
+- El estado del checkbox NO cambia (el clic es solo en el enlace, no en el checkbox)
+
+---
+
 ## Running Tests
 
 ```bash

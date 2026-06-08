@@ -177,6 +177,7 @@ const RegisterForm: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
           onBlur={handleBlurPassword}
           error={passwordError || undefined}
+          showToggle
         />
 
         <Input
@@ -188,6 +189,7 @@ const RegisterForm: React.FC = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           onBlur={handleBlurConfirmPassword}
           error={confirmPasswordError || undefined}
+          showToggle
         />
 
         <Checkbox
@@ -195,9 +197,17 @@ const RegisterForm: React.FC = () => {
           label={
             <span>
               Acepto los{' '}
-              <span className="font-semibold text-[#ef5226]">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.alert('Próximamente');
+                }}
+                className="font-semibold text-[#ef5226] hover:underline"
+              >
                 términos y condiciones
-              </span>
+              </button>
             </span>
           }
           checked={acceptTerms}

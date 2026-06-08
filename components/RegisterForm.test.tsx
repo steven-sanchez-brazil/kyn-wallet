@@ -172,4 +172,54 @@ describe('RegisterForm', () => {
       alertMock.mockRestore();
     });
   });
+
+  // FR-013: Password visibility toggle
+  describe('password visibility toggle', () => {
+    it('toggles password field visibility when eye icon is clicked', () => {
+      render(<RegisterForm />);
+      const passwordInput = screen.getByLabelText('Contraseña');
+      expect(passwordInput).toHaveAttribute('type', 'password');
+
+      const toggleButtons = screen.getAllByLabelText('Mostrar/Ocultar contraseña');
+      fireEvent.click(toggleButtons[0]);
+      expect(passwordInput).toHaveAttribute('type', 'text');
+
+      fireEvent.click(toggleButtons[0]);
+      expect(passwordInput).toHaveAttribute('type', 'password');
+    });
+
+    it('toggles confirmPassword field visibility when eye icon is clicked', () => {
+      render(<RegisterForm />);
+      const confirmInput = screen.getByLabelText('Confirmar contraseña');
+      expect(confirmInput).toHaveAttribute('type', 'password');
+
+      const toggleButtons = screen.getAllByLabelText('Mostrar/Ocultar contraseña');
+      fireEvent.click(toggleButtons[1]);
+      expect(confirmInput).toHaveAttribute('type', 'text');
+
+      fireEvent.click(toggleButtons[1]);
+      expect(confirmInput).toHaveAttribute('type', 'password');
+    });
+  });
+
+  // FR-015: Terms and conditions link
+  describe('terms and conditions link', () => {
+    it('shows alert "Próximamente" when términos y condiciones is clicked', () => {
+      const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
+      render(<RegisterForm />);
+      fireEvent.click(screen.getByText('términos y condiciones'));
+      expect(alertMock).toHaveBeenCalledWith('Próximamente');
+      alertMock.mockRestore();
+    });
+
+    it('does not toggle checkbox when T&C link is clicked', () => {
+      const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
+      render(<RegisterForm />);
+      const checkbox = screen.getByRole('checkbox');
+      expect(checkbox).not.toBeChecked();
+      fireEvent.click(screen.getByText('términos y condiciones'));
+      expect(checkbox).not.toBeChecked();
+      alertMock.mockRestore();
+    });
+  });
 });

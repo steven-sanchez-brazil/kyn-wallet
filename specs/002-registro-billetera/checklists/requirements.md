@@ -31,5 +31,5 @@
 
 ## Notes
 
-- All items pass validation. Spec is ready for `/speckit.clarify` or `/speckit.plan`.
-- The Figma design (node 31:2) could not be accessed due to permissions. Visual details should be confirmed during implementation.
+- All items pass validation. Spec is ready for `/speckit.plan`.
+- Figma design (node 31:2) was reviewed and 3 clarifications were integrated: eye icon toggle, BrandPanel parametrizado, enlace T&C con alert.

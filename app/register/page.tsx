@@ -4,7 +4,10 @@ import RegisterForm from '@/components/RegisterForm';
 export default function RegisterPage() {
   return (
     <main className="min-h-screen flex">
-      <BrandPanel />
+      <BrandPanel
+        headline={['Comienza tu', 'camino financiero.']}
+        subtitle="Crea tu cuenta en minutos y empieza a enviar, recibir y administrar tu dinero desde cualquier lugar."
+      />
 
       <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 bg-white">
         <RegisterForm />

@@ -65,3 +65,33 @@
 **Alternatives considered**:
 - Usar input nativo sin wrapper: Descartado — inconsistente con el design system y difícil de estilizar.
 - Incluir el checkbox inline en RegisterForm: Descartado — viola DRY si se necesita en otra pantalla.
+
+### 7. Password visibility toggle (eye icon) — FR-013
+
+**Decision**: El componente `Input` ya soporta `type="password"` con toggle de visibilidad (eye icon) desde la implementación de 001-login-billetera. Se reutiliza directamente en los campos de contraseña y confirmar contraseña del registro.
+
+**Rationale**: El diseño de Figma (node 31:28, 31:32) muestra explícitamente un eye icon en ambos campos de contraseña. La implementación ya existe en `Input.tsx` y no requiere cambios.
+
+**Alternatives considered**:
+- Agregar toggle solo al primer campo: Descartado — Figma muestra icono en ambos campos.
+- No incluir toggle: Descartado — está en el diseño y mejora UX para evitar errores de tipeo.
+
+### 8. BrandPanel parametrizado — FR-014
+
+**Decision**: Parametrizar `BrandPanel` con props opcionales `headline` y `subtitle` que permitan textos diferentes por pantalla. Valores por defecto mantienen los textos de login para backward compatibility.
+
+**Rationale**: El diseño de Figma para registro muestra textos diferentes ("Comienza tu camino financiero." / "Crea tu cuenta en minutos...") vs login ("Tu dinero, sin fronteras." / "Envía, recibe y paga en segundos..."). Props opcionales con defaults respetan DRY y evitan componentes duplicados.
+
+**Alternatives considered**:
+- Crear RegisterBrandPanel separado: Descartado — viola DRY, 95% del componente es idéntico.
+- Mantener textos fijos (ignorar Figma): Descartado — contradice el diseño aprobado.
+
+### 9. Enlace "términos y condiciones" con alert — FR-015
+
+**Decision**: El texto "términos y condiciones" en el checkbox se implementa como un `<button>` estilizado que ejecuta `window.alert('Próximamente')` al ser clickeado. Sigue el mismo patrón que los botones sociales.
+
+**Rationale**: No existe una página de T&C y el registro es simulado. Un alert es consistente con el patrón de Google/Apple buttons ("Próximamente") y cumple YAGNI.
+
+**Alternatives considered**:
+- Crear página /terms placeholder: Descartado — YAGNI, no hay contenido real de T&C.
+- Texto sin acción: Descartado — el usuario eligió que sea clickeable con feedback.

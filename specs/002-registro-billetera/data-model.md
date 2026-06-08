@@ -72,3 +72,16 @@ Representa el resultado del intento de registro.
 | ConfirmPasswordError | string \| null | null | Error de validación confirmación |
 | TermsError | string \| null | null | Error de aceptación T&C |
 | Loading | boolean | false | Estado de envío en progreso |
+
+### BrandPanel Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| Headline | string | "Tu dinero,\nsin fronteras." | Título principal del panel |
+| Subtitle | string | "Envía, recibe y paga en segundos..." | Texto descriptivo bajo el headline |
+
+### Input Password Toggle State (existing component)
+
+| State Variable | Type | Initial Value | Description |
+|---------------|------|---------------|-------------|
+| ShowPassword | boolean | false | Controla visibilidad del texto en campos password |

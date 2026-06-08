@@ -103,12 +103,15 @@ Como usuario, quiero tener opciones alternativas de registro (Google/Apple) y un
 - **FR-010**: El sistema DEBE validar que todos los campos sean obligatorios antes de permitir el envío.
 - **FR-011**: El sistema DEBE ser responsive: layout de 2 paneles en desktop (panel de marca + formulario) y solo formulario en mobile.
 - **FR-012**: El registro DEBE ser simulado (sin conexión real a backend).
+- **FR-013**: El sistema DEBE incluir un toggle de visibilidad (eye icon) en los campos de contraseña y confirmar contraseña, permitiendo alternar entre texto oculto y visible.
+- **FR-014**: El componente BrandPanel DEBE ser parametrizable mediante props para mostrar headline y subtítulo diferenciados por pantalla (login vs registro).
+- **FR-015**: El texto "términos y condiciones" junto al checkbox DEBE ser un enlace clickeable que muestre un alert con el mensaje "Próximamente" al ser presionado.
 
 ### Key Entities
 
 - **Usuario (Registro)**: Representa los datos capturados durante el registro — nombre completo, correo electrónico, contraseña.
 - **Formulario de Registro**: Componente que gestiona el estado de los campos, validaciones y el flujo de envío.
-- **Panel de Marca**: Componente visual lateral que se muestra solo en desktop con branding de la billetera.
+- **Panel de Marca**: Componente visual lateral parametrizable (headline, subtítulo) que se muestra solo en desktop con branding de la billetera. En registro muestra: "Comienza tu camino financiero." / "Crea tu cuenta en minutos y empieza a enviar, recibir y administrar tu dinero desde cualquier lugar."
 
 ## Success Criteria *(mandatory)*
 
@@ -126,6 +129,9 @@ Como usuario, quiero tener opciones alternativas de registro (Google/Apple) y un
 
 - Q: ¿En qué momento deben dispararse las validaciones inline — on blur, on change o mixto? → A: Al perder foco (on blur)
 - Q: ¿Cómo debe entregarse el mensaje de éxito al redirigir a /login? → A: Query parameter en la URL (`/login?registered=true`)
+- Q: ¿Debe incluirse toggle de visibilidad (eye icon) en los campos de contraseña? → A: Sí, en ambos campos (contraseña y confirmar)
+- Q: ¿Debe el BrandPanel mostrar textos diferentes entre login y registro? → A: Sí, parametrizar con props para textos diferenciados
+- Q: ¿El texto "términos y condiciones" debe ser un enlace funcional? → A: Sí, enlace que muestra alert "Próximamente"
 
 ## Assumptions
 

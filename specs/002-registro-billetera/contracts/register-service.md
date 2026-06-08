@@ -81,6 +81,34 @@ Valida que ambas contraseñas coincidan.
 
 ---
 
+## Interface: BrandPanel Props (parametrization — FR-014)
+
+```typescript
+interface BrandPanelProps {
+  Headline?: string;   // Default: "Tu dinero,\nsin fronteras."
+  Subtitle?: string;   // Default: "Envía, recibe y paga en segundos. Una billetera pensada para tu día a día."
+}
+```
+
+**Registration values**:
+- Headline: `"Comienza tu\ncamino financiero."`
+- Subtitle: `"Crea tu cuenta en minutos y empieza a enviar, recibir y administrar tu dinero desde cualquier lugar."`
+
+**Behavior**:
+- Props are optional; component renders defaults when omitted (backward compatible with login page)
+- Login page usage remains unchanged (no props passed)
+
+---
+
+## Interaction: Terms & Conditions Link (FR-015)
+
+**Element**: "términos y condiciones" text in Checkbox label  
+**Trigger**: Click on the styled text  
+**Action**: `window.alert('Próximamente')`  
+**Style**: `font-semibold text-[#ef5226]` — matches action link pattern
+
+---
+
 ## Route Contract: /login (modification)
 
 **Query Parameters** (nuevo):
