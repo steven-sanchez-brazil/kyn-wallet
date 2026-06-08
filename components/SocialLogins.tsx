@@ -1,29 +1,30 @@
+'use client';
+
 import React from 'react';
-import { Button } from './ui/Button';
 
 const SocialLogins: React.FC = () => {
-  const handleComingSoon = (provider: string) => {
-    alert(`${provider} estará disponible próximamente.`);
+  const handleSocialLogin = () => {
+    alert('En Construccion');
   };
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <Button 
-        variant="secondary" 
-        onClick={() => handleComingSoon('Google')}
-        className="flex items-center justify-center space-x-2"
+      <button
+        type="button"
+        onClick={handleSocialLogin}
+        className="flex items-center justify-center gap-2 px-4 py-3 border border-neutral-300 rounded-xl hover:bg-neutral-50 transition-colors"
       >
-        <span className="text-lg">G</span>
-        <span>Google</span>
-      </Button>
-      <Button 
-        variant="secondary" 
-        onClick={() => handleComingSoon('Apple')}
-        className="flex items-center justify-center space-x-2"
+        <div className="w-5 h-5 rounded-full bg-neutral-200" />
+        <span className="text-sm font-semibold text-neutral-900">Google</span>
+      </button>
+      <button
+        type="button"
+        onClick={handleSocialLogin}
+        className="flex items-center justify-center gap-2 px-4 py-3 border border-neutral-300 rounded-xl hover:bg-neutral-50 transition-colors"
       >
-        <span className="text-lg"></span>
-        <span>Apple</span>
-      </Button>
+        <div className="w-5 h-5 rounded-full bg-neutral-200" />
+        <span className="text-sm font-semibold text-neutral-900">Apple</span>
+      </button>
     </div>
   );
 };

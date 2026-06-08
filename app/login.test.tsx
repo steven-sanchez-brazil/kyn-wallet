@@ -13,7 +13,16 @@ vi.mock('next/navigation', () => ({
 }));
 
 describe('LoginForm Integration', () => {
-  it('should redirect to /construction on successful login', async () => {
+  it('should redirect to /home on successful login', async () => {
+    // Mock successful response
+    (global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ 
+        success: true, 
+        user: { Nombre: 'Diego', Email: 'tucorreo@ejemplo.com' } 
+      }),
+    });
+
     render(<LoginForm />);
 
     const emailInput = screen.getByLabelText(/Correo electrónico/i);
@@ -25,11 +34,17 @@ describe('LoginForm Integration', () => {
     fireEvent.click(loginButton);
 
     await waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith('/construction');
+      expect(mockPush).toHaveBeenCalledWith('/home');
     }, { timeout: 2000 });
   });
 
   it('should show error message on failed login (valid format but wrong credentials)', async () => {
+    // Mock failed response
+    (global.fetch as any).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({ success: false, message: 'Credenciales inválidas' }),
+    });
+
     render(<LoginForm />);
 
     const emailInput = screen.getByLabelText(/Correo electrónico/i);
@@ -37,7 +52,7 @@ describe('LoginForm Integration', () => {
     const loginButton = screen.getByRole('button', { name: /Iniciar sesión/i });
 
     fireEvent.change(emailInput, { target: { value: 'wrong@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'wrongpassword' } }); // 8+ chars to pass client-side validation
+    fireEvent.change(passwordInput, { target: { value: 'wrongpassword' } });
     fireEvent.click(loginButton);
 
     await waitFor(() => {
@@ -45,3 +60,4 @@ describe('LoginForm Integration', () => {
     });
   });
 });
+

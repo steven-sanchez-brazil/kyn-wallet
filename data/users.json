@@ -1,0 +1,12 @@
+[
+  {
+    "Nombre": "Diego Martínez",
+    "Email": "tucorreo@ejemplo.com",
+    "Password": "password123"
+  },
+  {
+    "Nombre": "Maximiliano Gustavo Ariza",
+    "Email": "maxgus@topmail.com",
+    "Password": "12345678"
+  }
+]

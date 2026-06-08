@@ -1,76 +1,79 @@
-# Implementation Plan: Login Spec Update
+# Implementation Plan: Billetera Virtual - Login, Registro y Home
 
-**Branch**: `002-login-spec-update` | **Date**: 2026-06-04 | **Spec**: [specs/002-login-spec-update/spec.md](spec.md)
-**Input**: Feature specification from `specs/002-login-spec-update/spec.md`
+**Branch**: `main` | **Date**: 2026-06-08 | **Spec**: [specs/001-login-billetera/spec.md](spec.md)
 
 ## Summary
 
-Implement a login screen for the KynWallet application using a split-panel design (Brand vs Form) that strictly follows the provided Figma design. The technical stack will be Next.js 14 (App Router), TypeScript, and Tailwind CSS, following a custom implementation of design tokens to ensure zero additional external UI library dependencies.
+Implement a comprehensive authentication system and main dashboard for KynWallet. This includes a Login screen, a Registration screen with full validation, and a responsive Home dashboard (Desktop and Mobile versions). The system uses file-based persistence for user data and strictly follows Figma designs for all views.
 
 ## Technical Context
 
 **Language/Version**: TypeScript / Next.js 14 (App Router)  
 **Primary Dependencies**: React 18, Next.js 14, Tailwind CSS 3.x  
-**Storage**: In-memory (hardcoded users array)  
-**Testing**: [NEEDS CLARIFICATION: Preferred test runner (Vitest/Jest) for TDD compliance?]  
-**Target Platform**: Web (Responsive)
+**Storage**: File-based persistence (`data/users.json`) via Next.js API Routes.  
+**Target Platform**: Web (Responsive: Desktop & Mobile)
 **Project Type**: web-application  
-**Performance Goals**: Login completion < 30s, successful validation < 2s.  
-**Constraints**: No external UI libraries (Radix, Shadcn, etc.), strict PascalCase naming.  
-**Scale/Scope**: Single feature (Login) with redirection to a placeholder screen.
+**Constraints**: No external UI libraries, strict PascalCase naming, Figma-accurate styling.
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
-
-- [ ] **TDD**: Is the test strategy defined before implementation? (Needs clarification on runner)
-- [x] **SOLID**: Does the design enforce SOLID principles? (Clean separation of UI, logic, and constants)
-- [x] **Clean Architecture**: Are layers strictly separated with inward dependencies? (app/ for routing, components/ for UI, lib/ for logic)
-- [x] **DRY & YAGNI**: Is the design free of unnecessary complexity and duplicated code? (Focused only on login requirements)
-- [x] **Naming**: Does the plan respect `PascalCase` for structures? (Mandatory for all components and structures)
-- [x] **Dependencies**: Is the solution completely free of external libraries? (Using only Next.js/Tailwind as base, no UI libs)
-- [x] **Security**: Are all inputs validated and protected routes authenticated? (Validation FR-004 and FR-005)
+- [x] **TDD**: Test runner (Vitest) configured.
+- [x] **SOLID**: Logic separated into services, components, and API routes.
+- [x] **Clean Architecture**: Separation of layers (app/ for routes, components/ for UI, lib/ services/ and utils/ for logic, data/ for storage).
+- [x] **DRY & YAGNI**: Reusable UI components and validation utilities.
+- [x] **Naming**: PascalCase for components and structures.
+- [x] **Dependencies**: No external UI libraries used.
+- [x] **Security**: Input validation on client and server; password minimum length (8 chars).
 
 ## Project Structure
 
-### Documentation (this feature)
+### Documentation
 
 ```text
-specs/002-login-spec-update/
+specs/001-login-billetera/
 ├── plan.md              # This file
-├── research.md          # Phase 0 output
-├── data-model.md        # Phase 1 output
-├── quickstart.md        # Phase 1 output
-├── checklists/
-│   └── requirements.md
-├── contracts/           # Phase 1 output
-└── spec.md              # Input spec
+├── research.md          # Design analysis
+├── data-model.md        # users.json structure
+├── quickstart.md        # Setup guide
+├── spec.md              # Requirements and User Stories
+└── checklists/
+    └── requirements.md
 ```
 
-### Source Code (repository root)
+### Source Code
 
 ```text
 app/
-├── layout.tsx
-├── page.tsx             # Login page
-└── construction/        # Placeholder page
-    └── page.tsx
+├── api/auth/            # Auth API Routes (login, register)
+├── login/               # Login Page
+├── registro/            # Register Page
+├── home/                # Home Dashboard (Protected)
+├── page.tsx             # Root redirect to /login
+└── layout.tsx           # Global layout
 
 components/
-├── BrandPanel.tsx
+├── BrandPanel.tsx       # Shared branding panel
 ├── LoginForm.tsx
-└── ui/                  # Custom UI elements (Input, Button, etc.)
+├── RegisterForm.tsx
+├── SocialLogins.tsx     # Google/Apple alerts
+├── ui/                  # Reusable components
+└── home/                # Modular home components (Sidebar, Summary, etc.)
+
+data/
+└── users.json           # User persistence
 
 lib/
-├── auth.ts              # Hardcoded logic
+├── services/
+│   └── AuthService.ts   # Client-side auth logic
+├── utils/
+│   └── Validation.ts    # Reusable regex validations
 └── constants/
-    └── design-tokens.ts # Figma tokens mapped here
+    └── DesignTokens.ts  # Figma colors and radii
 ```
-
-**Structure Decision**: Web application structure with Next.js App Router conventions, separating shared UI components and business logic in `components/` and `lib/` respectively.
 
 ## Complexity Tracking
 
 | Violation | Why Needed | Simpler Alternative Rejected Because |
 |-----------|------------|-------------------------------------|
-| Next.js / Tailwind | Explicit user directive overrides strict "no external libraries" for the base framework. | Building a custom SSR framework and CSS parser is out of scope. |
+| API Routes | Required for server-side file system access (Next.js App Router). | Client-side only storage (localStorage) doesn't fulfill "save in system file" requirement. |
+| localStorage | Used for session persistence on the client side. | Full JWT/Cookie implementation was out of scope for a prototype. |

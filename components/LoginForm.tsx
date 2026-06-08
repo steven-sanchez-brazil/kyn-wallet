@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Input } from './ui/Input';
 import { Button } from './ui/Button';
 import SocialLogins from './SocialLogins';
@@ -58,7 +59,7 @@ const LoginForm: React.FC = () => {
       });
 
       if (success) {
-        router.push('/construction');
+        router.push('/home');
       } else {
         setAuthError('Credenciales inválidas. Por favor, intenta de nuevo.');
       }
@@ -74,23 +75,23 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-md space-y-8">
-      <div className="text-center lg:text-left">
-        <h2 className="text-3xl font-bold text-neutral-900">
+    <div className="w-full max-w-[400px] space-y-[22px]">
+      <div className="text-left">
+        <h2 className="text-[30px] font-bold text-[#16182c]">
           Bienvenido de nuevo
         </h2>
-        <p className="mt-2 text-neutral-500">
-          Ingresa tus credenciales para acceder a tu billetera
+        <p className="text-[16px] text-[#8a8ca8]">
+          Ingresa a tu cuenta para continuar
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-        <div className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-[22px]">
+        <div className="space-y-[22px]">
           <Input
             id="email"
             label="Correo electrónico"
             type="email"
-            placeholder="ejemplo@correo.com"
+            placeholder="tucorreo@ejemplo.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             error={emailError || undefined}
@@ -111,29 +112,27 @@ const LoginForm: React.FC = () => {
         </div>
 
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
+          <div className="flex items-center gap-[8px]">
             <input
               id="remember-me"
               name="remember-me"
               type="checkbox"
-              className="h-4 w-4 text-brand-primary focus:ring-brand-primary border-neutral-300 rounded"
+              className="h-[20px] w-[20px] text-[#ff6b3d] focus:ring-[#ff6b3d] border-[#d7d9e6] rounded-[6px]"
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
             />
-            <label htmlFor="remember-me" className="ml-2 block text-sm text-neutral-900">
+            <label htmlFor="remember-me" className="text-[14px] font-medium text-[#3d3f5c]">
               Recordarme
             </label>
           </div>
 
-          <div className="text-sm">
-            <button
-              type="button"
-              onClick={handleForgotPassword}
-              className="font-medium text-brand-primary hover:text-opacity-80"
-            >
-              ¿Olvidaste tu contraseña?
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={handleForgotPassword}
+            className="text-[14px] font-semibold text-[#ef5226] hover:text-opacity-80"
+          >
+            ¿Olvidaste tu contraseña?
+          </button>
         </div>
 
         {authError && (
@@ -147,18 +146,20 @@ const LoginForm: React.FC = () => {
         </Button>
       </form>
 
-      <div className="mt-6">
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-neutral-300"></div>
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-neutral-500">o continúa con</span>
-          </div>
+      <div className="space-y-[22px]">
+        <div className="flex items-center gap-[14px]">
+          <div className="flex-1 h-px bg-[#d7d9e6]" />
+          <span className="text-[13px] text-[#8a8ca8]">o continúa con</span>
+          <div className="flex-1 h-px bg-[#d7d9e6]" />
         </div>
 
-        <div className="mt-6">
-          <SocialLogins />
+        <SocialLogins />
+
+        <div className="text-center text-[14px]">
+          <span className="text-[#8a8ca8]">¿No tienes cuenta? </span>
+          <Link href="/registro" className="font-semibold text-[#ef5226] hover:underline">
+            Regístrate
+          </Link>
         </div>
       </div>
     </div>

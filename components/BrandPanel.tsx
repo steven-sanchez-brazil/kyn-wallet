@@ -1,15 +1,28 @@
 import React from 'react';
 
-const BrandPanel: React.FC = () => {
+interface BrandPanelProps {
+  headline?: React.ReactNode;
+  description?: string;
+}
+
+const BrandPanel: React.FC<BrandPanelProps> = ({ 
+  headline = (
+    <>
+      <p className="mb-0">Tu dinero,</p>
+      <p>sin fronteras.</p>
+    </>
+  ),
+  description = "Envía, recibe y paga en segundos. Una billetera pensada para tu día a día."
+}) => {
   return (
     <div 
-      className="hidden lg:flex flex-col items-start justify-between w-1/2 px-[56px] py-[64px] relative bg-gradient-to-br from-brand-gradientStart to-brand-gradientEnd"
+      className="hidden lg:flex flex-col items-start justify-between w-1/2 px-[56px] py-[64px] relative bg-gradient-to-br from-[#FF8A65] to-[#EF5226]"
     >
       {/* Logo */}
       <div className="flex gap-[12px] items-center relative shrink-0">
-        <div className="h-[44px] relative shrink-0 w-[20px] bg-white rounded-full flex flex-col justify-between p-[2px]">
-           <div className="w-full aspect-square bg-brand-primary rounded-full opacity-0" />
-           <div className="w-full aspect-square bg-brand-primary rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        <div className="flex gap-[2px] items-center">
+            <div className="w-[10px] h-[28px] bg-white rounded-full opacity-80" />
+            <div className="w-[14px] h-[14px] bg-white rounded-full opacity-60 ml-[-8px] mt-[10px]" />
         </div>
         <p className="font-bold leading-[normal] not-italic relative shrink-0 text-[26px] text-white whitespace-nowrap">
           KynWallet
@@ -19,16 +32,15 @@ const BrandPanel: React.FC = () => {
       {/* Headline */}
       <div className="flex flex-col gap-[18px] items-start not-italic relative shrink-0 w-full mb-auto mt-[238px]">
         <div className="font-bold leading-[1.08] relative shrink-0 text-[44px] text-white w-full">
-          <p className="mb-0">Tu dinero,</p>
-          <p>sin fronteras.</p>
+          {headline}
         </div>
-        <p className="font-normal leading-[1.5] relative shrink-0 text-[17px] text-white/85 w-full">
-          Envía, recibe y paga en segundos. Una billetera pensada para tu día a día.
+        <p className="font-normal leading-[1.5] relative shrink-0 text-[17px] text-white/85 w-[500px]">
+          {description}
         </p>
       </div>
 
       {/* Card Mockup */}
-      <div className="bg-white/16 border border-white/35 flex flex-col h-[210px] items-start justify-between px-[26px] py-[24px] relative rounded-[22px] shrink-0 w-[360px] mt-[238px]">
+      <div className="bg-white/16 border border-white/35 flex flex-col h-[210px] items-start justify-between px-[26px] py-[24px] relative rounded-[22px] shrink-0 w-[360px]">
         <div className="flex items-center justify-between relative shrink-0 w-full">
           <p className="font-semibold leading-[normal] not-italic relative shrink-0 text-[15px] text-white whitespace-nowrap">
             Kyn Card
