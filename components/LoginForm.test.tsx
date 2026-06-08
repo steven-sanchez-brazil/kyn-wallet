@@ -45,4 +45,11 @@ describe('LoginForm UI', () => {
       expect(loginButton).toBeDisabled();
     });
   });
+
+  it('should render "¿No tiene cuenta? Registrate" link pointing to /registro', () => {
+    render(<LoginForm />);
+    const link = screen.getByRole('link', { name: /Registrate/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/registro');
+  });
 });
