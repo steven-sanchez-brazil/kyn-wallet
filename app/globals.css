@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.register-page {
+	background-color: #ffffff;
+}
+
+@media (max-width: 1023px) {
+	.register-page {
+		min-height: 100vh;
+	}
+}

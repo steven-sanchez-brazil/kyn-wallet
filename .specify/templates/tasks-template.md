@@ -51,6 +51,7 @@ description: "Task list template for feature implementation"
 - [ ] T001 Create project structure per Clean Architecture plan
 - [ ] T002 Initialize project with NO external dependencies
 - [ ] T003 [P] Configure strict formatting and naming tools (PascalCase only)
+- [ ] T003a [P] Validate Spec Kit artifacts and workflow compatibility with `copilot` integration
 
 ---
 

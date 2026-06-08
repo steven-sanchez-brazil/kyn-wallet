@@ -1,7 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { beforeEach, describe, it, expect, vi } from 'vitest';
 import LoginForm from '../components/LoginForm';
 import { AuthService } from '../lib/services/AuthService';
+import { UserStore } from '../lib/services/UserStore';
 import React from 'react';
 
 // Mock the router
@@ -13,6 +14,34 @@ vi.mock('next/navigation', () => ({
 }));
 
 describe('LoginForm Integration', () => {
+  beforeEach(() => {
+    mockPush.mockReset();
+    UserStore.reset();
+  });
+
+  it('should authenticate a newly registered user from shared store', async () => {
+    UserStore.add({
+      FullName: 'Carlos Ruiz',
+      Email: 'carlos@ejemplo.com',
+      Password: 'password123',
+      AcceptTerms: true,
+    });
+
+    render(<LoginForm />);
+
+    const emailInput = screen.getByLabelText(/Correo electrónico/i);
+    const passwordInput = screen.getByLabelText(/Contraseña/i);
+    const loginButton = screen.getByRole('button', { name: /Iniciar sesión/i });
+
+    fireEvent.change(emailInput, { target: { value: 'carlos@ejemplo.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'password123' } });
+    fireEvent.click(loginButton);
+
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith('/construction');
+    }, { timeout: 2000 });
+  });
+
   it('should redirect to /construction on successful login', async () => {
     render(<LoginForm />);
 

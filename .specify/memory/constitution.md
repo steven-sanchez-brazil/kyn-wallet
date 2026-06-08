@@ -1,13 +1,17 @@
 <!-- SYNC IMPACT REPORT
-Version change: 1.0.0 -> 1.0.1
+Version change: 1.0.1 -> 1.1.0
 Modified principles:
-- Traducción completa al español de todos los principios y restricciones.
+- N/A (sin cambios en el contenido normativo de los principios I-V)
 Added sections:
-- N/A
+- Integración de IA (Copilot)
 Removed sections:
 - N/A
 Templates requiring updates:
-- Ninguna adicional, aunque los templates ya reflejan los principios en inglés, se podrán traducir a futuro si el usuario lo requiere.
+- ✅ .specify/templates/plan-template.md
+- ✅ .specify/templates/spec-template.md
+- ✅ .specify/templates/tasks-template.md
+- ✅ README.md
+- ⚠ pending: .specify/templates/commands/*.md (no existe en este repositorio)
 Follow-up TODOs: None
 -->
 # Constitución de kyn-wallet
@@ -35,6 +39,11 @@ Todos los nombres DEBEN seguir estrictamente `PascalCase` para componentes, clas
 ### Dependencias
 El uso de **librerías externas está estrictamente prohibido**. Toda funcionalidad debe ser implementada utilizando capacidades nativas o código propio de la casa.
 
+### Integración de IA (Copilot)
+La integración por defecto y requerida para flujos de Spec Kit en este repositorio DEBE ser `copilot`.
+Los artefactos de especificación, planificación y tareas DEBEN mantenerse compatibles con instrucciones
+ubicadas en `.github/copilot-instructions.md`.
+
 ## Seguridad y Validación
 
 ### Validación de Entradas
@@ -46,5 +55,9 @@ Todas las rutas protegidas DEBEN requerir autenticación antes de conceder acces
 ## Gobernanza
 
 Las modificaciones requieren documentación y aprobación. Todos los pull requests y revisiones de código DEBEN verificar el cumplimiento de estos principios centrales y restricciones técnicas.
+Toda propuesta que altere la integración de IA (por ejemplo, cambiar de `copilot` a otra) DEBE:
+1. Actualizar esta constitución y los templates afectados.
+2. Justificar impacto en flujo, calidad y mantenibilidad.
+3. Incrementar versión semántica según el alcance del cambio.
 
-**Versión**: 1.0.1 | **Ratificada**: 2026-06-03 | **Última Modificación**: 2026-06-03
+**Versión**: 1.1.0 | **Ratificada**: 2026-06-03 | **Última Modificación**: 2026-06-08

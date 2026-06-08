@@ -88,6 +88,7 @@
 - **Constraint**: All protected routes MUST require authentication before granting access.
 - **Constraint**: The use of external libraries is strictly prohibited.
 - **Constraint**: `PascalCase` must be used for naming relevant structures.
+- **Constraint**: All Spec Kit artifacts MUST remain compatible with `copilot` integration and `.github/copilot-instructions.md`.
 
 ### Functional Requirements
 

@@ -15,4 +15,9 @@ export const DesignTokens = {
     FontFamily: 'Inter, sans-serif',
     FontWeightSemiBold: '600',
   },
+  Register: {
+    PanelDesktopGap: '238px',
+    HeadlinePrimarySize: '44px',
+    HeadlineSecondarySize: '17px',
+  },
 } as const;

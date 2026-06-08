@@ -1,7 +1,12 @@
-import { describe, it, expect } from 'vitest';
+import { beforeEach, describe, it, expect } from 'vitest';
 import { AuthService } from './AuthService';
+import { UserStore } from './UserStore';
 
 describe('AuthService', () => {
+  beforeEach(() => {
+    UserStore.reset();
+  });
+
   it('should return true for valid credentials', async () => {
     const result = await AuthService.login({
       Email: 'tucorreo@ejemplo.com',
