@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { validateEmail, validatePassword } from './Validation';
+import { validateEmail, validatePassword, validateFullName, validatePasswordMatch } from './Validation';
 
 describe('Validation Utils', () => {
   describe('validateEmail', () => {
@@ -24,6 +24,58 @@ describe('Validation Utils', () => {
     it('should return false for passwords with less than 8 characters', () => {
       expect(validatePassword('short')).toBe(false);
       expect(validatePassword('')).toBe(false);
+    });
+  });
+
+  describe('validateFullName', () => {
+    it('should return false for empty string', () => {
+      expect(validateFullName('')).toBe(false);
+    });
+
+    it('should return false for single word', () => {
+      expect(validateFullName('Ana')).toBe(false);
+    });
+
+    it('should return true for two words', () => {
+      expect(validateFullName('Ana García')).toBe(true);
+    });
+
+    it('should return true for multiple words', () => {
+      expect(validateFullName('Ana María García López')).toBe(true);
+    });
+
+    it('should handle extra spaces', () => {
+      expect(validateFullName('  Ana   García  ')).toBe(true);
+    });
+
+    it('should return false for only spaces', () => {
+      expect(validateFullName('   ')).toBe(false);
+    });
+  });
+
+  describe('validatePasswordMatch', () => {
+    it('should return true for matching passwords', () => {
+      expect(validatePasswordMatch('mipassword123', 'mipassword123')).toBe(true);
+    });
+
+    it('should return false for non-matching passwords', () => {
+      expect(validatePasswordMatch('mipassword123', 'mipassword124')).toBe(false);
+    });
+
+    it('should return false when first password is empty', () => {
+      expect(validatePasswordMatch('', 'mipassword123')).toBe(false);
+    });
+
+    it('should return false when second password is empty', () => {
+      expect(validatePasswordMatch('mipassword123', '')).toBe(false);
+    });
+
+    it('should return false when both are empty', () => {
+      expect(validatePasswordMatch('', '')).toBe(false);
+    });
+
+    it('should be case-sensitive', () => {
+      expect(validatePasswordMatch('MiPassword123', 'mipassword123')).toBe(false);
     });
   });
 });

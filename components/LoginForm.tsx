@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Input } from './ui/Input';
 import { Button } from './ui/Button';
 import SocialLogins from './SocialLogins';
@@ -10,6 +10,7 @@ import { validateEmail, validatePassword } from '../lib/utils/Validation';
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -17,6 +18,7 @@ const LoginForm: React.FC = () => {
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const showRegisteredBanner = searchParams.get('registered') === 'true';
 
   // Real-time validation for email
   useEffect(() => {
@@ -75,6 +77,15 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className="w-full max-w-md space-y-8">
+      {/* Registration Success Banner */}
+      {showRegisteredBanner && (
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <p className="text-green-700 text-sm font-medium">
+            ¡Cuenta creada exitosamente! Ya puedes iniciar sesión.
+          </p>
+        </div>
+      )}
+
       <div className="text-center lg:text-left">
         <h2 className="text-3xl font-bold text-neutral-900">
           Bienvenido de nuevo
@@ -160,6 +171,14 @@ const LoginForm: React.FC = () => {
         <div className="mt-6">
           <SocialLogins />
         </div>
+      </div>
+
+      {/* Sign Up Link */}
+      <div className="text-center text-[14px] text-neutral-900 mt-8">
+        ¿No tienes cuenta?{' '}
+        <a href="/register" className="text-brand-primary font-semibold hover:underline">
+          Regístrate
+        </a>
       </div>
     </div>
   );
