@@ -39,7 +39,7 @@ const BrandPanel: React.FC = () => {
           {`5294  ••••  ••••  4827`}
         </p>
         <div className="flex font-medium items-center justify-between leading-[normal] not-italic relative shrink-0 text-[13px] text-white/90 w-full whitespace-nowrap">
-          <p className="relative shrink-0">STEVEN LUNA</p>
+          <p className="relative shrink-0">ALEX MIGUEL MENA VASQUEZ</p>
           <p className="relative shrink-0">12/29</p>
         </div>
       </div>

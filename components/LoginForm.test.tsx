@@ -45,4 +45,11 @@ describe('LoginForm UI', () => {
       expect(loginButton).toBeDisabled();
     });
   });
+
+  it('should have a link to the registration page', () => {
+    render(<LoginForm />);
+    const link = screen.getByRole('link', { name: /regístrate/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/register');
+  });
 });
