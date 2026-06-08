@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import BrandPanel from '@/components/BrandPanel';
 import LoginForm from '@/components/LoginForm';
 
@@ -9,7 +10,9 @@ export default function LoginPage() {
 
       {/* Form Side (Right on Desktop, Full on Mobile) */}
       <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 bg-white">
-        <LoginForm />
+        <Suspense>
+          <LoginForm />
+        </Suspense>
       </div>
     </main>
   );
