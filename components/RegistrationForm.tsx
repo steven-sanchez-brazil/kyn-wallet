@@ -161,7 +161,7 @@ export function RegistrationForm() {
       <div className="pt-1 text-center text-sm text-[#8a8ba8]">
         ¿Ya tienes cuenta?{' '}
         <a className="font-semibold text-[#ef5226] hover:underline" href={LOGIN_PATH}>
-          Inicia sesión
+          Iniciar sesión
         </a>
       </div>
     </form>
