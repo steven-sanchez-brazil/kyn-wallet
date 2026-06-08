@@ -1,6 +1,6 @@
 # Especificación de Funcionalidad: Actualización de Login con Diseño Figma
 
-**Feature Branch**: `002-login-spec-update`  
+**Feature Branch**: `001-login-billetera`  
 **Creado**: 2026-06-04  
 **Estado**: Borrador  
 **Entrada**: "Actualiza el spec del login. Usa el MCP de Figma para obtener el contexto de diseño de este frame: https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=2-2&t=tZepRnS4l8ITDqOs-4 Los colores, tipografía y estructura del formulario deben coincidir con el diseño de Figma (login)."
@@ -13,7 +13,7 @@ Como usuario registrado, quiero ingresar mi correo y contraseña válidos en un 
 
 **Por qué esta prioridad**: Es el flujo crítico de entrada. La identidad visual genera confianza y profesionalismo.
 
-**Prueba Independiente**: Se puede probar verificando que al ingresar credenciales correctas (ej. tucorreo@ejemplo.com / 12345678), el sistema redirige a la pantalla de "En construcción" y que la UI coincide con los colores brand (#ff6b3d) y tipografía Inter.
+**Prueba Independiente**: Se puede probar verificando que al ingresar credenciales correctas (ej. tucorreo@ejemplo.com / password123), el sistema redirige a la pantalla de "En construcción" y que la UI coincide con los colores brand (#ff6b3d) y tipografía Inter.
 
 **Escenarios de Aceptación**:
 
@@ -51,6 +51,35 @@ Como usuario, quiero ver las opciones de "Recordarme", "¿Olvidaste tu contrase�
 
 ---
 
+### Historia de Usuario 4 - Navegación a Registro (Prioridad: P2)
+
+Como usuario no registrado, quiero poder navegar a la pantalla de registro desde el login mediante el enlace "Regístrate" para crear mi cuenta.
+
+**Por qué esta prioridad**: Permite el flujo completo de onboarding conectando login con registro.
+
+**Prueba Independiente**: Se puede probar verificando que al hacer clic en "Regístrate" el sistema navega a `/register`.
+
+**Escenarios de Aceptación**:
+
+1. **Dado** que el usuario está en la pantalla de Login, **Cuando** hace clic en "Regístrate" en el footer del formulario, **Entonces** el sistema lo redirige a la pantalla de registro (`/register`).
+
+---
+
+### Historia de Usuario 5 - Toggle de Visibilidad de Contraseña (Prioridad: P2)
+
+Como usuario, quiero poder alternar la visibilidad de mi contraseña mediante un ícono de ojo en el campo de contraseña para verificar lo que estoy escribiendo.
+
+**Por qué esta prioridad**: Mejora la usabilidad y reduce errores de ingreso de contraseña.
+
+**Prueba Independiente**: Se puede probar verificando que al hacer clic en el ícono de ojo, el campo alterna entre `type="password"` y `type="text"`.
+
+**Escenarios de Aceptación**:
+
+1. **Dado** que el usuario está ingresando su contraseña, **Cuando** hace clic en el ícono de ojo, **Entonces** el campo muestra el texto en claro.
+2. **Dado** que la contraseña es visible, **Cuando** hace clic nuevamente en el ícono, **Entonces** el campo oculta el texto con puntos.
+
+---
+
 ### Casos Extremos
 
 - ¿Cómo se comporta el degradado del panel izquierdo en pantallas con relaciones de aspecto muy anchas o muy estrechas?
@@ -75,6 +104,15 @@ Como usuario, quiero ver las opciones de "Recordarme", "¿Olvidaste tu contrase�
 - **FR-006**: Los encabezados DEBEN usar el color `#16182c` (Neutral 900) y los textos secundarios el color `#8a8ca8` (Neutral 500).
 - **FR-007**: El sistema DEBE incluir un mockup de tarjeta (Card Mockup) en el panel izquierdo con fondo `rgba(255, 255, 255, 0.16)` y borde `rgba(255, 255, 255, 0.35)`.
 - **FR-008**: El sistema DEBE mostrar opciones de acceso social (Google, Apple) con bordes de 1.5px color `#d7d9e6`.
+- **FR-009**: El campo de contraseña DEBE incluir un ícono de toggle (ojo) para alternar la visibilidad del texto ingresado. El botón DEBE incluir `aria-label="Mostrar/Ocultar contraseña"` para accesibilidad.
+- **FR-010**: El formulario DEBE incluir un enlace "Regístrate" en el footer con el texto "¿No tienes cuenta?" (Regular 14px, `#8a8ca8`) + "Regístrate" (SemiBold 14px, `#ef5226`) que navegue a `/register`.
+- **FR-011**: Los enlaces de acción ("¿Olvidaste tu contraseña?" y "Regístrate") DEBEN usar el color `#ef5226` (Brand/600) en peso SemiBold 14px.
+- **FR-012**: Las etiquetas de los campos (labels) DEBEN usar Inter Medium 14px en color `#3d3f5c` (Neutral 700).
+- **FR-013**: Los inputs DEBEN tener una altura de 52px y los botones sociales una altura de 48px.
+- **FR-014**: El **Brand Panel** DEBE mostrar el headline "Tu dinero, sin fronteras." (Bold 44px, blanco) y subtítulo "Envía, recibe y paga en segundos. Una billetera pensada para tu día a día." (Regular 17px, `rgba(255,255,255,0.85)`).
+- **FR-015**: El Card Mockup DEBE tener un radio de borde de 22px y el **Brand Panel** un padding de 56px horizontal y 64px vertical.
+- **FR-016**: El texto del divisor social DEBE ser "o continúa con" (Regular 13px, `#8a8ca8`) con líneas divisoras de color `#d7d9e6`.
+- **FR-017**: Los placeholders de los inputs DEBEN usar el color `#a9abc2` (Neutral 400) en Regular 15px.
 
 ### Entidades Clave
 

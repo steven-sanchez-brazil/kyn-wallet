@@ -1,5 +1,4 @@
-import React from 'react';
-import { Button } from './ui/Button';
+﻿import React from 'react';
 
 const SocialLogins: React.FC = () => {
   const handleComingSoon = (provider: string) => {
@@ -7,23 +6,26 @@ const SocialLogins: React.FC = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-      <Button 
-        variant="secondary" 
-        onClick={() => handleComingSoon('Google')}
-        className="flex items-center justify-center space-x-2"
-      >
-        <span className="text-lg">G</span>
-        <span>Google</span>
-      </Button>
-      <Button 
-        variant="secondary" 
-        onClick={() => handleComingSoon('Apple')}
-        className="flex items-center justify-center space-x-2"
-      >
-        <span className="text-lg"></span>
-        <span>Apple</span>
-      </Button>
+    <div className="space-y-[22px]">
+      {/* Social Buttons */}
+      <div className="flex gap-3">
+        <button
+          type="button"
+          onClick={() => handleComingSoon('Google')}
+          className="flex-1 flex items-center justify-center gap-2 h-social-btn border-[1.5px] border-neutral-300 rounded-lg bg-white hover:bg-neutral-50 transition-colors"
+        >
+          <span className="text-lg">G</span>
+          <span className="text-[15px] font-semibold text-neutral-900">Google</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => handleComingSoon('Apple')}
+          className="flex-1 flex items-center justify-center gap-2 h-social-btn border-[1.5px] border-neutral-300 rounded-lg bg-white hover:bg-neutral-50 transition-colors"
+        >
+          <span className="text-lg">&#xF8FF;</span>
+          <span className="text-[15px] font-semibold text-neutral-900">Apple</span>
+        </button>
+      </div>
     </div>
   );
 };

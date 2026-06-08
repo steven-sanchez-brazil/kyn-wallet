@@ -1,6 +1,6 @@
 # Tasks: Login Feature Update
 
-**Input**: Design documents from `/specs/002-login-spec-update/`
+**Input**: Design documents from `/specs/001-login-billetera/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
 ## Format: `[ID] [P?] [Story] Description`
@@ -31,6 +31,10 @@
 - [X] T007 Create custom UI base components (Button, Input) in `components/ui/` using tokens
 - [X] T008 [P] Implement `AuthCredentials` type in `lib/types/Auth.ts`
 - [X] T009 [P] Implement `AuthService` interface and mockup data in `lib/services/AuthService.ts`
+- [X] T032 [P] Extend `DesignTokens.ts` with new tokens: `Brand600` (#ef5226), `Neutral700` (#3d3f5c), `Neutral400` (#a9abc2), `BorderRadiusXl` (22px), `InputHeight` (52px), `SocialButtonHeight` (48px), `BrandPanelPaddingX` (56px), `BrandPanelPaddingY` (64px) in `lib/constants/DesignTokens.ts`
+- [X] T033 Update `tailwind.config.ts` to include new extended tokens from T032
+
+**⚠️ CRITICAL**: T032-T033 must be completed before new user story implementation (US4, US5)
 
 ---
 
@@ -90,33 +94,112 @@
 
 ---
 
-## Phase 6: Polish & Cross-Cutting Concerns
+## Phase 6: User Story 4 - Navegación a Registro (Priority: P2)
 
-**Purpose**: Final verification and documentation.
+**Goal**: Enable navigation from login to registration page via "Regístrate" footer link.
 
-- [X] T027 [P] Verify responsive behavior of the split-panel layout in `app/page.tsx`
-- [X] T028 Run all tests and ensure 100% pass rate
-- [X] T029 [P] Update `quickstart.md` with any new environment or setup steps
-- [X] T030 Final code review for `PascalCase` compliance across all files
-- [X] T031 Perform final visual audit against Figma link
+**Independent Test**: Click "Regístrate" and verify browser navigates to `/register`.
+
+### Tests for User Story 4 (TDD) ⚠️
+
+- [X] T034 [P] [US4] Create test for "Regístrate" link navigation in `components/LoginForm.test.tsx`
+- [X] T035 [P] [US4] Create test for "¿Olvidaste tu contraseña?" alert behavior in `components/LoginForm.test.tsx`
+
+### Implementation for User Story 4
+
+- [X] T036 [US4] Add "¿No tienes cuenta? Regístrate" footer with Next.js `Link` to `/register` in `components/LoginForm.tsx`
+- [X] T037 [US4] Style footer links with Brand/600 color `#ef5226` SemiBold 14px per FR-011 in `components/LoginForm.tsx`
+- [X] T038 [US4] Update "¿Olvidaste tu contraseña?" link to use `#ef5226` color per FR-011 in `components/LoginForm.tsx`
+
+**Checkpoint**: "Regístrate" navigates to `/register` and action links use correct Brand/600 color.
+
+---
+
+## Phase 7: User Story 5 - Toggle de Visibilidad de Contraseña (Priority: P2)
+
+**Goal**: Allow users to toggle password visibility with an eye icon.
+
+**Independent Test**: Click eye icon and verify input type toggles between `password` and `text`.
+
+### Tests for User Story 5 (TDD) ⚠️
+
+- [X] T039 [P] [US5] Create test for password visibility toggle in `components/ui/Input.tsx` rendering in `components/LoginForm.test.tsx`
+
+### Implementation for User Story 5
+
+- [X] T040 [US5] Add `showToggle` prop and eye icon SVG to `components/ui/Input.tsx` per FR-009
+- [X] T041 [US5] Implement internal `showPassword` state toggle logic in `components/ui/Input.tsx`
+- [X] T042 [US5] Connect password input in `components/LoginForm.tsx` to use `showToggle={true}` prop
+
+**Checkpoint**: Password field shows/hides text on eye icon click.
+
+---
+
+## Phase 8: Design Token Alignment & Visual Polish
+
+**Purpose**: Apply remaining FR-012 to FR-017 specifications to existing components.
+
+- [X] T043 [P] Update labels in `components/LoginForm.tsx` to use Inter Medium 14px `#3d3f5c` (Neutral 700) per FR-012
+- [X] T044 [P] Set input height to 52px in `components/ui/Input.tsx` per FR-013
+- [X] T045 [P] Set social button height to 48px in `components/SocialLogins.tsx` per FR-013
+- [X] T046 [P] Update `BrandPanel.tsx` headline to "Tu dinero, sin fronteras." Bold 44px and subtitle Regular 17px `rgba(255,255,255,0.85)` per FR-014
+- [X] T047 [P] Set Card Mockup border-radius to 22px and Brand Panel padding to 56px/64px in `components/BrandPanel.tsx` per FR-015
+- [X] T048 [P] Update divider text to "o continúa con" Regular 13px `#8a8ca8` with `#d7d9e6` lines per FR-016 in `components/SocialLogins.tsx`
+- [X] T049 [P] Set placeholder color to `#a9abc2` Regular 15px in `components/ui/Input.tsx` per FR-017
+- [X] T050 Run all tests and ensure 100% pass rate
+- [X] T051 Perform final visual audit against Figma frame (node 2:2)
+- [X] T052 Run quickstart.md validation scenarios manually
 
 ---
 
 ## Dependencies & Execution Order
 
-- **Setup (Phase 1)** -> **Foundational (Phase 2)** -> **User Stories (Phases 3-5)** -> **Polish (Phase 6)**
-- US1 is the MVP and must be completed first to provide value.
-- US2 and US3 can be worked on in parallel after US1 foundational logic is stable.
+### Phase Dependencies
 
-## Parallel Example: User Story 1
+- **Setup (Phase 1)**: ✅ Complete
+- **Foundational (Phase 2)**: T032-T033 must be completed first (new tokens)
+- **User Story 1-3 (Phases 3-5)**: ✅ Complete
+- **User Story 4 (Phase 6)**: Depends on T032-T033 (Brand/600 token)
+- **User Story 5 (Phase 7)**: Depends on T032-T033 (no additional dependencies)
+- **Visual Polish (Phase 8)**: Depends on T032-T033, can run in parallel with US4/US5
+- US4 and US5 can be worked on in parallel (different components/concerns)
+
+### Within New Tasks
+
+- T032 → T033 (tokens defined before Tailwind config)
+- T034-T035 → T036-T038 (TDD: tests fail first)
+- T039 → T040-T042 (TDD: tests fail first)
+- T043-T049 can ALL run in parallel (different files)
+
+### Parallel Opportunities
 
 ```bash
-# Launch Vitest and wait for failures:
-npm run test lib/services/AuthService.test.ts app/login.test.tsx
+# After T032-T033, all of these can start simultaneously:
+# Stream A: User Story 4 (T034-T038)
+# Stream B: User Story 5 (T039-T042)
+# Stream C: Visual Polish (T043-T049)
+```
 
-# Then implement in parallel:
-# Developer A: BrandPanel.tsx
-# Developer B: AuthService.ts (Logic)
+---
+
+## Parallel Example: New Tasks
+
+```bash
+# Stream A - After T033:
+Task: T034 [P] Test "Regístrate" navigation
+Task: T035 [P] Test "Olvidaste contraseña" alert
+
+# Stream B - After T033:
+Task: T039 [P] Test password toggle
+
+# Stream C - After T033 (ALL parallel):
+Task: T043 [P] Labels Neutral 700
+Task: T044 [P] Input height 52px
+Task: T045 [P] Social button height 48px
+Task: T046 [P] Brand Panel headline
+Task: T047 [P] Card Mockup 22px + padding
+Task: T048 [P] Divider text style
+Task: T049 [P] Placeholder color
 ```
 
 ---
@@ -125,14 +208,17 @@ npm run test lib/services/AuthService.test.ts app/login.test.tsx
 
 ### MVP First (User Story 1 Only)
 
-1. Complete Setup and Foundational tasks (T001-T009).
-2. Complete US1 tasks (T010-T016).
-3. Validate login functionality and redirection.
+1. ✅ Complete Setup and Foundational tasks (T001-T009).
+2. ✅ Complete US1 tasks (T010-T016).
+3. ✅ Login functional (MVP delivered).
 
-### Incremental Delivery
+### Incremental Delivery (Current Sprint)
 
-1. Foundation ready.
-2. Login functional (MVP).
-3. Design polished with validations (US2).
-4. Secondary actions added (US3).
-5. Final audit.
+1. ✅ Foundation ready (T001-T009)
+2. ✅ Login functional - MVP (US1)
+3. ✅ Design polished with validations (US2)
+4. ✅ Secondary actions added (US3)
+5. **Next**: Extend tokens (T032-T033)
+6. **Next**: Navigation to register (US4) + Password toggle (US5) — parallel
+7. **Next**: Visual polish alignment (Phase 8)
+8. **Final**: Full audit and test verification
