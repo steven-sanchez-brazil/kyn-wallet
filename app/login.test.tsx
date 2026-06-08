@@ -44,4 +44,11 @@ describe('LoginForm Integration', () => {
       expect(screen.getByText(/Credenciales inválidas/i)).toBeInTheDocument();
     });
   });
+
+  it('should render link to /registro on login page', () => {
+    render(<LoginForm />);
+    const link = screen.getByRole('link', { name: /Registrate/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/registro');
+  });
 });

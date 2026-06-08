@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Input } from './ui/Input';
 import { Button } from './ui/Button';
@@ -161,6 +162,13 @@ const LoginForm: React.FC = () => {
           <SocialLogins />
         </div>
       </div>
+
+      <p className="mt-6 text-center text-sm text-neutral-500">
+        ¿No tiene cuenta?{' '}
+        <Link href="/registro" className="font-semibold text-brand-primary hover:opacity-80">
+          Registrate
+        </Link>
+      </p>
     </div>
   );
 };
