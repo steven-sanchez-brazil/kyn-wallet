@@ -1,0 +1,22 @@
+import BrandPanel from '@/components/BrandPanel';
+import RegisterForm from '@/components/RegisterForm';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'KynWallet - Crear cuenta',
+  description: 'Regístrate y comienza a utilizar tu billetera descentralizada',
+};
+
+export default function RegisterPage() {
+  return (
+    <main className="min-h-screen flex">
+      {/* Brand Side (Left on Desktop) */}
+      <BrandPanel />
+
+      {/* Form Side (Right on Desktop, Full on Mobile) */}
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 bg-white">
+        <RegisterForm />
+      </div>
+    </main>
+  );
+}
