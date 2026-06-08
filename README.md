@@ -8,6 +8,7 @@ Este proyecto es una billetera virtual que implementa la pantalla de inicio de s
 *   **Validación en Tiempo Real**: Feedback instantáneo para errores de formato de correo y longitud de contraseña.
 *   **Diseño Responsivo**: Diseño de panel dividido (Split-panel) en escritorio y vista enfocada en el formulario para dispositivos móviles.
 *   **Test-Driven Development (TDD)**: Cobertura del 100% con pruebas unitarias y de integración utilizando Vitest y React Testing Library.
+*   **Integración Spec Kit con Copilot**: El flujo de especificación usa integración `copilot` y toma contexto de `.github/copilot-instructions.md`.
 
 ## Tecnologías Utilizadas
 

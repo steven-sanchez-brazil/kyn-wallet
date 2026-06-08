@@ -38,6 +38,7 @@
 - [ ] **Naming**: Does the plan respect `PascalCase` for structures?
 - [ ] **Dependencies**: Is the solution completely free of external libraries?
 - [ ] **Security**: Are all inputs validated and protected routes authenticated?
+- [ ] **Copilot Integration**: Are artifacts and execution steps aligned with `.github/copilot-instructions.md` and `copilot` as the active Spec Kit integration?
 
 ## Project Structure
 
