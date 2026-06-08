@@ -8,7 +8,7 @@ import SocialLogins from './SocialLogins';
 import { AuthService } from '../lib/services/AuthService';
 import { validateEmail, validatePassword } from '../lib/utils/Validation';
 
-const LoginForm: React.FC = () => {
+const LoginForm: React.FC<{ successMessage?: string }> = ({ successMessage }) => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -76,6 +76,11 @@ const LoginForm: React.FC = () => {
   return (
     <div className="w-full max-w-md space-y-8">
       <div className="text-center lg:text-left">
+        {successMessage && (
+          <div className="mb-4 bg-green-50 text-green-700 p-3 rounded-lg text-sm border border-green-200">
+            {successMessage}
+          </div>
+        )}
         <h2 className="text-3xl font-bold text-neutral-900">
           Bienvenido de nuevo
         </h2>
