@@ -62,7 +62,7 @@ const LoginForm: React.FC = () => {
       } else {
         setAuthError('Credenciales inválidas. Por favor, intenta de nuevo.');
       }
-    } catch (err) {
+    } catch {
       setAuthError('Ocurrió un error inesperado.');
     } finally {
       setLoading(false);

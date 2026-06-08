@@ -1,8 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import LoginForm from '../components/LoginForm';
-import { AuthService } from '../lib/services/AuthService';
 import React from 'react';
+import LoginPage from './page';
 
 // Mock the router
 const mockPush = vi.fn();
@@ -43,5 +43,28 @@ describe('LoginForm Integration', () => {
     await waitFor(() => {
       expect(screen.getByText(/Credenciales inválidas/i)).toBeInTheDocument();
     });
+  });
+});
+
+describe('LoginPage — banner de registro', () => {
+  it('should show success banner when searchParams.registered === "true"', () => {
+    render(<LoginPage searchParams={{ registered: 'true' }} />);
+    expect(
+      screen.getByText('¡Cuenta creada exitosamente! Inicia sesión para continuar.')
+    ).toBeInTheDocument();
+  });
+
+  it('should NOT show success banner when searchParams.registered is undefined', () => {
+    render(<LoginPage searchParams={{}} />);
+    expect(
+      screen.queryByText('¡Cuenta creada exitosamente! Inicia sesión para continuar.')
+    ).not.toBeInTheDocument();
+  });
+
+  it('should NOT show success banner when searchParams.registered is a different value', () => {
+    render(<LoginPage searchParams={{ registered: 'false' }} />);
+    expect(
+      screen.queryByText('¡Cuenta creada exitosamente! Inicia sesión para continuar.')
+    ).not.toBeInTheDocument();
   });
 });
