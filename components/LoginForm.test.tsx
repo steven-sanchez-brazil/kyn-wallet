@@ -45,4 +45,21 @@ describe('LoginForm UI', () => {
       expect(loginButton).toBeDisabled();
     });
   });
+
+  it('should render success message when URL parameter contains registered=success', () => {
+    // Set mock query parameters
+    const originalLocation = window.location;
+    delete (window as any).location;
+    window.location = {
+      ...originalLocation,
+      search: '?registered=success',
+    };
+
+    render(<LoginForm />);
+
+    expect(screen.getByText(/Registro realizado con éxito/i)).toBeInTheDocument();
+
+    // Restore original location
+    window.location = originalLocation;
+  });
 });
