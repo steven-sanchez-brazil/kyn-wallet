@@ -1,6 +1,11 @@
 import React from 'react';
 
-const BrandPanel: React.FC = () => {
+interface BrandPanelProps {
+  headline?: [string, string];
+  subtitle?: string;
+}
+
+const BrandPanel: React.FC<BrandPanelProps> = ({ headline, subtitle }) => {
   return (
     <div 
       className="hidden lg:flex flex-col items-start justify-between w-1/2 px-[56px] py-[64px] relative bg-gradient-to-br from-brand-gradientStart to-brand-gradientEnd"
@@ -19,11 +24,11 @@ const BrandPanel: React.FC = () => {
       {/* Headline */}
       <div className="flex flex-col gap-[18px] items-start not-italic relative shrink-0 w-full mb-auto mt-[238px]">
         <div className="font-bold leading-[1.08] relative shrink-0 text-[44px] text-white w-full">
-          <p className="mb-0">Tu dinero,</p>
-          <p>sin fronteras.</p>
+          <p className="mb-0">{headline ? headline[0] : 'Tu dinero,'}</p>
+          <p>{headline ? headline[1] : 'sin fronteras.'}</p>
         </div>
         <p className="font-normal leading-[1.5] relative shrink-0 text-[17px] text-white/85 w-full">
-          Envía, recibe y paga en segundos. Una billetera pensada para tu día a día.
+          {subtitle || 'Envía, recibe y paga en segundos. Una billetera pensada para tu día a día.'}
         </p>
       </div>
 
