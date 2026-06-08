@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Input } from './ui/Input';
 import { Button } from './ui/Button';
-import SocialLogins from './SocialLogins';
+import { SocialLogins } from './SocialLogins';
 import { AuthService } from '../lib/services/AuthService';
 import { validateEmail, validatePassword } from '../lib/utils/Validation';
 
@@ -58,7 +59,7 @@ const LoginForm: React.FC = () => {
       });
 
       if (success) {
-        router.push('/construction');
+        router.push('/welcome');
       } else {
         setAuthError('Credenciales inválidas. Por favor, intenta de nuevo.');
       }
@@ -159,6 +160,16 @@ const LoginForm: React.FC = () => {
 
         <div className="mt-6">
           <SocialLogins />
+        </div>
+
+        <div className="mt-8 text-center text-sm text-neutral-500">
+          ¿No tienes cuenta?{' '}
+          <Link 
+            href="/register" 
+            className="text-brand-primary font-semibold hover:underline"
+          >
+            Regístrate
+          </Link>
         </div>
       </div>
     </div>

@@ -1,17 +1,30 @@
 # KynWallet
 
-Este proyecto es una billetera virtual que implementa la pantalla de inicio de sesión (Login) basada en un diseño de alta fidelidad de Figma, utilizando tecnologías modernas web y respetando estrictamente los tokens de diseño (colores, tipografía, bordes).
+Este proyecto es una billetera virtual que implementa las pantallas de inicio de sesión (Login) y registro (Register) basadas en un diseño de alta fidelidad de Figma, utilizando tecnologías modernas web y respetando estrictamente los tokens de diseño (colores, tipografía, bordes).
 
 ## Características
 
 *   **Arquitectura Limpia**: Separación clara entre componentes de UI (`components/ui`), lógica de negocio (`lib/services`) y vistas (`app/`).
-*   **Validación en Tiempo Real**: Feedback instantáneo para errores de formato de correo y longitud de contraseña.
+*   **Validación en Tiempo Real**: Feedback instantáneo para errores de formato de correo, longitud de contraseña y coincidencia de contraseñas.
 *   **Diseño Responsivo**: Diseño de panel dividido (Split-panel) en escritorio y vista enfocada en el formulario para dispositivos móviles.
+*   **Registro de Usuario**: Permite a nuevos usuarios crear una cuenta con validaciones robustas e integración simulada.
 *   **Test-Driven Development (TDD)**: Cobertura del 100% con pruebas unitarias y de integración utilizando Vitest y React Testing Library.
 
 ## Tecnologías Utilizadas
+...
+### Funcionalidades de Registro
 
-*   **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
+*   **Ruta**: `/register`
+*   **Campos**: Nombre completo, Email, Contraseña y Confirmar Contraseña.
+*   **Validaciones**:
+    *   Email válido (formato).
+    *   Contraseña mínima de 8 caracteres.
+    *   Confirmación de contraseña idéntica.
+    *   Aceptación obligatoria de términos y condiciones.
+*   **Redirección**: Al completar el registro con éxito, el usuario es redirigido a `/login` con un mensaje de confirmación.
+
+## Pruebas (Testing)
+
 *   **Librería UI**: [React 18](https://react.dev/)
 *   **Estilos**: [Tailwind CSS 3](https://tailwindcss.com/) (implementación personalizada sin librerías de UI externas)
 *   **Lenguaje**: [TypeScript](https://www.typescriptlang.org/)

@@ -1,7 +1,8 @@
-import { AuthCredentials, User } from '../types/Auth';
+import { AuthCredentials, User, UserRegistrationData, RegistrationResponse } from '../types/Auth';
 
 export interface IAuthService {
   login(credentials: AuthCredentials): Promise<boolean>;
+  register(data: UserRegistrationData): Promise<RegistrationResponse>;
   isAuthenticated(): boolean;
 }
 
@@ -31,7 +32,30 @@ export const AuthService: IAuthService = {
     return false;
   },
 
+  async register(data: UserRegistrationData): Promise<RegistrationResponse> {
+    // Simulating API delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    const existingUser = MOCK_USERS.find((u) => u.Email === data.Email);
+    if (existingUser) {
+      return { Success: false, ErrorMessage: 'El correo electrónico ya está registrado.' };
+    }
+
+    const newUser: User = {
+      Email: data.Email,
+      Password: data.Password,
+      FullName: data.FullName,
+    };
+
+    MOCK_USERS.push(newUser);
+    return { Success: true };
+  },
+
   isAuthenticated(): boolean {
     return currentUser !== null;
+  },
+
+  getCurrentUser(): User | null {
+    return currentUser;
   },
 };
