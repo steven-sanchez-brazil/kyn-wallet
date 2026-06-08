@@ -1,50 +1,38 @@
-import React from 'react';
-
-const BrandPanel: React.FC = () => {
+export function BrandPanel() {
   return (
-    <div 
-      className="hidden lg:flex flex-col items-start justify-between w-1/2 px-[56px] py-[64px] relative bg-gradient-to-br from-brand-gradientStart to-brand-gradientEnd"
+    <aside
+      className="relative hidden min-h-screen overflow-hidden lg:block"
+      style={{
+        background: 'linear-gradient(70.73deg, #ff8a65 31.698%, #ef5226 83.455%)'
+      }}
     >
-      {/* Logo */}
-      <div className="flex gap-[12px] items-center relative shrink-0">
-        <div className="h-[44px] relative shrink-0 w-[20px] bg-white rounded-full flex flex-col justify-between p-[2px]">
-           <div className="w-full aspect-square bg-brand-primary rounded-full opacity-0" />
-           <div className="w-full aspect-square bg-brand-primary rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-        </div>
-        <p className="font-bold leading-[normal] not-italic relative shrink-0 text-[26px] text-white whitespace-nowrap">
-          KynWallet
+      <div className="absolute left-14 top-16 flex items-center gap-2 text-white">
+        <div className="relative h-7 w-3 rounded-full bg-white/90" />
+        <div className="absolute left-[4px] top-[12px] h-4 w-4 rounded-full bg-white/90" />
+        <span className="ml-3 text-[26px] font-bold">KynWallet</span>
+      </div>
+
+      <div className="absolute left-14 top-[400px] max-w-[500px] text-white">
+        <h2 className="text-[44px] font-bold leading-[1.08]">Comienza tu</h2>
+        <h2 className="text-[44px] font-bold leading-[1.08]">camino financiero.</h2>
+        <p className="mt-6 text-[17px] leading-8 text-white/85">
+          Crea tu cuenta en minutos y empieza a enviar, recibir y administrar tu dinero desde cualquier lugar.
         </p>
       </div>
 
-      {/* Headline */}
-      <div className="flex flex-col gap-[18px] items-start not-italic relative shrink-0 w-full mb-auto mt-[238px]">
-        <div className="font-bold leading-[1.08] relative shrink-0 text-[44px] text-white w-full">
-          <p className="mb-0">Tu dinero,</p>
-          <p>sin fronteras.</p>
-        </div>
-        <p className="font-normal leading-[1.5] relative shrink-0 text-[17px] text-white/85 w-full">
-          Envía, recibe y paga en segundos. Una billetera pensada para tu día a día.
-        </p>
-      </div>
-
-      {/* Card Mockup */}
-      <div className="bg-white/16 border border-white/35 flex flex-col h-[210px] items-start justify-between px-[26px] py-[24px] relative rounded-[22px] shrink-0 w-[360px] mt-[238px]">
-        <div className="flex items-center justify-between relative shrink-0 w-full">
-          <p className="font-semibold leading-[normal] not-italic relative shrink-0 text-[15px] text-white whitespace-nowrap">
-            Kyn Card
-          </p>
-          <div className="bg-[#ffd980e6] h-[28px] relative rounded-[6px] shrink-0 w-[38px]" />
-        </div>
-        <p className="font-medium leading-[normal] not-italic relative shrink-0 text-[20px] text-white tracking-[1px] whitespace-pre">
-          {`5294  ••••  ••••  4827`}
-        </p>
-        <div className="flex font-medium items-center justify-between leading-[normal] not-italic relative shrink-0 text-[13px] text-white/90 w-full whitespace-nowrap">
-          <p className="relative shrink-0">STEVEN LUNA</p>
-          <p className="relative shrink-0">12/29</p>
+      <div className="absolute bottom-6 left-14 h-[210px] w-[360px] rounded-[22px] border border-white/35 bg-white/15 p-6 text-white shadow-2xl backdrop-blur-sm">
+        <div className="flex h-full flex-col">
+          <div className="flex items-center justify-between text-[15px] font-semibold">
+            <span>Kyn Card</span>
+            <div className="h-7 w-10 rounded-md bg-[#ffd980]/90" />
+          </div>
+          <div className="mt-8 text-[20px] font-medium tracking-[0.16em]">5294 •••• •••• 4827</div>
+          <div className="mt-auto flex items-end justify-between text-[13px] font-medium text-white/90">
+            <span>STEVEN LUNA</span>
+            <span>12/29</span>
+          </div>
         </div>
       </div>
-    </div>
+    </aside>
   );
-};
-
-export default BrandPanel;
+}

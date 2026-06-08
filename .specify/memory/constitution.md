@@ -1,50 +1,63 @@
-<!-- SYNC IMPACT REPORT
-Version change: 1.0.0 -> 1.0.1
+# Sync Impact Report
+<!--
+Version change: [CONSTITUTION_VERSION] -> 1.0.0
 Modified principles:
-- Traducción completa al español de todos los principios y restricciones.
+- [PRINCIPLE_1_NAME] -> TestFirstTDD
+- [PRINCIPLE_2_NAME] -> SOLIDDesign
+- [PRINCIPLE_3_NAME] -> CleanArchitecture
+- [PRINCIPLE_4_NAME] -> DRYAndYAGNI
+- [PRINCIPLE_5_NAME] -> SecurityAndValidation
 Added sections:
-- N/A
+- ConstraintsAndSecurity, DevelopmentWorkflow
 Removed sections:
-- N/A
+- none
 Templates requiring updates:
-- Ninguna adicional, aunque los templates ya reflejan los principios en inglés, se podrán traducir a futuro si el usuario lo requiere.
-Follow-up TODOs: None
+- .specify/templates/plan-template.md: ⚠ pending
+- .specify/templates/spec-template.md: ⚠ pending
+- .specify/templates/tasks-template.md: ⚠ pending
+Follow-up TODOs:
+- RATIFICATION_DATE: TODO(RATIFICATION_DATE): specify initial ratification date
 -->
-# Constitución de kyn-wallet
 
-## Principios Centrales
+# Hello Login Spec Kit Constitution
 
-### I. Desarrollo Guiado por Pruebas (TDD)
-Las pruebas DEBEN escribirse antes de la implementación. El ciclo Rojo-Verde-Refactorización se aplica estrictamente.
+## Core Principles
 
-### II. Principios SOLID
-El código DEBE adherirse a los principios SOLID (Responsabilidad Única, Abierto/Cerrado, Sustitución de Liskov, Segregación de Interfaces, Inversión de Dependencias) para asegurar el mantenimiento y la escalabilidad.
+### TestFirstTDD
+TDD is MANDATORY: escribir pruebas primero (unitarias → integración → contrato). Seguir el ciclo Rojo-Verde-Refactor y mantener tests legibles y deterministas. Antes de cambiar comportamiento, agregar pruebas que fallen.
 
-### III. Arquitectura Limpia (Clean Architecture)
-El proyecto DEBE organizarse siguiendo los principios de Clean Architecture. Las capas deben estar estrictamente separadas (Dominio, Casos de Uso, Interfaces/Adaptadores, Infraestructura) y las dependencias deben apuntar hacia adentro.
+### SOLIDDesign
+Aplicar los principios SOLID para diseñar componentes mantenibles y desacoplados. Fomentar `SingleResponsibility`, `OpenClosed`, `LiskovSubstitution`, `InterfaceSegregation` y `DependencyInversion` en todos los módulos.
 
-### IV. DRY y YAGNI
-- **DRY (No te repitas)**: Evita la duplicación de código abstrayendo la lógica compartida.
-- **YAGNI (No lo vas a necesitar)**: No agregues funcionalidad hasta que se considere necesaria. Mantén el código fuente simple y enfocado en los requisitos actuales.
+### CleanArchitecture
+Organizar el proyecto siguiendo Clean Architecture: capas claramente separadas (Entidades, Casos de Uso, Interfaces, Infraestructura). Dependencias dirigidas hacia el núcleo de negocio; la lógica de negocio no debe depender de frameworks ni detalles de infraestructura.
 
-## Restricciones Técnicas
+### DRYAndYAGNI
+Evitar duplicación (DRY): extraer comportamientos repetidos en abstracciones reutilizables. Aplicar YAGNI: no implementar funcionalidad hasta que una prueba o requerimiento la necesite.
 
-### Convenciones de Nombres
-Todos los nombres DEBEN seguir estrictamente `PascalCase` para componentes, clases, archivos (donde aplique) y estructuras relevantes.
+### SecurityAndValidation
+Validación de entradas: todas las entradas del usuario deben validarse explícitamente en la capa de borde. Las rutas/procedimientos protegidos requieren autenticación y autorización comprobable antes de ejecutar la lógica.
 
-### Dependencias
-El uso de **librerías externas está estrictamente prohibido**. Toda funcionalidad debe ser implementada utilizando capacidades nativas o código propio de la casa.
+## ConstraintsAndSecurity
 
-## Seguridad y Validación
+- Convención de nombres: PascalCase para nombres públicos (clases, funciones, módulos, tests). Internos pueden usar lowerCamelCase si el lenguaje lo recomienda.
+- No se deben utilizar librerías externas; implementar utilidades necesarias dentro del repositorio.
+- Validación: cada capa de entrada debe validar formatos, tamaños y tipos; rechazar y testear entradas inválidas.
+- Rutas protegidas: cualquier endpoint marcado como protegido exige autenticación; los tests deben cubrir intentos de acceso no autorizado.
 
-### Validación de Entradas
-Todas las entradas de los usuarios DEBEN ser validadas rigurosamente antes de ser procesadas para prevenir inyecciones y asegurar la integridad de los datos.
+## DevelopmentWorkflow
 
-### Autenticación
-Todas las rutas protegidas DEBEN requerir autenticación antes de conceder acceso. El acceso no autorizado debe ser rechazado explícitamente.
+- Ciclo TDD obligatorio: los tests deben existir y fallar antes de implementar la funcionalidad.
+- Escribir tests unitarios para la lógica de negocio y tests de integración para flujos y rutas protegidas.
+- Las PRs deben incluir: pruebas nuevas, cambios de diseño justificados (si hay violación a SOLID), y evidencia de que no se han introducido dependencias externas.
+- Revisión de código: verificar cumplimiento de SOLID, Clean Architecture, DRY, YAGNI y la convención de nombres.
 
-## Gobernanza
+## Governance
 
-Las modificaciones requieren documentación y aprobación. Todos los pull requests y revisiones de código DEBEN verificar el cumplimiento de estos principios centrales y restricciones técnicas.
+La constitución define prácticas no negociables para el proyecto. Enmiendas requieren: propuesta documentada, aprobación por mantenedores, y plan de migración para código existente.
 
-**Versión**: 1.0.1 | **Ratificada**: 2026-06-03 | **Última Modificación**: 2026-06-03
+- Compliance: las PRs deben pasar la puerta de pruebas (unitarias + integración) y recibir revisión que confirme las reglas de arquitectura.
+- Versionado constitucional: seguir SemVer para la constitución. Cambios mayores (MAJOR) rompen compatibilidad con principios; MINOR agrega principios o secciones; PATCH son clarificaciones menores.
+
+**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE): specify initial adoption date | **Last Amended**: 2026-06-04
+
