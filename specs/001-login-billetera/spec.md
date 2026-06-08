@@ -1,97 +1,154 @@
-# Especificación de Funcionalidad: Actualización de Login con Diseño Figma
+# Feature Specification: Registro de Billetera Virtual
 
-**Feature Branch**: `002-login-spec-update`  
-**Creado**: 2026-06-04  
-**Estado**: Borrador  
-**Entrada**: "Actualiza el spec del login. Usa el MCP de Figma para obtener el contexto de diseño de este frame: https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=2-2&t=tZepRnS4l8ITDqOs-4 Los colores, tipografía y estructura del formulario deben coincidir con el diseño de Figma (login)."
+**Feature Branch**: `[001-login-billetera]`
 
-## Escenarios de Usuario y Pruebas *(obligatorio)*
+**Created**: 2026-06-04
 
-### Historia de Usuario 1 - Autenticación Exitosa (Prioridad: P1)
+**Status**: Draft
 
-Como usuario registrado, quiero ingresar mi correo y contraseña válidos en un formulario que refleje la identidad visual de KynWallet para acceder a mi cuenta.
+**Input**: User description: "Construye la pantalla de registro de una billetera virtual usando como referencia visual el frame de Figma `04 · Registro`. La autenticacion va ser simulada con usuarios harcoded. Si el usuario selecciona iniciar sesion o completa el registro exitosamente, debe ir a la pagina de login. La pagina de login debe seguir el diseño del frame de Figma `01 · Login`."
 
-**Por qué esta prioridad**: Es el flujo crítico de entrada. La identidad visual genera confianza y profesionalismo.
+## User Scenarios & Testing *(mandatory)*
 
-**Prueba Independiente**: Se puede probar verificando que al ingresar credenciales correctas (ej. tucorreo@ejemplo.com / 12345678), el sistema redirige a la pantalla de "En construcción" y que la UI coincide con los colores brand (#ff6b3d) y tipografía Inter.
+### User Story 1 - Ver pantalla de registro (Priority: P1)
 
-**Escenarios de Aceptación**:
+Como usuario de la billetera virtual, quiero ver una pantalla de registro clara y reconocible para poder crear una cuenta de forma rápida.
 
-1. **Dado** que el usuario está en la pantalla de Login, **Cuando** ingresa un correo y contraseña válidos y presiona "Iniciar sesión", **Entonces** el sistema valida los datos y lo redirige a la pantalla de éxito.
-2. **Dado** que el usuario visualiza el panel izquierdo, **Cuando** observa la marca, **Entonces** debe ver el degradado naranja y la tarjeta de mockup con los datos de "STEVEN LUNA" y el logo de "KynWallet".
+**Why this priority**: Es el punto de entrada principal para nuevos usuarios y define la primera impresión del producto.
 
----
+**Independent Test**: Abrir la aplicación desde un estado no autenticado y verificar que la pantalla de registro se muestra completa y lista para usar.
 
-### Historia de Usuario 2 - Retroalimentación de Diseño y Validaciones (Priority: P2)
+**Acceptance Scenarios**:
 
-Como usuario, quiero que los campos de entrada y botones tengan el estilo visual definido en Figma (bordes redondeados de 12px, colores neutros específicos) para tener una experiencia coherente.
-
-**Por qué esta prioridad**: La consistencia visual es clave para la usabilidad y la percepción de calidad del producto.
-
-**Prueba Independiente**: Inspección visual de los elementos: radio de borde de 12px en inputs y botón principal, color de texto #16182c para encabezados.
-
-**Escenarios de Aceptación**:
-
-1. **Dado** que el usuario interactúa con los inputs, **Cuando** el campo está vacío o tiene un formato inválido, **Entonces** el sistema debe mostrar una validación visual que respete el estilo del formulario.
-2. **Dado** que el usuario ve el botón de "Iniciar sesión", **Cuando** lo presiona, **Entonces** debe tener el color de fondo #ff6b3d y texto blanco en SemiBold.
+1. **Given** que el usuario no está autenticado, **When** abre la aplicación, **Then** ve la pantalla de registro con los controles necesarios para crear una cuenta.
+2. **Given** que el usuario está en la pantalla de registro, **When** observa la interfaz, **Then** identifica claramente dónde ingresar su nombre, correo, contraseña y confirmación.
 
 ---
 
-### Historia de Usuario 3 - Interacción con Elementos Secundarios (Priority: P3)
+### User Story 2 - Crear una cuenta con datos válidos (Priority: P2)
 
-Como usuario, quiero ver las opciones de "Recordarme", "¿Olvidaste tu contraseña?" y los accesos sociales (Google/Apple) con el diseño de Figma, aunque su funcionalidad sea limitada en esta fase.
+Como usuario, quiero registrar una cuenta con datos válidos para acceder a la página de login.
 
-**Por qué esta prioridad**: Completa la interfaz visual según el prototipo de alta fidelidad.
+**Why this priority**: Permite completar el flujo principal de alta con éxito y continuar en el siguiente paso del acceso.
 
-**Prueba Independiente**: Verificación de la presencia del divisor "o continúa con" y los botones sociales con borde de 1.5px color #d7d9e6.
+**Independent Test**: Ingresar datos válidos y verificar que el alta se completa sin intervención adicional y redirige al login.
 
-**Escenarios de Aceptación**:
+**Acceptance Scenarios**:
 
-1. **Dado** que el usuario ve la sección de redes sociales, **Cuando** hace clic en Google o Apple, **Entonces** el sistema muestra un aviso de "Funcionalidad próximamente".
+1. **Given** que el usuario ingresa nombre, correo, contraseña, confirmación válidos y acepta los términos y condiciones, **When** confirma el registro, **Then** el sistema crea la cuenta correctamente.
+2. **Given** que el registro es exitoso, **When** el sistema procesa la validación, **Then** redirige al usuario a la página de login.
 
 ---
 
-### Casos Extremos
+### User Story 3 - Rechazar registros inválidos y entradas vacías (Priority: P3)
 
-- ¿Cómo se comporta el degradado del panel izquierdo en pantallas con relaciones de aspecto muy anchas o muy estrechas?
-- ¿Qué sucede si el usuario intenta ingresar una contraseña de menos de 8 caracteres (según los puntos del mockup)?
+Como usuario, quiero recibir retroalimentación clara cuando mis datos no sean válidos para corregir el intento sin confusión.
 
-## Requisitos *(obligatorio)*
+**Why this priority**: Reduce errores de uso y evita accesos indebidos.
 
-### Restricciones de Seguridad y Validación *(obligatorio)*
+**Independent Test**: Intentar registrarse con datos incorrectos, incompletos o vacíos y verificar que el sistema bloquea el alta y muestra un mensaje útil.
 
-- **Restricción**: Todas las entradas del usuario DEBEN ser rigurosamente validadas antes del procesamiento.
-- **Restricción**: Todas las rutas protegidas DEBEN requerir autenticación previa.
-- **Restricción**: El uso de librerías externas para la UI o lógica está estrictamente prohibido.
-- **Restricción**: Se debe usar `PascalCase` para el nombramiento de las estructuras relevantes.
+**Acceptance Scenarios**:
 
-### Requisitos Funcionales
+1. **Given** que el usuario deja campos obligatorios vacíos, **When** intenta registrarse, **Then** el sistema le indica que complete la información requerida.
+2. **Given** que el usuario introduce un correo inválido, contraseñas que no coinciden, una contraseña inválida o no acepta los términos y condiciones, **When** confirma el registro, **Then** el sistema rechaza el alta y muestra un mensaje de error comprensible.
 
-- **FR-001**: El sistema DEBE implementar un diseño de pantalla dividida: Panel de Marca (Brand Panel) a la izquierda y Panel de Formulario (Form Panel) a la derecha.
-- **FR-002**: El **Brand Panel** DEBE tener un fondo con gradiente lineal de 121.19° desde `rgb(255, 138, 101)` hasta `rgb(239, 82, 38)`.
-- **FR-003**: El sistema DEBE usar la tipografía **Inter** en sus variantes Bold, SemiBold, Medium y Regular según se especifica en el diseño.
-- **FR-004**: El **Formulario** DEBE incluir campos de "Correo electrónico" y "Contraseña" con bordes redondeados de 12px y color de borde `#d7d9e6`.
-- **FR-005**: El botón de "Iniciar sesión" DEBE tener el color `#ff6b3d`, texto blanco SemiBold de 16px y bordes redondeados de 12px.
-- **FR-006**: Los encabezados DEBEN usar el color `#16182c` (Neutral 900) y los textos secundarios el color `#8a8ca8` (Neutral 500).
-- **FR-007**: El sistema DEBE incluir un mockup de tarjeta (Card Mockup) en el panel izquierdo con fondo `rgba(255, 255, 255, 0.16)` y borde `rgba(255, 255, 255, 0.35)`.
-- **FR-008**: El sistema DEBE mostrar opciones de acceso social (Google, Apple) con bordes de 1.5px color `#d7d9e6`.
+---
 
-### Entidades Clave
+### User Story 4 - Habilitar el envío solo con datos completos (Priority: P3)
 
-- **AuthCredentials**: Representa los datos de acceso del usuario. Atributos: `Email`, `Password`.
-- **UIStyles**: Definición de los tokens de diseño (colores, espaciados, bordes) extraídos de Figma.
+Como usuario, quiero que el botón de crear cuenta solo se habilite cuando el formulario esté completo y válido para evitar intentos fallidos innecesarios.
 
-## Criterios de Éxito *(obligatorio)*
+**Why this priority**: Reduce errores de entrada y deja claro cuándo el formulario está listo para enviarse.
 
-### Resultados Medibles
+**Independent Test**: Verificar que el botón permanezca deshabilitado hasta que todos los campos obligatorios sean válidos y los términos y condiciones estén aceptados.
 
-- **SC-001**: La interfaz del Login coincide visualmente en un 95% con el diseño de Figma proporcionado (disposición, colores y tipografía).
-- **SC-002**: El formulario es funcional y permite el acceso con las credenciales hardcodeadas en menos de 2 segundos de procesamiento.
-- **SC-003**: Todos los elementos de entrada (inputs, checkbox, botones) tienen el radio de borde de 12px (o 6px para el checkbox de Recordarme) según el diseño.
+**Acceptance Scenarios**:
 
-## Suposiciones
+1. **Given** que falta completar uno o más campos obligatorios, **When** el usuario observa el formulario, **Then** el botón de crear cuenta permanece deshabilitado.
+2. **Given** que todos los campos obligatorios son válidos pero los términos y condiciones no están aceptados, **When** el usuario observa el formulario, **Then** el botón de crear cuenta permanece deshabilitado.
+3. **Given** que todos los campos obligatorios son válidos y los términos y condiciones están aceptados, **When** el usuario observa el formulario, **Then** el botón de crear cuenta se habilita.
 
-- Se asume que el usuario tiene instalada la fuente "Inter" o que el sistema la cargará como recurso local.
-- Los activos visuales (logo, iconos sociales) se simularán mediante elementos CSS o placeholders si no están disponibles como archivos individuales.
-- El panel de marca ocupa un ancho fijo de 620px en la resolución de diseño (1440x1024), escalando proporcionalmente o manteniendo su estructura.
-- Las interacciones sociales y de recuperación de contraseña son meramente visuales para esta versión.
+---
+
+### User Story 5 - Ver pantalla de login (Priority: P2)
+
+Como usuario, quiero ver una pantalla de login coherente con la pantalla de registro para continuar el acceso con una experiencia visual consistente.
+
+**Why this priority**: La pantalla de login es el destino natural del enlace de acceso y del registro exitoso.
+
+**Independent Test**: Abrir la ruta de login y verificar que la pantalla respeta la misma familia visual, colores y estructura general del Figma de referencia.
+
+**Acceptance Scenarios**:
+
+1. **Given** que el usuario abre la página de login, **When** observa la interfaz, **Then** ve un panel de marca, un formulario de acceso y acciones sociales con el estilo definido en el diseño.
+2. **Given** que el usuario está en la pantalla de registro, **When** selecciona "Inicia sesión", **Then** la aplicación lo redirige a la página de login.
+3. **Given** que el usuario completa el registro correctamente, **When** confirma la cuenta, **Then** la aplicación lo redirige a la página de login.
+
+---
+
+### User Story 6 - Mostrar mensaje en acciones sociales (Priority: P3)
+
+Como usuario, quiero recibir una respuesta clara al seleccionar las opciones sociales para entender que esa vía no está disponible todavía.
+
+**Why this priority**: Evita confusión cuando el usuario interactúa con alternativas de acceso que aún no están activas.
+
+**Independent Test**: Seleccionar Google o Apple y verificar que el sistema muestra un mensaje informativo de disponibilidad futura.
+
+**Acceptance Scenarios**:
+
+1. **Given** que el usuario selecciona la opción Google, **When** la interacción se completa, **Then** el sistema muestra el mensaje "Proximamente".
+2. **Given** que el usuario selecciona la opción Apple, **When** la interacción se completa, **Then** el sistema muestra el mensaje "Proximamente".
+
+### Edge Cases
+
+- El usuario intenta enviar el formulario con espacios en blanco en lugar de valores reales.
+- El usuario repite un intento con datos incorrectos después de un fallo anterior.
+- El usuario intenta acceder a una ruta protegida o vuelve a una sesión previa sin una autenticación válida.
+- El usuario vuelve a la pantalla de registro después de registrarse y el sistema conserva el estado de acceso mientras dure la sesión activa.
+
+## Requirements *(mandatory)*
+
+### Functional Requirements
+
+- **FR-001**: The system MUST mostrar una pantalla de registro para la billetera virtual antes de permitir cualquier acceso al flujo protegido.
+- **FR-002**: The system MUST permitir ingresar nombre completo, correo electrónico, contraseña y confirmación de contraseña.
+- **FR-003**: The system MUST validar todas las entradas del usuario antes de intentar crear la cuenta.
+- **FR-004**: The system MUST rechazar campos vacíos, correos inválidos, contraseñas no coincidentes o contraseñas que no cumplan el formato esperado y mostrar una retroalimentación clara.
+- **FR-005**: The system MUST mantener deshabilitado el botón de crear cuenta mientras falte completar información obligatoria o no se acepten los términos y condiciones.
+- **FR-006**: The system MUST habilitar el botón de crear cuenta únicamente cuando nombre, correo, contraseña, confirmación de contraseña y términos y condiciones sean válidos.
+- **FR-007**: The system MUST crear exitosamente una cuenta cuando los datos ingresados sean válidos y coincidan con las reglas definidas para la demo.
+- **FR-008**: The system MUST redirigir a la página de login cuando el registro sea exitoso.
+- **FR-009**: The system MUST mostrar la página de login con el mismo lenguaje visual base de la pantalla de registro y alineada al frame de Figma `01 · Login`.
+- **FR-010**: The system MUST incluir campos de correo electrónico y contraseña, una opción de recordar sesión, una acción de recuperación de contraseña, y accesos sociales en la pantalla de login.
+- **FR-011**: The system MUST impedir el acceso directo a rutas protegidas si el usuario no está autenticado o no ha completado el registro.
+- **FR-012**: The system MUST mantener el estado de autenticación durante la sesión activa para evitar pedir credenciales repetidas de forma innecesaria.
+- **FR-013**: The system MUST present a registration experience that follows the provided Figma visual reference for layout, hierarchy, and overall look and feel.
+- **FR-014**: The system MUST include an entry point to navigate from registration to the login path using the visible "Inicia sesión" action.
+- **FR-015**: The system MUST mostrar el mensaje "Proximamente" cuando el usuario seleccione Google o Apple desde la pantalla de registro o de login.
+
+### Key Entities *(include if feature involves data)*
+
+- **Registration Form**: Representa la pantalla de alta y sus campos obligatorios.
+- **Demo User**: Representa un usuario simulado con datos válidos para la demostración.
+- **Authentication State**: Representa si el usuario está autenticado o no dentro del flujo de la aplicación.
+- **Login Screen**: Representa la pantalla de acceso mostrada después de seleccionar iniciar sesión o completar el registro.
+
+## Success Criteria *(mandatory)*
+
+### Measurable Outcomes
+
+- **SC-001**: 100% de los intentos con datos válidos completan el registro con éxito.
+- **SC-002**: 100% de los intentos con campos vacíos, correos inválidos o contraseñas no coincidentes son rechazados con un mensaje visible para el usuario.
+- **SC-003**: Al menos 95% de los usuarios de prueba completan el flujo de registro en menos de 45 segundos desde la apertura de la pantalla.
+- **SC-004**: 100% de los intentos de acceso directo a rutas protegidas desde un estado no autenticado o sin registro completado son bloqueados.
+- **SC-005**: 100% de los intentos de ir a login desde el enlace "Inicia sesión" o desde un registro exitoso terminan en la página de login correcta.
+
+## Assumptions
+
+- El registro será una simulación acotada a reglas fijas de validación definidas para demostración.
+- La pantalla de login reutilizará la misma paleta, jerarquía y lenguaje visual general que la pantalla de registro.
+- El alcance de esta entrega se limita al flujo de registro, al acceso posterior, a la ruta de login y al enlace hacia esa ruta.
+- El diseño visual se alineará con el frame de Figma proporcionado en la medida en que el alcance funcional del registro lo permita.
+- El botón de crear cuenta permanecerá deshabilitado hasta que el formulario esté completo y válido, incluyendo la aceptación de términos y condiciones.
+- Las opciones Google y Apple solo informarán disponibilidad futura mediante el mensaje "Proximamente".

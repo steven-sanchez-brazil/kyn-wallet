@@ -1,38 +1,15 @@
-import type { Config } from "tailwindcss";
-import { DesignTokens } from "./lib/constants/DesignTokens";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
   theme: {
     extend: {
-      colors: {
-        brand: {
-          primary: DesignTokens.Colors.BrandPrimary,
-          gradientStart: DesignTokens.Colors.BrandGradientStart,
-          gradientEnd: DesignTokens.Colors.BrandGradientEnd,
-        },
-        neutral: {
-          900: DesignTokens.Colors.Neutral900,
-          500: DesignTokens.Colors.Neutral500,
-          300: DesignTokens.Colors.Neutral300,
-        },
-      },
-      borderRadius: {
-        lg: DesignTokens.BorderRadius.Lg,
-        md: DesignTokens.BorderRadius.Md,
-      },
-      fontFamily: {
-        sans: [DesignTokens.Typography.FontFamily],
-      },
-      fontWeight: {
-        semibold: DesignTokens.Typography.FontWeightSemiBold,
-      },
-    },
+      boxShadow: {
+        soft: '0 24px 80px rgba(15, 23, 42, 0.12)'
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 };
+
 export default config;

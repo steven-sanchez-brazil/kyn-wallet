@@ -1,50 +1,56 @@
-# Implementation Plan: Login Spec Update
+# Implementation Plan: Registro de Billetera Virtual
 
-**Branch**: `002-login-spec-update` | **Date**: 2026-06-04 | **Spec**: [specs/002-login-spec-update/spec.md](spec.md)
-**Input**: Feature specification from `specs/002-login-spec-update/spec.md`
+**Branch**: `[001-login-billetera]` | **Date**: 2026-06-04 | **Spec**: [spec.md](spec.md)
 
 ## Summary
 
-Implement a login screen for the KynWallet application using a split-panel design (Brand vs Form) that strictly follows the provided Figma design. The technical stack will be Next.js 14 (App Router), TypeScript, and Tailwind CSS, following a custom implementation of design tokens to ensure zero additional external UI library dependencies.
+Build a registration-first wallet entry screen that matches the Figma frame `04 · Registro`, using Next.js App Router and Tailwind CSS. The screen collects name, email, password, confirm password, and terms acceptance, validates inputs locally, simulates account creation with hardcoded demo data, and redirects successful registration to the login screen designed from the Figma frame `01 · Login`.
 
+**Scale/Scope**: Single registration flow, one login destination page, and one existing login entry point from registration
 ## Technical Context
 
-**Language/Version**: TypeScript / Next.js 14 (App Router)  
-**Primary Dependencies**: React 18, Next.js 14, Tailwind CSS 3.x  
-**Storage**: In-memory (hardcoded users array)  
-**Testing**: [NEEDS CLARIFICATION: Preferred test runner (Vitest/Jest) for TDD compliance?]  
-**Target Platform**: Web (Responsive)
-**Project Type**: web-application  
-**Performance Goals**: Login completion < 30s, successful validation < 2s.  
-**Constraints**: No external UI libraries (Radix, Shadcn, etc.), strict PascalCase naming.  
-**Scale/Scope**: Single feature (Login) with redirection to a placeholder screen.
+**Language/Version**: TypeScript with React 18 and Next.js App Router
+
+**Primary Dependencies**: next, react, react-dom, tailwindcss
+
+**Storage**: In-memory session state and hardcoded demo account data; no persistent backend storage
+
+**Testing**: Next.js build/type checks plus browser-level smoke verification for validation and route protection
+
+**Target Platform**: Web browsers on desktop and mobile
+
+**Project Type**: Web application
+
+**Constraints**: No external auth service; validation must happen locally; protected routes must reject unauthenticated access; styling must use Tailwind CSS; folder structure must center on app/, components/, and lib/
+
+**Scale/Scope**: Single registration flow, one login destination page, and one existing login entry point from registration
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-- [ ] **TDD**: Is the test strategy defined before implementation? (Needs clarification on runner)
-- [x] **SOLID**: Does the design enforce SOLID principles? (Clean separation of UI, logic, and constants)
-- [x] **Clean Architecture**: Are layers strictly separated with inward dependencies? (app/ for routing, components/ for UI, lib/ for logic)
-- [x] **DRY & YAGNI**: Is the design free of unnecessary complexity and duplicated code? (Focused only on login requirements)
-- [x] **Naming**: Does the plan respect `PascalCase` for structures? (Mandatory for all components and structures)
-- [x] **Dependencies**: Is the solution completely free of external libraries? (Using only Next.js/Tailwind as base, no UI libs)
-- [x] **Security**: Are all inputs validated and protected routes authenticated? (Validation FR-004 and FR-005)
+| Gate | Status | Notes |
+|---|---|---|
+| TDD | PASS | The implementation plan will start with failing tests for validation and route protection before code changes.
+| SOLID | PASS | Responsibilities are split between page composition, reusable components, and pure helper functions.
+| Clean Architecture | PASS | UI, validation, and session helpers are separated so business rules stay out of page markup.
+| DRY / YAGNI | PASS | Shared form and auth helpers avoid duplication; only the registration path and protected destination are in scope.
+| Security / Validation | PASS | Inputs are validated locally and protected routes require authenticated state.
+| No external libraries | FAIL, justified | The user explicitly requested React, Next.js, and Tailwind CSS, which are external frameworks/libraries; this is necessary to satisfy the requested stack.
 
 ## Project Structure
 
 ### Documentation (this feature)
 
 ```text
-specs/002-login-spec-update/
-├── plan.md              # This file
-├── research.md          # Phase 0 output
-├── data-model.md        # Phase 1 output
-├── quickstart.md        # Phase 1 output
-├── checklists/
-│   └── requirements.md
-├── contracts/           # Phase 1 output
-└── spec.md              # Input spec
+specs/001-login-billetera/
+├── plan.md
+├── research.md
+├── data-model.md
+├── quickstart.md
+├── contracts/
+│   └── routes.md
+└── tasks.md
 ```
 
 ### Source Code (repository root)
@@ -52,25 +58,31 @@ specs/002-login-spec-update/
 ```text
 app/
 ├── layout.tsx
-├── page.tsx             # Login page
-└── construction/        # Placeholder page
-    └── page.tsx
+├── page.tsx
+├── register/
+│   └── page.tsx
+├── login/
+│   └── page.tsx
 
 components/
 ├── BrandPanel.tsx
-├── LoginForm.tsx
-└── ui/                  # Custom UI elements (Input, Button, etc.)
+├── RegistrationForm.tsx
+├── SocialButtons.tsx
+└── ProtectedRoute.tsx
 
 lib/
-├── auth.ts              # Hardcoded logic
-└── constants/
-    └── design-tokens.ts # Figma tokens mapped here
+├── auth/
+│   ├── demoUsers.ts
+│   ├── session.ts
+│   └── validation.ts
+└── routes.ts
 ```
 
-**Structure Decision**: Web application structure with Next.js App Router conventions, separating shared UI components and business logic in `components/` and `lib/` respectively.
+**Structure Decision**: Use a single Next.js app with route segments under `app/`, shared presentation components under `components/`, and pure auth/session helpers under `lib/`. This matches the user request and keeps page composition separate from validation and state logic.
 
 ## Complexity Tracking
 
 | Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| Next.js / Tailwind | Explicit user directive overrides strict "no external libraries" for the base framework. | Building a custom SSR framework and CSS parser is out of scope. |
+|---|---|---|
+| External frameworks/libraries | Next.js, React, and Tailwind CSS were explicitly requested | A plain HTML/CSS/JS implementation would not satisfy the requested stack |
+

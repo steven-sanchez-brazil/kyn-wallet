@@ -1,31 +1,27 @@
-# Quickstart: Login Feature
+# Quickstart: Registro de Billetera Virtual
 
-## Setup
-1. Asegúrate de tener **Node.js 18+** instalado.
-2. Clona el repositorio y navega a la raíz.
-3. Instala las dependencias base (Next.js, Tailwind, Vitest):
-   ```bash
-   npm install
-   ```
+## Prerequisites
 
-## Development
-- Inicia el servidor de desarrollo:
-  ```bash
-  npm run dev
-  ```
-- La pantalla de login estará disponible en `/`.
-- Credenciales de prueba: `tucorreo@ejemplo.com` / `password123`.
+- Next.js app scaffolded with `app/`, `components/`, and `lib/`.
+- Tailwind CSS configured for the project.
 
-## Testing
-- Ejecuta los tests unitarios y de integración con Vitest:
-  ```bash
-  npm run test
-  ```
-- Para modo watch:
-  ```bash
-  npm run test:watch
-  ```
+## Run the app
 
-## UI Guidelines
-- Usa los componentes definidos en `components/ui/` para mantener la consistencia con los tokens de Figma.
-- Todas las estructuras de datos y clases deben seguir el estándar `PascalCase`.
+```bash
+npm install
+npm run dev
+```
+
+## Validate the feature
+
+1. Open the registration route and confirm the screen matches the `04 · Registro` layout.
+2. Submit the form with missing or invalid fields and confirm the errors are shown inline or in a visible message area.
+3. Submit valid data and confirm the app redirects to the login screen.
+4. Open the login route and confirm the screen matches the `01 · Login` layout and uses the same brand colors and visual language as registration.
+5. Click `Inicia sesión` and confirm the app navigates to the login path.
+
+## Expected outcome
+
+- Registration is blocked until the input rules are satisfied.
+- Successful registration sets the simulated authenticated state and lands on login.
+- Protected navigation is denied without authentication on any route that requires it.

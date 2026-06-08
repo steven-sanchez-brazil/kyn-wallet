@@ -1,8 +1,8 @@
-# Specification Quality Checklist: Login Spec Update
+# Specification Quality Checklist: Registro de Billetera Virtual
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
 **Created**: 2026-06-04
-**Feature**: [specs/002-login-spec-update/spec.md](spec.md)
+**Feature**: [spec.md](../spec.md)
 
 ## Content Quality
 
@@ -31,4 +31,5 @@
 
 ## Notes
 
-- All validation items passed. The specification is ready for the next phase.
+- All checklist items pass on the current draft for the registration and login flows, including the button-enable rule, terms acceptance behavior, social-button feedback message, and redirect behavior to the login screen.
+- Ready for `/speckit.plan`.
