@@ -63,7 +63,9 @@ specs/002-registro-usuarios/
 
 ```text
 app/
-├── page.tsx                      → MODIFICAR: agregar link "Regístrate" → /register + banner éxito
+├── page.tsx                      → MODIFICAR: redirect permanente a /login (resuelve 404 en /login)
+├── login/
+│   └── page.tsx                  → NUEVO: página de login en ruta canónica /login
 ├── register/
 │   └── page.tsx                  → NUEVO: página de registro (/register)
 ├── construction/
@@ -150,6 +152,7 @@ Ver [research.md](./research.md) para la justificación detallada de cada decisi
 | D-007 | `validateFullName` y `validatePasswordMatch` agregados a `Validation.ts` |
 | D-008 | `User` extendido con `FullName`; nuevos tipos `RegisterCredentials`, `RegisterResult` |
 | D-009 | Tokens de diseño del frame "04 · Registro" compatibles con sistema existente |
+| D-010 | Routing canónico: login en `/login` (`app/login/page.tsx`); `/` redirige a `/login` via `redirect()` |
 
 ---
 

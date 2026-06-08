@@ -128,3 +128,22 @@ specs/        → especificaciones del proyecto
 ## Conclusión
 
 Todos los ítems de investigación han sido resueltos. La implementación puede proceder sin incertidumbres técnicas. El stack existente es suficiente: no se requieren nuevas dependencias.
+
+---
+
+## Decisión posterior a la implementación
+
+### D-010: Routing canónico — Login en `/login`, raíz redirige
+
+**Contexto**: Al implementar el flujo de registro, se detectó que `http://localhost:3000/login` retornaba 404 porque la pantalla de login vivía en `app/page.tsx` (ruta `/`). Los links del sistema (`/login?registered=true` desde RegisterForm, "Inicia sesión" en RegisterForm) apuntaban a `/login`, lo que rompía el banner de éxito y generaba una mala experiencia.
+
+**Decisión**: Mover la pantalla de login a `app/login/page.tsx` (ruta canónica `/login`) y convertir `app/page.tsx` en un redirect via `redirect('/login')` de Next.js.
+
+**Impacto**:
+- `app/login/page.tsx` → NUEVO (contenido movido de `app/page.tsx`)
+- `app/page.tsx` → `redirect('/login')` (solo 136 B en build)
+- Build output: `/, /login, /register, /construction` — todos accesibles
+
+**Alternativas descartadas**:
+- Mantener login en `/` y cambiar todos los links → requería cambiar RegisterForm, LoginForm y el redirect post-registro; frágil a futuro.
+- Alias de ruta con `rewrites` en `next.config.mjs` → innecesario, la solución directa es más clara.
