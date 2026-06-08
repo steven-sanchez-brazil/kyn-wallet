@@ -17,7 +17,7 @@ describe('LoginForm Integration', () => {
     render(<LoginForm />);
 
     const emailInput = screen.getByLabelText(/Correo electrónico/i);
-    const passwordInput = screen.getByLabelText(/Contraseña/i);
+    const passwordInput = screen.getByPlaceholderText('••••••••');
     const loginButton = screen.getByRole('button', { name: /Iniciar sesión/i });
 
     fireEvent.change(emailInput, { target: { value: 'tucorreo@ejemplo.com' } });
@@ -33,7 +33,7 @@ describe('LoginForm Integration', () => {
     render(<LoginForm />);
 
     const emailInput = screen.getByLabelText(/Correo electrónico/i);
-    const passwordInput = screen.getByLabelText(/Contraseña/i);
+    const passwordInput = screen.getByPlaceholderText('••••••••');
     const loginButton = screen.getByRole('button', { name: /Iniciar sesión/i });
 
     fireEvent.change(emailInput, { target: { value: 'wrong@example.com' } });
