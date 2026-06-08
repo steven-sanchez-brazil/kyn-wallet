@@ -12,3 +12,11 @@ export const validateEmail = (email: string): boolean => {
 export const validatePassword = (password: string): boolean => {
   return password.length >= 8;
 };
+
+export const validateFullName = (name: string): boolean => {
+  return name.trim().length > 0;
+};
+
+export const validatePasswordMatch = (password: string, confirmPassword: string): boolean => {
+  return password === confirmPassword;
+};
