@@ -1,11 +1,11 @@
 # KynWallet
 
-Este proyecto es una billetera virtual que implementa la pantalla de inicio de sesión (Login) basada en un diseño de alta fidelidad de Figma, utilizando tecnologías modernas web y respetando estrictamente los tokens de diseño (colores, tipografía, bordes).
+Este proyecto es una billetera virtual que implementa las pantallas de inicio de sesión (Login) y registro (Registro) basadas en un diseño de alta fidelidad de Figma, utilizando tecnologías modernas web y respetando estrictamente los tokens de diseño (colores, tipografía, bordes).
 
 ## Características
 
 *   **Arquitectura Limpia**: Separación clara entre componentes de UI (`components/ui`), lógica de negocio (`lib/services`) y vistas (`app/`).
-*   **Validación en Tiempo Real**: Feedback instantáneo para errores de formato de correo y longitud de contraseña.
+*   **Validación en Tiempo Real**: Feedback instantáneo para errores de formato de correo, longitud de contraseña y confirmación de contraseña.
 *   **Diseño Responsivo**: Diseño de panel dividido (Split-panel) en escritorio y vista enfocada en el formulario para dispositivos móviles.
 *   **Test-Driven Development (TDD)**: Cobertura del 100% con pruebas unitarias y de integración utilizando Vitest y React Testing Library.
 
@@ -54,6 +54,18 @@ Para probar el flujo de inicio de sesión exitoso, utiliza las siguientes creden
 
 Al ingresar credenciales válidas, el sistema redirigirá a una página de `/construction`.
 
+### Ruta de Registro
+
+La pantalla de registro está disponible en:
+
+*   `/registro`
+
+Escenarios de prueba recomendados:
+
+*   Registrar un correo nuevo con contraseña y confirmación válidas.
+*   Probar un correo ya registrado (`tucorreo@ejemplo.com`) para validar el mensaje de cuenta duplicada.
+*   Verificar errores de formato y de coincidencia de contraseña.
+
 ## Pruebas (Testing)
 
 El proyecto utiliza Vitest para pruebas unitarias e integración.
@@ -83,16 +95,18 @@ kyn-wallet/
 │   ├── globals.css       # Estilos globales (Tailwind)
 │   ├── layout.tsx        # Layout principal (HTML structure)
 │   ├── login.test.tsx    # Tests de integración del Login
-│   └── page.tsx          # Página principal (Login)
+│   ├── page.tsx          # Página principal (Login)
+│   └── registro/         # Ruta y tests de registro
 ├── components/           # Componentes React
 │   ├── BrandPanel.tsx    # Panel izquierdo con diseño de marca y tarjeta
 │   ├── LoginForm.tsx     # Formulario derecho con lógica
+│   ├── RegistrationForm.tsx # Formulario de registro con validaciones
 │   ├── SocialLogins.tsx  # Botones de login social (Google, Apple)
 │   └── ui/               # Componentes UI reusables (Input, Button)
 ├── lib/                  # Lógica de negocio y utilidades
 │   ├── constants/        # Design Tokens exportados
-│   ├── services/         # Servicios (AuthService) y tests
-│   ├── types/            # Definiciones de TypeScript (Interfaces)
-│   └── utils/            # Funciones de utilidad (Validaciones) y tests
+│   ├── services/         # Servicios (AuthService, RegistrationService) y tests
+│   ├── types/            # Definiciones de TypeScript (Auth, Registration)
+│   └── utils/            # Funciones de utilidad (Validation, RegistrationValidation) y tests
 └── specs/                # Documentación del diseño impulsado por especificaciones (SDD)
 ```

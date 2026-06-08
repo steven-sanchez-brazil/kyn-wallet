@@ -1,76 +1,110 @@
-# Implementation Plan: Login Spec Update
+# Implementation Plan: [FEATURE]
 
-**Branch**: `002-login-spec-update` | **Date**: 2026-06-04 | **Spec**: [specs/002-login-spec-update/spec.md](spec.md)
-**Input**: Feature specification from `specs/002-login-spec-update/spec.md`
+**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
+**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+
+**Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/plan-template.md` for the execution workflow.
 
 ## Summary
 
-Implement a login screen for the KynWallet application using a split-panel design (Brand vs Form) that strictly follows the provided Figma design. The technical stack will be Next.js 14 (App Router), TypeScript, and Tailwind CSS, following a custom implementation of design tokens to ensure zero additional external UI library dependencies.
+[Extract from feature spec: primary requirement + technical approach from research]
 
 ## Technical Context
 
-**Language/Version**: TypeScript / Next.js 14 (App Router)  
-**Primary Dependencies**: React 18, Next.js 14, Tailwind CSS 3.x  
-**Storage**: In-memory (hardcoded users array)  
-**Testing**: [NEEDS CLARIFICATION: Preferred test runner (Vitest/Jest) for TDD compliance?]  
-**Target Platform**: Web (Responsive)
-**Project Type**: web-application  
-**Performance Goals**: Login completion < 30s, successful validation < 2s.  
-**Constraints**: No external UI libraries (Radix, Shadcn, etc.), strict PascalCase naming.  
-**Scale/Scope**: Single feature (Login) with redirection to a placeholder screen.
+<!--
+  ACTION REQUIRED: Replace the content in this section with the technical details
+  for the project. The structure here is presented in advisory capacity to guide
+  the iteration process.
+-->
+
+**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
+**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
+**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
+**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
+**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
+**Project Type**: [e.g., library/cli/web-service/mobile-app/compiler/desktop-app or NEEDS CLARIFICATION]  
+**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
+**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
+**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-- [ ] **TDD**: Is the test strategy defined before implementation? (Needs clarification on runner)
-- [x] **SOLID**: Does the design enforce SOLID principles? (Clean separation of UI, logic, and constants)
-- [x] **Clean Architecture**: Are layers strictly separated with inward dependencies? (app/ for routing, components/ for UI, lib/ for logic)
-- [x] **DRY & YAGNI**: Is the design free of unnecessary complexity and duplicated code? (Focused only on login requirements)
-- [x] **Naming**: Does the plan respect `PascalCase` for structures? (Mandatory for all components and structures)
-- [x] **Dependencies**: Is the solution completely free of external libraries? (Using only Next.js/Tailwind as base, no UI libs)
-- [x] **Security**: Are all inputs validated and protected routes authenticated? (Validation FR-004 and FR-005)
+- [ ] **TDD**: Is the test strategy defined before implementation?
+- [ ] **SOLID**: Does the design enforce SOLID principles?
+- [ ] **Clean Architecture**: Are layers strictly separated with inward dependencies?
+- [ ] **DRY & YAGNI**: Is the design free of unnecessary complexity and duplicated code?
+- [ ] **Naming**: Does the plan respect `PascalCase` for structures?
+- [ ] **Dependencies**: Is the solution completely free of external libraries?
+- [ ] **Security**: Are all inputs validated and protected routes authenticated?
 
 ## Project Structure
 
 ### Documentation (this feature)
 
 ```text
-specs/002-login-spec-update/
-├── plan.md              # This file
-├── research.md          # Phase 0 output
-├── data-model.md        # Phase 1 output
-├── quickstart.md        # Phase 1 output
-├── checklists/
-│   └── requirements.md
-├── contracts/           # Phase 1 output
-└── spec.md              # Input spec
+specs/[###-feature]/
+├── plan.md              # This file (/speckit.plan command output)
+├── research.md          # Phase 0 output (/speckit.plan command)
+├── data-model.md        # Phase 1 output (/speckit.plan command)
+├── quickstart.md        # Phase 1 output (/speckit.plan command)
+├── contracts/           # Phase 1 output (/speckit.plan command)
+└── tasks.md             # Phase 2 output (/speckit.tasks command - NOT created by /speckit.plan)
 ```
 
 ### Source Code (repository root)
+<!--
+  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
+  for this feature. Delete unused options and expand the chosen structure with
+  real paths (e.g., apps/admin, packages/something). The delivered plan must
+  not include Option labels.
+-->
 
 ```text
-app/
-├── layout.tsx
-├── page.tsx             # Login page
-└── construction/        # Placeholder page
-    └── page.tsx
+# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
+src/
+├── models/
+├── services/
+├── cli/
+└── lib/
 
-components/
-├── BrandPanel.tsx
-├── LoginForm.tsx
-└── ui/                  # Custom UI elements (Input, Button, etc.)
+tests/
+├── contract/
+├── integration/
+└── unit/
 
-lib/
-├── auth.ts              # Hardcoded logic
-└── constants/
-    └── design-tokens.ts # Figma tokens mapped here
+# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
+backend/
+├── src/
+│   ├── models/
+│   ├── services/
+│   └── api/
+└── tests/
+
+frontend/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   └── services/
+└── tests/
+
+# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
+api/
+└── [same as backend above]
+
+ios/ or android/
+└── [platform-specific structure: feature modules, UI flows, platform tests]
 ```
 
-**Structure Decision**: Web application structure with Next.js App Router conventions, separating shared UI components and business logic in `components/` and `lib/` respectively.
+**Structure Decision**: [Document the selected structure and reference the real
+directories captured above]
 
 ## Complexity Tracking
 
+> **Fill ONLY if Constitution Check has violations that must be justified**
+
 | Violation | Why Needed | Simpler Alternative Rejected Because |
 |-----------|------------|-------------------------------------|
-| Next.js / Tailwind | Explicit user directive overrides strict "no external libraries" for the base framework. | Building a custom SSR framework and CSS parser is out of scope. |
+| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
+| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
