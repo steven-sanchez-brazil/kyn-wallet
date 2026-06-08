@@ -16,7 +16,18 @@ const LoginForm: React.FC = () => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Check registration success query parameter
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('registered') === 'success') {
+        setSuccessMessage('Registro realizado con éxito. Inicia sesión con tus nuevas credenciales');
+      }
+    }
+  }, []);
 
   // Real-time validation for email
   useEffect(() => {
@@ -83,6 +94,15 @@ const LoginForm: React.FC = () => {
           Ingresa tus credenciales para acceder a tu billetera
         </p>
       </div>
+
+      {successMessage && (
+        <div className="bg-emerald-50 text-emerald-800 p-4 rounded-lg text-sm font-medium border border-emerald-100 flex items-center gap-2">
+          <svg className="h-5 w-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>{successMessage}</span>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
         <div className="space-y-4">
@@ -160,6 +180,13 @@ const LoginForm: React.FC = () => {
         <div className="mt-6">
           <SocialLogins />
         </div>
+      </div>
+
+      <div className="text-center text-sm text-neutral-500 mt-6">
+        ¿No tienes cuenta?{' '}
+        <a href="/registry" className="font-semibold text-brand-primary hover:text-opacity-80">
+          Regístrate
+        </a>
       </div>
     </div>
   );
