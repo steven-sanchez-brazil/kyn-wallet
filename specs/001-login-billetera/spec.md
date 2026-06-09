@@ -2,8 +2,29 @@
 
 **Feature Branch**: `002-login-spec-update`  
 **Creado**: 2026-06-04  
-**Estado**: Borrador  
-**Entrada**: "Actualiza el spec del login. Usa el MCP de Figma para obtener el contexto de diseño de este frame: https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=2-2&t=tZepRnS4l8ITDqOs-4 Los colores, tipografía y estructura del formulario deben coincidir con el diseño de Figma (login)."
+**Estado**: Borrador
+### Detalle de la Entrada
+
+**Objetivo**: Actualizar la especificación de la pantalla de Login de KynWallet para que su identidad visual (colores, tipografía y estructura del formulario) coincida fielmente con el diseño de alta fidelidad definido en Figma, manteniendo el flujo de autenticación funcional.
+
+**Fuente de diseño (Figma)**:
+
+- **Archivo**: "Billetera Virtual - Prototipos".
+- **Frame de referencia**: Login (`node-id=2-2`).
+- **Enlace**: https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=2-2&t=tZepRnS4l8ITDqOs-4
+- **Método de extracción**: El contexto de diseño DEBE obtenerse mediante el MCP de Figma para asegurar valores exactos (códigos de color, pesos tipográficos, radios de borde, espaciados y disposición), evitando estimaciones manuales.
+
+**Alcance de la actualización**:
+
+- **Incluye**: Fidelidad visual del Login (Panel de Marca y Panel de Formulario), tokens de diseño (colores, tipografía Inter, radios de borde), estructura del formulario (campos, botón principal, elementos secundarios), y la validación de entradas y el flujo de autenticación hacia la pantalla protegida de éxito.
+- **No incluye**: La implementación funcional completa de los accesos sociales (Google/Apple) ni la recuperación de contraseña, que permanecen como elementos visuales con aviso "Funcionalidad próximamente" en esta fase.
+
+**Contexto y restricciones clave**:
+
+- La pantalla de Login es el punto de entrada de la aplicación; su fidelidad visual refuerza la confianza del usuario.
+- La actualización DEBE cumplir los Principios Centrales de la Constitución de KynWallet (v1.1.0): TDD, SOLID, Arquitectura Limpia, DRY/YAGNI, nombres en `PascalCase`, prohibición de librerías externas, validación rigurosa de entradas y autenticación de rutas protegidas.
+
+**Resultado esperado**: Una especificación actualizada y verificable cuyos requisitos funcionales y criterios de éxito reflejen tanto la fidelidad visual con el frame de Figma como las garantías de validación y autenticación exigidas por la constitución.
 
 ## Escenarios de Usuario y Pruebas *(obligatorio)*
 
@@ -60,10 +81,18 @@ Como usuario, quiero ver las opciones de "Recordarme", "¿Olvidaste tu contrase�
 
 ### Restricciones de Seguridad y Validación *(obligatorio)*
 
-- **Restricción**: Todas las entradas del usuario DEBEN ser rigurosamente validadas antes del procesamiento.
-- **Restricción**: Todas las rutas protegidas DEBEN requerir autenticación previa.
-- **Restricción**: El uso de librerías externas para la UI o lógica está estrictamente prohibido.
-- **Restricción**: Se debe usar `PascalCase` para el nombramiento de las estructuras relevantes.
+Esta funcionalidad DEBE cumplir los Principios Centrales de la Constitución de KynWallet (v1.1.0). Las siguientes restricciones son verificables en revisión:
+
+- **Validación de entradas (Principio VII)**: TODAS las entradas del usuario (correo, contraseña y cualquier dato de formulario) DEBEN validarse rigurosamente en la frontera de la aplicación ANTES de procesarse, verificando obligatoriedad, tipo, formato y longitud. Las entradas inválidas DEBEN rechazarse con un mensaje claro, sin procesarse ni persistirse.
+- **Autenticación de rutas protegidas (Principio VIII)**: El acceso a la pantalla de éxito ("En construcción") y a cualquier vista posterior DEBE requerir una sesión autenticada. El acceso no autenticado DEBE rechazarse explícitamente (redirección a Login), nunca degradarse de forma silenciosa.
+- **Sin librerías externas (Principio VI)**: El uso de librerías externas de terceros para la UI o la lógica está estrictamente prohibido. Toda funcionalidad DEBE implementarse con capacidades nativas de la plataforma o código propio.
+- **Convención de nombres (Principio V)**: Las estructuras relevantes (componentes, clases, tipos, interfaces y archivos que las exporten) DEBEN nombrarse en `PascalCase`.
+
+### Restricciones de Calidad y Diseño *(obligatorio)*
+
+- **TDD (Principio I)**: El comportamiento de esta funcionalidad DEBE desarrollarse con pruebas escritas antes del código (ciclo Rojo-Verde-Refactorización); cada comportamiento nuevo o modificado DEBE incluir su prueba en el mismo cambio.
+- **SOLID y Arquitectura Limpia (Principios II y III)**: La lógica de autenticación y validación DEBE residir fuera de los componentes de UI, separada en las capas correspondientes (Dominio/Casos de Uso/Adaptadores), con dependencias apuntando hacia adentro mediante abstracciones.
+- **DRY y YAGNI (Principio IV)**: La lógica de validación reutilizable DEBE tener una única representación autoritativa; NO se DEBE añadir funcionalidad ni abstracciones que no respondan a un requisito explícito de esta especificación.
 
 ### Requisitos Funcionales
 
@@ -75,6 +104,11 @@ Como usuario, quiero ver las opciones de "Recordarme", "¿Olvidaste tu contrase�
 - **FR-006**: Los encabezados DEBEN usar el color `#16182c` (Neutral 900) y los textos secundarios el color `#8a8ca8` (Neutral 500).
 - **FR-007**: El sistema DEBE incluir un mockup de tarjeta (Card Mockup) en el panel izquierdo con fondo `rgba(255, 255, 255, 0.16)` y borde `rgba(255, 255, 255, 0.35)`.
 - **FR-008**: El sistema DEBE mostrar opciones de acceso social (Google, Apple) con bordes de 1.5px color `#d7d9e6`.
+- **FR-009**: El sistema DEBE validar que el correo electrónico tenga un formato válido antes de procesar el acceso, mostrando un mensaje inline cuando no lo sea.
+- **FR-010**: El sistema DEBE validar que la contraseña tenga un mínimo de 8 caracteres antes de procesar el acceso, mostrando un mensaje inline cuando no se cumpla.
+- **FR-011**: Cuando exista al menos un error de validación, el sistema NO DEBE procesar el acceso y DEBE conservar la información ya ingresada por el usuario.
+- **FR-012**: Ante credenciales válidas, el sistema DEBE establecer una sesión autenticada y redirigir a la pantalla protegida de éxito ("En construcción").
+- **FR-013**: La pantalla de éxito ("En construcción") y cualquier vista protegida DEBEN requerir una sesión autenticada; el acceso sin autenticación DEBE rechazarse explícitamente redirigiendo a la pantalla de Login.
 
 ### Entidades Clave
 
@@ -88,6 +122,8 @@ Como usuario, quiero ver las opciones de "Recordarme", "¿Olvidaste tu contrase�
 - **SC-001**: La interfaz del Login coincide visualmente en un 95% con el diseño de Figma proporcionado (disposición, colores y tipografía).
 - **SC-002**: El formulario es funcional y permite el acceso con las credenciales hardcodeadas en menos de 2 segundos de procesamiento.
 - **SC-003**: Todos los elementos de entrada (inputs, checkbox, botones) tienen el radio de borde de 12px (o 6px para el checkbox de Recordarme) según el diseño.
+- **SC-004**: El 100% de los intentos de acceso con datos inválidos (correo mal formado o contraseña con menos de 8 caracteres) son bloqueados y muestran el mensaje inline correspondiente, conservando los datos ingresados.
+- **SC-005**: El 100% de los intentos de acceder a la pantalla protegida sin una sesión autenticada son rechazados y redirigidos a la pantalla de Login.
 
 ## Suposiciones
 

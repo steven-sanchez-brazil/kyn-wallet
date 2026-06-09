@@ -1,76 +1,76 @@
-# Implementation Plan: Login Spec Update
+# Plan de Implementación: Actualización del Spec de Login
 
-**Branch**: `002-login-spec-update` | **Date**: 2026-06-04 | **Spec**: [specs/002-login-spec-update/spec.md](spec.md)
-**Input**: Feature specification from `specs/002-login-spec-update/spec.md`
+**Rama**: `002-login-spec-update` | **Fecha**: 2026-06-04 | **Spec**: [specs/002-login-spec-update/spec.md](spec.md)
+**Entrada**: Especificación de funcionalidad desde `specs/002-login-spec-update/spec.md`
 
-## Summary
+## Resumen
 
-Implement a login screen for the KynWallet application using a split-panel design (Brand vs Form) that strictly follows the provided Figma design. The technical stack will be Next.js 14 (App Router), TypeScript, and Tailwind CSS, following a custom implementation of design tokens to ensure zero additional external UI library dependencies.
+Implementar una pantalla de Login para la aplicación KynWallet usando un diseño de pantalla dividida (Panel de Marca vs Panel de Formulario) que siga estrictamente el diseño de Figma proporcionado. El stack técnico será Next.js 14 (App Router), TypeScript y Tailwind CSS, con una implementación propia de los tokens de diseño para garantizar cero dependencias adicionales de librerías de UI externas.
 
-## Technical Context
+## Contexto Técnico
 
-**Language/Version**: TypeScript / Next.js 14 (App Router)  
-**Primary Dependencies**: React 18, Next.js 14, Tailwind CSS 3.x  
-**Storage**: In-memory (hardcoded users array)  
-**Testing**: [NEEDS CLARIFICATION: Preferred test runner (Vitest/Jest) for TDD compliance?]  
-**Target Platform**: Web (Responsive)
-**Project Type**: web-application  
-**Performance Goals**: Login completion < 30s, successful validation < 2s.  
-**Constraints**: No external UI libraries (Radix, Shadcn, etc.), strict PascalCase naming.  
-**Scale/Scope**: Single feature (Login) with redirection to a placeholder screen.
+**Lenguaje/Versión**: TypeScript / Next.js 14 (App Router)  
+**Dependencias Principales**: React 18, Next.js 14, Tailwind CSS 3.x  
+**Almacenamiento**: En memoria (arreglo de usuarios hardcodeado)  
+**Pruebas**: Vitest + React Testing Library (runner definido para cumplimiento de TDD)  
+**Plataforma Objetivo**: Web (Responsive)
+**Tipo de Proyecto**: aplicación web  
+**Objetivos de Rendimiento**: Completar el login < 30s, validación exitosa < 2s.  
+**Restricciones**: Sin librerías de UI externas (Radix, Shadcn, etc.), nomenclatura estricta en PascalCase.  
+**Escala/Alcance**: Funcionalidad única (Login) con redirección a una pantalla placeholder.
 
-## Constitution Check
+## Verificación de Constitución
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+*GATE: Debe pasar antes de la investigación de Fase 0. Re-verificar tras el diseño de Fase 1.*
 
-- [ ] **TDD**: Is the test strategy defined before implementation? (Needs clarification on runner)
-- [x] **SOLID**: Does the design enforce SOLID principles? (Clean separation of UI, logic, and constants)
-- [x] **Clean Architecture**: Are layers strictly separated with inward dependencies? (app/ for routing, components/ for UI, lib/ for logic)
-- [x] **DRY & YAGNI**: Is the design free of unnecessary complexity and duplicated code? (Focused only on login requirements)
-- [x] **Naming**: Does the plan respect `PascalCase` for structures? (Mandatory for all components and structures)
-- [x] **Dependencies**: Is the solution completely free of external libraries? (Using only Next.js/Tailwind as base, no UI libs)
-- [x] **Security**: Are all inputs validated and protected routes authenticated? (Validation FR-004 and FR-005)
+- [x] **TDD**: ¿La estrategia de pruebas está definida antes de la implementación? (Vitest + React Testing Library; pruebas antes del código)
+- [x] **SOLID**: ¿El diseño aplica los principios SOLID? (Separación limpia de UI, lógica y constantes)
+- [x] **Arquitectura Limpia**: ¿Las capas están estrictamente separadas con dependencias hacia adentro? (app/ para enrutamiento, components/ para UI, lib/ para lógica)
+- [x] **DRY y YAGNI**: ¿El diseño está libre de complejidad innecesaria y código duplicado? (Enfocado solo en los requisitos del login)
+- [x] **Nomenclatura**: ¿El plan respeta `PascalCase` para las estructuras? (Obligatorio para todos los componentes y estructuras)
+- [x] **Dependencias**: ¿La solución está completamente libre de librerías externas? (Usando solo Next.js/Tailwind como base, sin librerías de UI)
+- [x] **Seguridad**: ¿Todas las entradas se validan y las rutas protegidas se autentican? (Validación FR-009/FR-010, autenticación FR-012/FR-013)
 
-## Project Structure
+## Estructura del Proyecto
 
-### Documentation (this feature)
+### Documentación (esta funcionalidad)
 
 ```text
 specs/002-login-spec-update/
-├── plan.md              # This file
-├── research.md          # Phase 0 output
-├── data-model.md        # Phase 1 output
-├── quickstart.md        # Phase 1 output
+├── plan.md              # Este archivo
+├── research.md          # Salida de Fase 0
+├── data-model.md        # Salida de Fase 1
+├── quickstart.md        # Salida de Fase 1
 ├── checklists/
 │   └── requirements.md
-├── contracts/           # Phase 1 output
-└── spec.md              # Input spec
+├── contracts/           # Salida de Fase 1
+└── spec.md              # Spec de entrada
 ```
 
-### Source Code (repository root)
+### Código Fuente (raíz del repositorio)
 
 ```text
 app/
 ├── layout.tsx
-├── page.tsx             # Login page
-└── construction/        # Placeholder page
+├── page.tsx             # Página de Login
+└── construction/        # Página placeholder
     └── page.tsx
 
 components/
 ├── BrandPanel.tsx
 ├── LoginForm.tsx
-└── ui/                  # Custom UI elements (Input, Button, etc.)
+└── ui/                  # Elementos de UI propios (Input, Button, etc.)
 
 lib/
-├── auth.ts              # Hardcoded logic
+├── auth.ts              # Lógica hardcodeada
 └── constants/
-    └── design-tokens.ts # Figma tokens mapped here
+    └── design-tokens.ts # Tokens de Figma mapeados aquí
 ```
 
-**Structure Decision**: Web application structure with Next.js App Router conventions, separating shared UI components and business logic in `components/` and `lib/` respectively.
+**Decisión de Estructura**: Estructura de aplicación web con convenciones del App Router de Next.js, separando los componentes de UI compartidos y la lógica de negocio en `components/` y `lib/` respectivamente.
 
-## Complexity Tracking
+## Seguimiento de Complejidad
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| Next.js / Tailwind | Explicit user directive overrides strict "no external libraries" for the base framework. | Building a custom SSR framework and CSS parser is out of scope. |
+| Violación | Por qué es necesaria | Por qué se rechazó la alternativa más simple |
+|-----------|----------------------|----------------------------------------------|
+| Next.js / Tailwind | La directiva explícita del usuario prevalece sobre la regla estricta de "sin librerías externas" para el framework base. | Construir un framework SSR propio y un parser de CSS está fuera del alcance. |

@@ -19,3 +19,43 @@ describe('AuthService', () => {
     expect(result).toBe(false);
   });
 });
+
+describe('AuthService.register', () => {
+  it('should register a new email successfully (C1)', async () => {
+    const result = await AuthService.register({
+      FullName: 'Nuevo Usuario',
+      Email: 'nuevo@ejemplo.com',
+      Password: 'password123',
+      ConfirmPassword: 'password123',
+      AcceptedTerms: true,
+    });
+    expect(result.Success).toBe(true);
+  });
+
+  it('should reject an already registered email (C2)', async () => {
+    const result = await AuthService.register({
+      FullName: 'Duplicado',
+      Email: 'tucorreo@ejemplo.com',
+      Password: 'password123',
+      ConfirmPassword: 'password123',
+      AcceptedTerms: true,
+    });
+    expect(result.Success).toBe(false);
+    expect(result.Error).toBe('Este correo ya está registrado');
+  });
+
+  it('should allow login with a newly registered email (C3)', async () => {
+    await AuthService.register({
+      FullName: 'Login Posterior',
+      Email: 'posterior@ejemplo.com',
+      Password: 'password123',
+      ConfirmPassword: 'password123',
+      AcceptedTerms: true,
+    });
+    const loginResult = await AuthService.login({
+      Email: 'posterior@ejemplo.com',
+      Password: 'password123',
+    });
+    expect(loginResult).toBe(true);
+  });
+});

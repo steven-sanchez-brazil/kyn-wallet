@@ -1,15 +1,18 @@
 import BrandPanel from '@/components/BrandPanel';
-import LoginForm from '@/components/LoginForm';
+import RegisterForm from '@/components/RegisterForm';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <main className="min-h-screen flex">
       {/* Brand Side (Left on Desktop) */}
-      <BrandPanel />
+      <BrandPanel
+        headlineLines={['Comienza tu', 'camino financiero']}
+        subtitle="Crea tu cuenta y empieza a mover tu dinero sin fronteras."
+      />
 
       {/* Form Side (Right on Desktop, Full on Mobile) */}
       <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 bg-white">
-        <LoginForm />
+        <RegisterForm />
       </div>
     </main>
   );

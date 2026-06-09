@@ -1,37 +1,37 @@
-# Research: Login Implementation
+# Investigación: Implementación del Login
 
-## Decision: Testing Framework
-- **Decision**: Vitest + React Testing Library + JSDOM.
-- **Rationale**: 
-    - **Performance**: Instant watch mode and faster execution compared to Jest.
-    - **Modern Stack**: Native ESM and TypeScript support align with Next.js 14.
-    - **DX**: API compatibility with Jest makes it easy to use while providing a better developer experience.
-- **Alternatives considered**: 
-    - **Jest**: Rejected due to complex configuration with ESM/Next.js and slower startup times.
-    - **Cypress/Playwright**: Will be used for E2E if needed, but not as the primary unit/integration test runner for TDD logic.
+## Decisión: Framework de Pruebas
+- **Decisión**: Vitest + React Testing Library + JSDOM.
+- **Justificación**: 
+    - **Rendimiento**: Modo watch instantáneo y ejecución más rápida en comparación con Jest.
+    - **Stack Moderno**: Soporte nativo de ESM y TypeScript, alineado con Next.js 14.
+    - **DX**: La compatibilidad de API con Jest facilita su uso a la vez que ofrece una mejor experiencia de desarrollo.
+- **Alternativas consideradas**: 
+    - **Jest**: Rechazado por su configuración compleja con ESM/Next.js y tiempos de arranque más lentos.
+    - **Cypress/Playwright**: Se usarán para E2E si es necesario, pero no como runner principal de pruebas unitarias/de integración para la lógica TDD.
 
-## Decision: Design Token Mapping
-- **Decision**: Centralized TypeScript definition in `lib/constants/DesignTokens.ts` imported into `tailwind.config.ts`.
-- **Rationale**: 
-    - **Type Safety**: Ensures design tokens are consistent across the app.
-    - **Maintainability**: Single source of truth for Figma values.
-    - **Tailwind Integration**: Easy to extend the theme in `tailwind.config.ts` by importing the object.
-- **Alternatives considered**: 
-    - **Direct Hardcoding**: Rejected as it violates maintainability and DRY principles.
-    - **CSS Variables only**: Rejected as it loses Tailwind's utility class benefits and type-safe config.
+## Decisión: Mapeo de Tokens de Diseño
+- **Decisión**: Definición centralizada en TypeScript en `lib/constants/DesignTokens.ts`, importada en `tailwind.config.ts`.
+- **Justificación**: 
+    - **Seguridad de Tipos**: Garantiza que los tokens de diseño sean consistentes en toda la app.
+    - **Mantenibilidad**: Una única fuente de verdad para los valores de Figma.
+    - **Integración con Tailwind**: Es fácil extender el tema en `tailwind.config.ts` importando el objeto.
+- **Alternativas consideradas**: 
+    - **Hardcodeo Directo**: Rechazado porque viola la mantenibilidad y el principio DRY.
+    - **Solo Variables CSS**: Rechazado porque pierde los beneficios de las clases utilitarias de Tailwind y la configuración con seguridad de tipos.
 
-## Decision: Component Architecture
-- **Decision**: Clean Architecture approach with a split between UI components and logic.
-- **Rationale**: 
-    - **SOLID**: Separating `LoginForm` (UI) from `AuthService` (Logic).
-    - **Clean Architecture**: Domain entities (User) and Use Cases (Login) separated from Infrastructure (Next.js components).
-- **Alternatives considered**: 
-    - **Everything in Page**: Rejected as it violates SRP and Clean Architecture principles.
+## Decisión: Arquitectura de Componentes
+- **Decisión**: Enfoque de Arquitectura Limpia con una separación entre componentes de UI y lógica.
+- **Justificación**: 
+    - **SOLID**: Separar `LoginForm` (UI) de `AuthService` (Lógica).
+    - **Arquitectura Limpia**: Entidades de dominio (User) y Casos de Uso (Login) separados de la Infraestructura (componentes de Next.js).
+- **Alternativas consideradas**: 
+    - **Todo en la Página**: Rechazado porque viola el SRP y los principios de Arquitectura Limpia.
 
-## Decision: Brand Panel Implementation
-- **Decision**: Pure CSS/Tailwind implementation of the gradient and mockup layout.
-- **Rationale**: 
-    - **Performance**: No extra SVG assets or heavy images where CSS suffices.
-    - **Constraint Compliance**: Zero external libraries.
-- **Alternatives considered**: 
-    - **Figma Exported SVG**: Rejected to maintain control over responsiveness and animations via code.
+## Decisión: Implementación del Panel de Marca
+- **Decisión**: Implementación del degradado y la disposición del mockup con CSS/Tailwind puro.
+- **Justificación**: 
+    - **Rendimiento**: Sin assets SVG adicionales ni imágenes pesadas donde el CSS es suficiente.
+    - **Cumplimiento de Restricciones**: Cero librerías externas.
+- **Alternativas consideradas**: 
+    - **SVG Exportado de Figma**: Rechazado para mantener el control sobre la responsividad y las animaciones mediante código.

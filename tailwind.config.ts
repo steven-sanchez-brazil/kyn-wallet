@@ -12,11 +12,13 @@ const config: Config = {
       colors: {
         brand: {
           primary: DesignTokens.Colors.BrandPrimary,
+          link: DesignTokens.Colors.BrandLink,
           gradientStart: DesignTokens.Colors.BrandGradientStart,
           gradientEnd: DesignTokens.Colors.BrandGradientEnd,
         },
         neutral: {
           900: DesignTokens.Colors.Neutral900,
+          700: DesignTokens.Colors.Neutral700,
           500: DesignTokens.Colors.Neutral500,
           300: DesignTokens.Colors.Neutral300,
         },

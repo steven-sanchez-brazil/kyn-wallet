@@ -1,6 +1,7 @@
 # Implementation Plan: [FEATURE]
 
 **Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
+
 **Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
 
 **Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/plan-template.md` for the execution workflow.
@@ -17,27 +18,47 @@
   the iteration process.
 -->
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
+**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]
+
+**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]
+
+**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
+
+**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]
+
 **Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [e.g., library/cli/web-service/mobile-app/compiler/desktop-app or NEEDS CLARIFICATION]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
+
+**Project Type**: [e.g., library/cli/web-service/mobile-app/compiler/desktop-app or NEEDS CLARIFICATION]
+
+**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]
+
+**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]
+
 **Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-- [ ] **TDD**: Is the test strategy defined before implementation?
-- [ ] **SOLID**: Does the design enforce SOLID principles?
-- [ ] **Clean Architecture**: Are layers strictly separated with inward dependencies?
-- [ ] **DRY & YAGNI**: Is the design free of unnecessary complexity and duplicated code?
-- [ ] **Naming**: Does the plan respect `PascalCase` for structures?
-- [ ] **Dependencies**: Is the solution completely free of external libraries?
-- [ ] **Security**: Are all inputs validated and protected routes authenticated?
+Derived from `.specify/memory/constitution.md` (v1.1.0). Each gate MUST be satisfied
+or justified in Complexity Tracking:
+
+- [ ] **I. TDD**: El plan prevé escribir pruebas (Vitest/RTL) antes del código de
+      producción y respetar el ciclo Rojo-Verde-Refactorización.
+- [ ] **II. SOLID**: El diseño respeta responsabilidad única e inversión de
+      dependencias; la UI no contiene lógica de negocio.
+- [ ] **III. Arquitectura Limpia**: Capas separadas (Dominio, Casos de Uso,
+      Interfaces/Adaptadores, Infraestructura) con dependencias hacia adentro.
+- [ ] **IV. DRY y YAGNI**: Sin duplicación de lógica ni abstracción especulativa;
+      solo lo requerido por el alcance actual.
+- [ ] **V. PascalCase**: Componentes, clases, tipos y archivos de artefacto principal
+      en `PascalCase`.
+- [ ] **VI. Sin dependencias externas**: No se añaden dependencias de runtime a
+      `package.json`; solo capacidades nativas o código propio.
+- [ ] **VII. Validación de entradas**: Toda entrada de usuario se valida en la
+      frontera antes de procesarse.
+- [ ] **VIII. Autenticación**: Las rutas protegidas exigen autenticación y rechazan
+      explícitamente el acceso no autorizado.
 
 ## Project Structure
 
