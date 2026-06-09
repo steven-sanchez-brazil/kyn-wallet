@@ -1,0 +1,7 @@
+{
+  "inputs": {
+    "spec": "Registro de Usuarios",
+    "integration": "gemini",
+    "scope": "full"
+  }
+}

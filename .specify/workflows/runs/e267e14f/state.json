@@ -1,0 +1,31 @@
+{
+  "run_id": "e267e14f",
+  "workflow_id": "speckit",
+  "status": "failed",
+  "current_step_index": 0,
+  "current_step_id": "specify",
+  "step_results": {
+    "specify": {
+      "integration": "gemini",
+      "model": null,
+      "options": {},
+      "input": {
+        "args": "Registro de Usuarios"
+      },
+      "output": {
+        "command": "speckit.specify",
+        "integration": "gemini",
+        "model": null,
+        "options": {},
+        "input": {
+          "args": "Registro de Usuarios"
+        },
+        "exit_code": 1,
+        "dispatched": false
+      },
+      "status": "failed"
+    }
+  },
+  "created_at": "2026-06-08T23:18:57.981069+00:00",
+  "updated_at": "2026-06-08T23:18:58.013429+00:00"
+}

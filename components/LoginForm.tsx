@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Input } from './ui/Input';
 import { Button } from './ui/Button';
 import SocialLogins from './SocialLogins';
@@ -10,6 +10,9 @@ import { validateEmail, validatePassword } from '../lib/utils/Validation';
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const showRegisterSuccess = searchParams.get('registered') === 'success';
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -83,6 +86,12 @@ const LoginForm: React.FC = () => {
           Ingresa tus credenciales para acceder a tu billetera
         </p>
       </div>
+
+      {showRegisterSuccess && (
+        <div className="bg-green-50 text-green-700 p-3 rounded-lg text-sm border border-green-200 font-medium">
+          ¡Registro exitoso! Por favor inicia sesión.
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
         <div className="space-y-4">

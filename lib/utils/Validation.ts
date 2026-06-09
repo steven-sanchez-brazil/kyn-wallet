@@ -12,3 +12,10 @@ export const validateEmail = (email: string): boolean => {
 export const validatePassword = (password: string): boolean => {
   return password.length >= 8;
 };
+
+/**
+ * Valida si un nombre es válido (no vacío y mínimo 3 caracteres).
+ */
+export const validateName = (name: string): boolean => {
+  return name.trim().length >= 3;
+};
