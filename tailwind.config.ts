@@ -20,6 +20,14 @@ const config: Config = {
           500: DesignTokens.Colors.Neutral500,
           300: DesignTokens.Colors.Neutral300,
         },
+        success: {
+          700: DesignTokens.Colors.Success700,
+          50: DesignTokens.Colors.Success50,
+        },
+        error: {
+          500: DesignTokens.Colors.Error500,
+          50: DesignTokens.Colors.Error50,
+        },
       },
       borderRadius: {
         lg: DesignTokens.BorderRadius.Lg,

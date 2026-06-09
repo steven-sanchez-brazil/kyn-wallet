@@ -7,10 +7,21 @@ import React from 'react';
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
     push: vi.fn(),
+    replace: vi.fn(),
+  }),
+  useSearchParams: () => ({
+    get: () => null,
   }),
 }));
 
 describe('LoginForm UI', () => {
+  it('should render register link', () => {
+    render(<LoginForm />);
+
+    const registerLink = screen.getByRole('link', { name: /Regístrate/i });
+    expect(registerLink).toHaveAttribute('href', '/register');
+  });
+
   it('should show real-time validation error for invalid email', async () => {
     render(<LoginForm />);
     
