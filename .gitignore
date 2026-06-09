@@ -64,3 +64,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 *.log
+
+# Guías locales excluidas de git
+comandos-taller.md
