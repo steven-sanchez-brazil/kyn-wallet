@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Input } from './ui/Input';
 import { Button } from './ui/Button';
@@ -8,7 +9,11 @@ import SocialLogins from './SocialLogins';
 import { AuthService } from '../lib/services/AuthService';
 import { validateEmail, validatePassword } from '../lib/utils/Validation';
 
-const LoginForm: React.FC = () => {
+interface LoginFormProps {
+  successMessage?: string;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ successMessage }) => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -85,6 +90,12 @@ const LoginForm: React.FC = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+        {successMessage && (
+          <div className="bg-emerald-50 text-emerald-700 p-3 rounded-lg text-sm border border-emerald-200">
+            {successMessage}
+          </div>
+        )}
+
         <div className="space-y-4">
           <Input
             id="email"
@@ -160,6 +171,13 @@ const LoginForm: React.FC = () => {
         <div className="mt-6">
           <SocialLogins />
         </div>
+
+        <p className="mt-5 text-sm text-center text-neutral-500">
+          ¿No tienes cuenta?{' '}
+          <Link href="/register" className="text-brand-primary font-semibold hover:underline">
+            Regístrate
+          </Link>
+        </p>
       </div>
     </div>
   );
