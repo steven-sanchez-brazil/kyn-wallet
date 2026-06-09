@@ -8,7 +8,7 @@
 
 ## Summary
 
-Implementar la pantalla de Registro de Usuarios para Kyn-Wallet con paridad visual frente al diseño de referencia, validaciones inline completas, redirección a `/login` en caso de éxito y comportamiento responsive (desktop dos paneles, mobile solo formulario), reutilizando el stack existente Next.js + TypeScript + Tailwind sin agregar librerías externas.
+Implementar la pantalla de Registro de Usuarios para Kyn-Wallet con paridad visual frente al diseño de referencia, validaciones inline completas, manejo explícito de errores de negocio/técnicos, botón de envío con estado de carga bloqueante y redirección a `/login` en caso de éxito, manteniendo comportamiento responsive (desktop dos paneles, mobile solo formulario) y reutilizando el stack existente Next.js + TypeScript + Tailwind sin agregar librerías externas.
 
 ## Technical Context
 
@@ -20,7 +20,7 @@ Implementar la pantalla de Registro de Usuarios para Kyn-Wallet con paridad visu
 **Project Type**: web-application (monorepo simple de una app Next.js)  
 **Performance Goals**: validación de formulario perceptiblemente inmediata (<100 ms por interacción) y transición de navegación post-registro sin bloqueos visibles  
 **Constraints**: cero librerías externas nuevas; cumplimiento de `PascalCase`; validación rigurosa de entrada; equivalencia visual con diseño de referencia; mantener arquitectura limpia existente  
-**Scale/Scope**: una nueva pantalla/flujo de registro y su lógica de validación, más pruebas unitarias e integración de UI
+**Scale/Scope**: una nueva pantalla/flujo de registro con validación y manejo de errores (correo duplicado + error técnico transitorio), más pruebas unitarias e integración de UI
 
 ## Constitution Check
 
@@ -32,7 +32,7 @@ Implementar la pantalla de Registro de Usuarios para Kyn-Wallet con paridad visu
 - [x] **DRY & YAGNI**: Se reutiliza infraestructura existente (componentes UI, tokens, helpers) y solo se implementa alcance del spec.
 - [x] **Naming**: Se mantiene convención `PascalCase` para componentes, tipos y estructuras relevantes.
 - [x] **Dependencies**: No se incorporan librerías externas adicionales.
-- [x] **Security & Validation**: Validaciones inline y bloqueo de envío para entradas inválidas/terminos no aceptados contemplados.
+- [x] **Security & Validation**: Validaciones inline, bloqueo de envío duplicado en `submitting` y manejo de errores de registro contemplados.
 
 Re-check post-design: **PASS**. Ningún artefacto de diseño introduce violaciones constitucionales.
 

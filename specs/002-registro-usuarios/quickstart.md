@@ -19,9 +19,12 @@ npm run dev
 2. Verificar en desktop layout de dos paneles y en mobile solo formulario.
 3. Intentar enviar vacio: deben aparecer errores inline en todos los campos obligatorios.
 4. Ingresar correo invalido, password corta o confirmacion distinta: validar mensajes inline especificos.
-5. Marcar terminos y completar datos validos: al enviar debe redirigir a `/login` con mensaje de exito.
-6. Presionar botones Google y Apple: debe mostrarse alerta "Proximamente".
-7. Presionar enlace "¿Ya tienes cuenta? Inicia sesion": debe navegar a `/login`.
+5. Ingresar un correo ya existente: debe mostrarse error inline en correo y permanecer en `/register`.
+6. Marcar terminos y completar datos validos: al enviar, el boton "Crear cuenta" debe deshabilitarse y mostrar estado de carga hasta la respuesta.
+7. Simular fallo tecnico/transitorio de registro: debe mostrarse "No pudimos crear tu cuenta. Intenta nuevamente." y permanecer en `/register`.
+8. Completar datos validos con respuesta exitosa: debe redirigir a `/login` con mensaje de exito.
+9. Presionar botones Google y Apple: debe mostrarse alerta "Proximamente".
+10. Presionar enlace "¿Ya tienes cuenta? Inicia sesion": debe navegar a `/login`.
 
 ## Ejecutar pruebas
 ```bash

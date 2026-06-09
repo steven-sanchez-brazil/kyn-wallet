@@ -1,22 +1,33 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { Input } from './ui/Input';
 import { Button } from './ui/Button';
 import SocialLogins from './SocialLogins';
 import { AuthService } from '../lib/services/AuthService';
 import { validateEmail, validatePassword } from '../lib/utils/Validation';
+import { AuthMessages } from '../lib/constants/AuthMessages';
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get('registered') === '1') {
+      setSuccessMessage(AuthMessages.RegisterSuccess);
+      router.replace('/login');
+    }
+  }, [router, searchParams]);
 
   // Real-time validation for email
   useEffect(() => {
@@ -142,6 +153,12 @@ const LoginForm: React.FC = () => {
           </div>
         )}
 
+        {successMessage && (
+          <div className="bg-green-50 text-green-700 p-3 rounded-lg text-sm border border-green-200">
+            {successMessage}
+          </div>
+        )}
+
         <Button type="submit" disabled={loading || !!emailError || !!passwordError}>
           {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
         </Button>
@@ -160,6 +177,13 @@ const LoginForm: React.FC = () => {
         <div className="mt-6">
           <SocialLogins />
         </div>
+
+        <p className="mt-6 text-center text-sm text-neutral-500">
+          ¿No tienes cuenta?{' '}
+          <Link href="/register" className="font-semibold text-brand-primary hover:text-opacity-80">
+            Regístrate
+          </Link>
+        </p>
       </div>
     </div>
   );

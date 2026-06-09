@@ -5,6 +5,14 @@
 **Status**: Draft  
 **Input**: User description: "Necesito crear una nueva feature de Registro de Usuarios para Kyn-Wallet, con UI idéntica al diseño de referencia y validaciones/flujo de registro definidos."
 
+## Clarifications
+
+### Session 2026-06-08
+
+- Q: Cuando el registro falle por correo ya existente, ¿cómo debe responder la UI? → A: Mostrar error inline en correo y permanecer en registro.
+- Q: Durante el envío válido de registro (estado `submitting`), ¿qué debe hacer el botón "Crear cuenta"? → A: Deshabilitar botón y mostrar estado de carga hasta respuesta.
+- Q: Si falla el registro por error técnico/transitorio (timeout o caída de servicio), ¿qué feedback debe ver la persona usuaria? → A: Mostrar mensaje inline/banner "No pudimos crear tu cuenta. Intenta nuevamente." y permanecer en registro.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Registro completo con validaciones (Priority: P1)
@@ -20,6 +28,7 @@ Como visitante sin cuenta, quiero completar el formulario de registro con mis da
 1. **Given** una persona en la pantalla de registro, **When** deja cualquier campo obligatorio vacío y pulsa "Crear cuenta", **Then** se muestran mensajes inline por cada campo faltante y el envío no se realiza.
 2. **Given** una persona en la pantalla de registro, **When** ingresa correo con formato inválido, contraseña menor a 8 caracteres o contraseñas distintas, **Then** se muestran errores inline específicos y no se permite continuar.
 3. **Given** una persona en la pantalla de registro, **When** completa nombre completo, correo válido, contraseña válida, confirmación coincidente y acepta términos, **Then** el registro se procesa como exitoso.
+4. **Given** una persona con datos válidos en el formulario, **When** ocurre un error técnico/transitorio al registrar, **Then** se muestra el mensaje "No pudimos crear tu cuenta. Intenta nuevamente.", la persona permanece en registro y puede reintentar.
 
 ---
 
@@ -56,9 +65,12 @@ Como visitante, quiero ver opciones de acceso social y una interfaz adaptable al
 
 - Intento de envío sin aceptar términos y condiciones.
 - Correos con espacios al inicio o final ingresados por error.
+- Intento de registro con correo ya existente: se muestra error inline en el campo correo y la persona permanece en la pantalla de registro.
 - Contraseña y confirmación idénticas salvo diferencia de mayúsculas/minúsculas.
 - Nombre completo con caracteres especiales válidos (acentos, apóstrofes, guiones).
 - Acción repetida del botón "Crear cuenta" durante un envío en curso.
+- Durante `submitting`, el botón "Crear cuenta" queda deshabilitado y con indicador de carga para prevenir envíos duplicados.
+- Error técnico/transitorio de registro (por ejemplo timeout o caída de servicio): se muestra banner/mensaje inline "No pudimos crear tu cuenta. Intenta nuevamente." y no hay redirección.
 - Cambio de orientación o tamaño de pantalla durante el llenado del formulario.
 
 ## Requirements *(mandatory)*
@@ -84,6 +96,9 @@ Como visitante, quiero ver opciones de acceso social y una interfaz adaptable al
 - **FR-010**: Tras un registro exitoso, el sistema DEBE redirigir a `/login` y mostrar un mensaje de éxito.
 - **FR-011**: La interfaz DEBE mantener paridad visual con el diseño de referencia definido para la pantalla de registro.
 - **FR-012**: La interfaz DEBE comportarse de forma responsive, mostrando dos paneles en desktop y solo el formulario en mobile.
+- **FR-013**: Si el correo ingresado ya existe, el sistema DEBE mostrar error inline asociado al campo correo y DEBE mantener a la persona en la pantalla de registro sin redirigir.
+- **FR-014**: Durante el estado de envío válido (`submitting`), el sistema DEBE deshabilitar el botón "Crear cuenta" y DEBE mostrar un estado de carga hasta recibir respuesta del registro.
+- **FR-015**: Si el registro falla por error técnico/transitorio, el sistema DEBE mostrar el mensaje "No pudimos crear tu cuenta. Intenta nuevamente.", DEBE mantener a la persona en la pantalla de registro y DEBE permitir reintento.
 
 ### Key Entities *(include if feature involves data)*
 

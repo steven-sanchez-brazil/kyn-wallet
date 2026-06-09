@@ -17,6 +17,7 @@ interface RegisterResult {
   Exitoso: boolean;
   Mensaje: string;
   RutaSiguiente: '/login';
+  TipoError?: 'CorreoExistente' | 'TecnicoTransitorio';
   Errores?: {
     NombreCompleto?: string;
     CorreoElectronico?: string;
@@ -34,6 +35,8 @@ interface RegisterService {
 ## Behavioral Rules
 - `register` MUST validar todos los campos antes de procesar el alta.
 - Si hay errores de validacion, `Exitoso` MUST ser `false` y `Errores` MUST contener el detalle inline por campo.
+- Si el correo ya existe, `Exitoso` MUST ser `false`, `TipoError` MUST ser `CorreoExistente` y `Errores.CorreoElectronico` MUST incluir el mensaje inline correspondiente.
+- Si ocurre falla tecnica/transitoria, `Exitoso` MUST ser `false`, `TipoError` MUST ser `TecnicoTransitorio` y `Mensaje` MUST ser "No pudimos crear tu cuenta. Intenta nuevamente.".
 - Si el registro es exitoso, `Exitoso` MUST ser `true`, `RutaSiguiente` MUST ser `/login` y `Mensaje` MUST ser apto para mostrarse en login.
 - El contrato de esta iteracion NO incluye autenticacion social real; Google/Apple se resuelven en UI con aviso "Proximamente".
 

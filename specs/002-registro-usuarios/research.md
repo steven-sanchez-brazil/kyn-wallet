@@ -20,6 +20,26 @@
   - Mostrar modal de exito en la misma ruta: descartado porque el requisito pide redireccion a `/login`.
   - Persistir estado global para mensaje: descartado por complejidad innecesaria.
 
+## Decision: Manejo de errores de registro
+- **Decision**: Diferenciar error de negocio (correo existente) y error tecnico/transitorio con feedback en la misma pantalla de registro.
+- **Rationale**:
+  - Mantiene continuidad del usuario sin redirecciones incorrectas en fallos.
+  - Permite mensajes accionables por tipo de error.
+  - Alinea la UX con las clarificaciones cerradas en el spec.
+- **Alternatives considered**:
+  - Redirigir a `/login` en errores: descartado por confundir el flujo de alta.
+  - Alertas del navegador: descartado por mala experiencia y baja testabilidad.
+
+## Decision: Comportamiento del boton en submitting
+- **Decision**: Deshabilitar el boton "Crear cuenta" y mostrar estado de carga durante `submitting`.
+- **Rationale**:
+  - Previene envios duplicados y condiciones de carrera.
+  - Hace visible el estado de progreso de la operacion.
+  - Facilita pruebas deterministas de UX.
+- **Alternatives considered**:
+  - Ignorar clics extra con boton activo: descartado por ambigüedad visual.
+  - Permitir multiples envios: descartado por riesgo de duplicados.
+
 ## Decision: Paridad visual con Figma y responsive
 - **Decision**: Reutilizar tokens visuales y componentes existentes para lograr equivalencia visual del diseño en desktop y mobile, con layout de dos paneles en desktop y formulario unico en mobile.
 - **Rationale**:

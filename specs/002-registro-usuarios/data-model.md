@@ -27,6 +27,7 @@ Representa la salida del caso de uso de registro.
 | Campo | Tipo | Descripcion |
 |------|------|-------------|
 | `Exitoso` | `boolean` | Estado final del intento de registro. |
+| `TipoError` | `'Ninguno' \| 'CorreoExistente' \| 'TecnicoTransitorio'` | Clasifica el motivo de falla para presentar el feedback correcto. |
 | `Mensaje` | `string` | Mensaje para retroalimentacion y/o redireccion. |
 | `RutaSiguiente` | `string` | Ruta destino post-registro (`/login`). |
 
@@ -39,6 +40,7 @@ Representa la salida del caso de uso de registro.
 1. `Idle`: formulario inicial sin envio.
 2. `Editing`: usuario modifica campos y dispara validaciones inline.
 3. `Invalid`: existen errores de validacion; envio bloqueado.
-4. `Submitting`: formulario valido y en proceso de registro.
+4. `Submitting`: formulario valido y en proceso de registro, boton deshabilitado con estado de carga.
 5. `Success`: registro exitoso; redireccion a `/login` con mensaje.
-6. `Failure`: fallo en registro; mensaje de error y retorno a `Editing`.
+6. `FailureDuplicateEmail`: fallo por correo existente; error inline en correo y retorno a `Editing`.
+7. `FailureTransient`: fallo tecnico/transitorio; banner/mensaje "No pudimos crear tu cuenta. Intenta nuevamente." y retorno a `Editing`.
