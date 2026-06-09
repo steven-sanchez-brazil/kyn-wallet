@@ -1,7 +1,18 @@
 import BrandPanel from '@/components/BrandPanel';
 import LoginForm from '@/components/LoginForm';
 
-export default function LoginPage() {
+interface LoginPageProps {
+  searchParams?: {
+    registered?: string;
+  };
+}
+
+export default function LoginPage({ searchParams }: LoginPageProps) {
+  const successMessage =
+    searchParams?.registered === '1'
+      ? 'Cuenta creada exitosamente. Ahora puedes iniciar sesión.'
+      : undefined;
+
   return (
     <main className="min-h-screen flex">
       {/* Brand Side (Left on Desktop) */}
@@ -9,7 +20,7 @@ export default function LoginPage() {
 
       {/* Form Side (Right on Desktop, Full on Mobile) */}
       <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 bg-white">
-        <LoginForm />
+        <LoginForm successMessage={successMessage} />
       </div>
     </main>
   );

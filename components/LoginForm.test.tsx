@@ -45,4 +45,12 @@ describe('LoginForm UI', () => {
       expect(loginButton).toBeDisabled();
     });
   });
+
+  it('should render register call-to-action link to /register', () => {
+    render(<LoginForm />);
+
+    expect(screen.getByText(/¿No tienes cuenta\?/i)).toBeInTheDocument();
+    const registerLink = screen.getByRole('link', { name: /Regístrate/i });
+    expect(registerLink).toHaveAttribute('href', '/register');
+  });
 });
