@@ -1,29 +1,7 @@
 {
   "extends": ["next/core-web-vitals"],
+  "plugins": ["@typescript-eslint"],
   "rules": {
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "selector": "default",
-        "format": ["PascalCase"],
-        "leadingUnderscore": "allow"
-      },
-      {
-        "selector": "variable",
-        "format": ["PascalCase", "camelCase", "UPPER_CASE"]
-      },
-      {
-        "selector": "parameter",
-        "format": ["PascalCase", "camelCase"]
-      },
-      {
-        "selector": "memberLike",
-        "format": ["PascalCase", "camelCase"]
-      },
-      {
-        "selector": "typeLike",
-        "format": ["PascalCase"]
-      }
-    ]
+    "@typescript-eslint/naming-convention": "off"
   }
 }

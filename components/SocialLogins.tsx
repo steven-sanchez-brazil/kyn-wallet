@@ -2,23 +2,25 @@ import React from 'react';
 import { Button } from './ui/Button';
 
 const SocialLogins: React.FC = () => {
-  const handleComingSoon = (provider: string) => {
-    alert(`${provider} estará disponible próximamente.`);
+  const handleComingSoon = () => {
+    alert('Próximamente');
   };
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <Button 
-        variant="secondary" 
-        onClick={() => handleComingSoon('Google')}
+      <Button
+        type="button"
+        variant="secondary"
+        onClick={handleComingSoon}
         className="flex items-center justify-center space-x-2"
       >
         <span className="text-lg">G</span>
         <span>Google</span>
       </Button>
-      <Button 
-        variant="secondary" 
-        onClick={() => handleComingSoon('Apple')}
+      <Button
+        type="button"
+        variant="secondary"
+        onClick={handleComingSoon}
         className="flex items-center justify-center space-x-2"
       >
         <span className="text-lg"></span>

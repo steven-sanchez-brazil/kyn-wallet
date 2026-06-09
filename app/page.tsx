@@ -1,15 +1,13 @@
 import BrandPanel from '@/components/BrandPanel';
-import LoginForm from '@/components/LoginForm';
+import RegisterForm from '@/components/RegisterForm';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
-    <main className="min-h-screen flex">
-      {/* Brand Side (Left on Desktop) */}
+    <main className="min-h-screen flex bg-white">
       <BrandPanel />
 
-      {/* Form Side (Right on Desktop, Full on Mobile) */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 bg-white">
-        <LoginForm />
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center px-6 py-10 sm:p-8 bg-white">
+        <RegisterForm />
       </div>
     </main>
   );
